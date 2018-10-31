@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { render } from 'react-dom';
 import Hero from './Components/Hero';
 
 class App extends Component {
@@ -9,4 +10,4 @@ class App extends Component {
   }
 }
 
-export default App;
+render(React.createElement(App), document.getElementById('root'));
