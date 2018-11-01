@@ -4,6 +4,7 @@ module.exports = {
     "browser": true,
     "es6": true
     },
+    "parser": "babel-eslint",
     "rules": {
     "react/jsx-filename-extension": "off",
     "react/prefer-stateless-function": "off",
