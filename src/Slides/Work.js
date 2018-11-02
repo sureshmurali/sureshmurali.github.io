@@ -6,35 +6,25 @@ const MyName = styled.div`
   font-size: 150px;
   text-align:center;
 `;
-
-const MyPosition = styled.div`
-  font-family: 'AvenirRoman';
-  font-size: 50px;
-  text-align:center;
-`;
 const Container = styled.div`
     display: flex;
     flex-flow: column nowrap;
-    border: 1px dashed red;
+    border: 1px dashed #EEE;
     justify-content: center;
     align-items: center;
     height:100vh;
 `;
 
-class Hero extends Component {
+class Work extends Component {
   render() {
     return (
       <Container>
         <MyName>
             Suresh Murali
         </MyName>
-        <br />
-        <MyPosition>
-          {'UI/UX designer & Front end developer'}
-        </MyPosition>
       </Container>
     );
   }
 }
 
-export default Hero;
+export default Work;

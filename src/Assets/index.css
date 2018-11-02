@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'AvenirRoman';
+    src: url('./Fonts/Avenir/Avenir-Roman-12.ttf');
+  }
+  
+  @font-face {
+    font-family: 'Valencia';
+    src: url('./Fonts/Valencia/Valencia.ttf');
+  }
