@@ -30,7 +30,7 @@ position: absolute;
 background-color: white;
 margin-right:100%;
 width: 120%;
-height: 300px;
+height: 35vh;
 /* border: 1px solid grey; */
 `;
 
