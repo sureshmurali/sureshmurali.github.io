@@ -1,9 +1,24 @@
 @font-face {
-    font-family: 'AvenirRoman';
-    src: url('./Fonts/Avenir/Avenir-Roman-12.ttf');
-  }
-  
-  @font-face {
-    font-family: 'Valencia';
-    src: url('./Fonts/Valencia/Valencia.ttf');
-  }
+font-family: 'AvenirRoman';
+src: url('./Fonts/Avenir/Avenir-Roman-12.ttf');
+}
+
+@font-face {
+font-family: 'AvenirBook';
+src: url('./Fonts/Avenir/Avenir-Book-01.ttf');
+}
+
+@font-face {
+font-family: 'AvenirMedium';
+src: url('./Fonts/Avenir/Avenir-Medium-09.ttf');
+}
+
+@font-face {
+font-family: 'AvenirHeavy';
+src: url('./Fonts/Avenir/Avenir-Heavy-05.ttf');
+}
+
+@font-face {
+font-family: 'Valencia';
+src: url('./Fonts/Valencia/Valencia.ttf');
+}
