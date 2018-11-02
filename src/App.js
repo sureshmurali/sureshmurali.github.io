@@ -15,7 +15,7 @@ class App extends Component {
     return (
       <React.Fragment>
         <Hero />
-        {/* <Work /> */}
+        <Work />
         <GlobalStyle />
       </React.Fragment>
     );
