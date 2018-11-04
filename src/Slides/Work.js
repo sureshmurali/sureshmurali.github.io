@@ -82,10 +82,10 @@ class Work extends Component {
           <ProjectDetailsContainer>
             <ProjectDetails>
               <ProjectName>
-            Voistrap
+              Voistrap
               </ProjectName>
               <ProjectDesc>
-            IoT project to give workplace insights using indoor localization, voice and schedule.
+              IoT project to give workplace insights using indoor localization, voice and schedule.
               </ProjectDesc>
               <MyRole>
               UI Designer&nbsp; • &nbsp;Full stack developer
