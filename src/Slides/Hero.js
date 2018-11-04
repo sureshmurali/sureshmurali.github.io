@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import TextReveal from '../Components/TextReveal';
+import TextReveal from '../Components/HeroSlide/TextReveal';
 
 const Container = styled.div`
     display: flex;
