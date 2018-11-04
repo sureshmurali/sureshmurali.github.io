@@ -134,6 +134,7 @@ TextContent.propTypes = {
   projectDesc: PropTypes.string.isRequired,
   projectType: PropTypes.number.isRequired,
   roles: PropTypes.array.isRequired,
+  timeDelay: PropTypes.number.isRequired,
 };
 
 export default TextContent;
