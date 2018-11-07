@@ -103,18 +103,17 @@ class TextContent extends Component {
               {projectDesc}
             </ProjectDesc>
             <MyRole>
-              {
-                    roles.map((role, index, arr) => (index === arr.length - 1 ? (
-                      <span>
-                        {role}
-                      </span>
-                    ) : (
-                      <span>
-                        {role}
-                          &nbsp; • &nbsp;
-                      </span>
-                    )))
-                }
+              {roles.map((role, index, arr) => (index === arr.length - 1 ? (
+                <span key={role}>
+                  {role}
+                </span>
+              ) : (
+                <span key={role}>
+                  {role}
+                  {' '}
+                        &nbsp; • &nbsp;
+                </span>
+              )))}
             </MyRole>
           </ProjectDetails>
           <EmptyBlock />
@@ -132,9 +131,8 @@ TextContent.propTypes = {
   number: PropTypes.string.isRequired,
   projectName: PropTypes.string.isRequired,
   projectDesc: PropTypes.string.isRequired,
-  projectType: PropTypes.number.isRequired,
+  projectType: PropTypes.string.isRequired,
   roles: PropTypes.array.isRequired,
-  timeDelay: PropTypes.number.isRequired,
 };
 
 export default TextContent;
