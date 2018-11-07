@@ -10,6 +10,34 @@ const Container = styled.div`
 `;
 
 class Work extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      vh: 0,
+      slideNumber: 0,
+    };
+    this.handleScroll = this.handleScroll.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+    this.setState({ vh: Math.round(window.innerHeight) });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll(event) {
+    const { body, documentElement } = event.srcElement;
+    const { vh, slideNumber } = this.state;
+    const scrollDistance = Math.max(body.scrollTop, documentElement.scrollTop);
+    if (Math.floor(scrollDistance / vh) !== slideNumber) {
+      this.setState({ slideNumber: Math.floor(scrollDistance / vh) });
+      console.log(Math.floor(scrollDistance / vh));
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
