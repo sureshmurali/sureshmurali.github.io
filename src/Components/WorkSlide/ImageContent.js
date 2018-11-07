@@ -6,17 +6,24 @@ const ImageContainer = styled.div`
 border: 1px dashed black;
 margin-left:50vw;
 width:50%;
-height:500vh;
+height:2000vh;
 display: flex;
 flex-flow: column nowrap;
 `;
 
-const WorkImage = styled.img`
+const PhoneImage = styled.img`
 border: 1px dashed red;
+max-height: 90vh;
 `;
 
 const ImageBox = styled.div`
+margin-top:98vh;
 border: 1px dashed green;
+margin-bottom:2vh;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
 `;
 
 class ImageContent extends Component {
@@ -24,12 +31,23 @@ class ImageContent extends Component {
     return (
       <ImageContainer>
         <ImageBox>
-          <WorkImage src={voistrapImg} alt="voistrapMap" />
+          <PhoneImage src={voistrapImg} alt="voistrapMap" />
         </ImageBox>
         <ImageBox>
-          <WorkImage src={voistrapImg} alt="voistrapMap" />
+          <PhoneImage src={voistrapImg} alt="voistrapMap" />
         </ImageBox>
-
+        <ImageBox>
+          <PhoneImage src={voistrapImg} alt="voistrapMap" />
+        </ImageBox>
+        <ImageBox>
+          <PhoneImage src={voistrapImg} alt="voistrapMap" />
+        </ImageBox>
+        <ImageBox>
+          <PhoneImage src={voistrapImg} alt="voistrapMap" />
+        </ImageBox>
+        <ImageBox>
+          <PhoneImage src={voistrapImg} alt="voistrapMap" />
+        </ImageBox>
       </ImageContainer>
     );
   }
