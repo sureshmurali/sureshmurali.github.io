@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import TextContent from '../Components/WorkSlide/TextContent';
+import ImageContent from '../Components/WorkSlide/ImageContent';
 
 const Container = styled.div`
     display: flex;
@@ -31,10 +32,16 @@ class Work extends Component {
   handleScroll(event) {
     const { body, documentElement } = event.srcElement;
     const { vh, slideNumber } = this.state;
-    const scrollDistance = Math.max(body.scrollTop, documentElement.scrollTop);
-    if (Math.floor(scrollDistance / vh) !== slideNumber) {
-      this.setState({ slideNumber: Math.floor(scrollDistance / vh) });
+    let scrollDistance = Math.max(body.scrollTop, documentElement.scrollTop);
+    if (Math.floor(scrollDistance / vh) > 1) {
+      scrollDistance /= 2;
+    }
+    if (Math.floor(scrollDistance / vh) !== slideNumber && slideNumber < 3) {
       console.log(Math.floor(scrollDistance / vh));
+      this.setState({ slideNumber: Math.floor(scrollDistance / vh) });
+    } else if (slideNumber === 3 && (Math.floor(scrollDistance / vh) < slideNumber)) {
+      console.log(Math.floor(scrollDistance / vh));
+      this.setState({ slideNumber: Math.floor(scrollDistance / vh) });
     }
   }
 
@@ -85,6 +92,7 @@ class Work extends Component {
     return (
       <Container>
         {this.changeTextContentBasedOnScroll()}
+        <ImageContent />
       </Container>
     );
   }
