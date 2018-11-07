@@ -47,7 +47,7 @@ width: 50%;
 const ProjectDetails = styled.div`
 display: flex;
 flex-flow: column nowrap;
-/* border: 2px solid black; */
+/* border: 1px dashed black; */
 `;
 
 const EmptyBlock = styled.div`
