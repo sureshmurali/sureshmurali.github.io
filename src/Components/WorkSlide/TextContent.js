@@ -95,6 +95,7 @@ let BlockTextReveal = styled.span`
 `;
 
 const BlockTextRevealQuick = styled.span`
+display:${props => (props.inline ? 'inline' : 'block')};
 color: #FFF;
 animation: ${appearText} 0.0001s linear forwards;
 animation-delay: 0.5s;
@@ -149,19 +150,19 @@ class TextContent extends Component {
     return (
       <TextContainer>
         <ProjectID>
-          <BlockTextReveal refreshToggle={refreshToggle}>
+          <BlockTextReveal refreshToggle={refreshToggle} inline>
             {number}
           </BlockTextReveal>
         </ProjectID>
         <ProjectDetailsContainer>
           <ProjectDetails>
             <ProjectName>
-              <BlockTextReveal refreshToggle={refreshToggle}>
+              <BlockTextReveal refreshToggle={refreshToggle} inline>
                 {projectName}
               </BlockTextReveal>
             </ProjectName>
             <MyRole>
-              <BlockTextReveal refreshToggle={refreshToggle}>
+              <BlockTextReveal refreshToggle={refreshToggle} inline>
                 {roles.map((role, index, arr) => (index === arr.length - 1 ? (
                   <span key={role}>
                     {role}
@@ -175,7 +176,7 @@ class TextContent extends Component {
               </BlockTextReveal>
             </MyRole>
             <ProjectDesc>
-              <BlockTextReveal refreshToggle={refreshToggle}>
+              <BlockTextReveal refreshToggle={refreshToggle} inline={false}>
                 {projectDesc}
               </BlockTextReveal>
             </ProjectDesc>
@@ -183,7 +184,7 @@ class TextContent extends Component {
         </ProjectDetailsContainer>
 
         <ProjectType>
-          <BlockTextReveal refreshToggle={refreshToggle}>
+          <BlockTextReveal refreshToggle={refreshToggle} inline>
             {projectType}
           </BlockTextReveal>
         </ProjectType>
