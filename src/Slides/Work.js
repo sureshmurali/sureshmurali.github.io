@@ -17,6 +17,8 @@ class Work extends Component {
       vh: 0,
       slideNumber: 0,
     };
+    this.lastScrollTop = 0;
+    this.scrollDirectionDown = true;
     this.handleScroll = this.handleScroll.bind(this);
     this.workDetails = [
       {
@@ -93,6 +95,14 @@ class Work extends Component {
     const { body, documentElement } = event.srcElement;
     const { vh, slideNumber } = this.state;
     const scrollDistance = Math.max(body.scrollTop, documentElement.scrollTop);
+
+    if (scrollDistance > this.lastScrollTop) {
+      this.scrollDirectionDown = true;
+    } else {
+      this.scrollDirectionDown = false;
+    }
+    this.lastScrollTop = scrollDistance;
+
     if (Math.floor(scrollDistance / vh) !== slideNumber
       && slideNumber < this.workDetails.length - 1) {
       console.log(Math.floor(scrollDistance / vh));
@@ -106,6 +116,13 @@ class Work extends Component {
 
   changeTextContentBasedOnScroll() {
     const { slideNumber } = this.state;
+    let refresh = true;
+    if (slideNumber > 1 && slideNumber % 2 === 0) {
+      refresh = false;
+    }
+    if (!this.scrollDirectionDown) {
+      refresh = !refresh;
+    }
     return (
       <TextContent
         number={this.workDetails[slideNumber].number}
@@ -113,6 +130,7 @@ class Work extends Component {
         projectDesc={this.workDetails[slideNumber].projectDesc}
         projectType={this.workDetails[slideNumber].projectType}
         roles={this.workDetails[slideNumber].roles}
+        block={refresh}
       />
     );
   }
