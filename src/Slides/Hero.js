@@ -10,6 +10,7 @@ const Container = styled.div`
     align-items: center;
     height:100vh;
     width:100%;
+    background-color: white;
 `;
 
 class Hero extends Component {
@@ -18,7 +19,7 @@ class Hero extends Component {
       <Container>
         <TextReveal text="Suresh Murali" fontFam="Valencia" fontSizeInPx="150" timeDelay={500} />
         <br />
-        <TextReveal text="UI/UX designer & Front end developer" fontFam="AvenirRoman" fontSizeInPx="50" timeDelay={1300} />
+        <TextReveal text="UI/UX Designer & Front-end Developer" fontFam="AvenirRoman" fontSizeInPx="50" timeDelay={1300} />
       </Container>
     );
   }
