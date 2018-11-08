@@ -130,7 +130,7 @@ class Work extends Component {
         projectDesc={this.workDetails[slideNumber].projectDesc}
         projectType={this.workDetails[slideNumber].projectType}
         roles={this.workDetails[slideNumber].roles}
-        block={refresh}
+        refreshToggle={refresh}
       />
     );
   }

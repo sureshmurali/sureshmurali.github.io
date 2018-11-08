@@ -22,8 +22,7 @@ const ProjectName = styled.div`
 const ProjectDesc = styled.div`
   padding-top:2%;
   font-family: 'AvenirBook';
-  font-size: 30px;
-  min-height: 150px; /** NEED RESPO */
+  font-size: 30px; /** NEED RESPO */
   /* border: 1px dashed black; */
 `;
 
@@ -53,7 +52,8 @@ display: flex;
 flex-flow: column nowrap;
 /* border: 1px dashed black; */
 width: 100%;
-padding-left:20%;
+padding: 5%;
+padding-left:10%;
 `;
 
 
@@ -131,8 +131,8 @@ class TextContent extends Component {
   }
 
   refresh(nextProps) {
-    const { block } = nextProps;
-    if (block) {
+    const { refreshToggle } = nextProps;
+    if (refreshToggle) {
       BlockTextReveal = BlockTextRevealNoAnim;
       this.setState({ refreshBlock: true },
         () => {
@@ -144,24 +144,24 @@ class TextContent extends Component {
 
   render() {
     const {
-      number, projectName, projectDesc, roles, projectType, block,
+      number, projectName, projectDesc, roles, projectType, refreshToggle,
     } = this.props;
     return (
       <TextContainer>
         <ProjectID>
-          <BlockTextReveal block={block}>
+          <BlockTextReveal refreshToggle={refreshToggle}>
             {number}
           </BlockTextReveal>
         </ProjectID>
         <ProjectDetailsContainer>
           <ProjectDetails>
             <ProjectName>
-              <BlockTextReveal block={block}>
+              <BlockTextReveal refreshToggle={refreshToggle}>
                 {projectName}
               </BlockTextReveal>
             </ProjectName>
             <MyRole>
-              <BlockTextReveal block={block}>
+              <BlockTextReveal refreshToggle={refreshToggle}>
                 {roles.map((role, index, arr) => (index === arr.length - 1 ? (
                   <span key={role}>
                     {role}
@@ -175,13 +175,15 @@ class TextContent extends Component {
               </BlockTextReveal>
             </MyRole>
             <ProjectDesc>
-              {projectDesc}
+              <BlockTextReveal refreshToggle={refreshToggle}>
+                {projectDesc}
+              </BlockTextReveal>
             </ProjectDesc>
           </ProjectDetails>
         </ProjectDetailsContainer>
 
         <ProjectType>
-          <BlockTextReveal block={block}>
+          <BlockTextReveal refreshToggle={refreshToggle}>
             {projectType}
           </BlockTextReveal>
         </ProjectType>
@@ -196,7 +198,7 @@ TextContent.propTypes = {
   projectDesc: PropTypes.string.isRequired,
   projectType: PropTypes.string.isRequired,
   roles: PropTypes.array.isRequired,
-  block: PropTypes.bool.isRequired,
+  refreshToggle: PropTypes.bool.isRequired,
 };
 
 export default TextContent;

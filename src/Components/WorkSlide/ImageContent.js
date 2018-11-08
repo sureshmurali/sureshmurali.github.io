@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import voistrapImg from '../../Assets/Images/Voistrap/VoistrapPhone.png';
+import voistrapHomeImg from '../../Assets/Images/Voistrap/Home.png';
+import voistrapMeetingsImg from '../../Assets/Images/Voistrap/Meetings.png';
 
 const ImageContainer = styled.div`
 /* border: 1px dashed black; */
 margin-left:50vw;
 width:50%;
-height:2000vh;
+height:1200vh;
 display: flex;
 flex-flow: column nowrap;
 `;
@@ -32,22 +33,19 @@ class ImageContent extends Component {
     return (
       <ImageContainer>
         <ImageBox>
-          <PhoneImage src={voistrapImg} alt="voistrapMap" />
+          <PhoneImage src={voistrapHomeImg} alt="voistrapMap" />
         </ImageBox>
         <ImageBox>
-          <PhoneImage src={voistrapImg} alt="voistrapMap" />
+          <PhoneImage src={voistrapMeetingsImg} alt="voistrapMap" />
         </ImageBox>
         <ImageBox>
-          <PhoneImage src={voistrapImg} alt="voistrapMap" />
+          <PhoneImage src={voistrapHomeImg} alt="voistrapMap" />
         </ImageBox>
         <ImageBox>
-          <PhoneImage src={voistrapImg} alt="voistrapMap" />
+          <PhoneImage src={voistrapHomeImg} alt="voistrapMap" />
         </ImageBox>
         <ImageBox>
-          <PhoneImage src={voistrapImg} alt="voistrapMap" />
-        </ImageBox>
-        <ImageBox>
-          <PhoneImage src={voistrapImg} alt="voistrapMap" />
+          <PhoneImage src={voistrapHomeImg} alt="voistrapMap" />
         </ImageBox>
       </ImageContainer>
     );
