@@ -92,22 +92,6 @@ const revBlock = () => keyframes`
 
 
 let BlockTextReveal = styled.span`
-color: #FFF;
-animation: ${appearText} 0.0001s linear forwards;
-animation-delay: 1.4s;
-position: relative;
-
-&::after{
-content:'';
-top:0;
-left:0;
-position:absolute;
-width:0%;
-height:100%;
-background: #222;
-animation: ${revBlock} 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-animation-delay:1s;
-}
 `;
 
 const BlockTextRevealQuick = styled.span`
@@ -124,7 +108,7 @@ position:absolute;
 width:0%;
 height:100%;
 background: #222;
-animation: ${revBlock} 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+animation: ${revBlock} 1s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 animation-delay:0s;
 }
 `;
@@ -142,13 +126,13 @@ class TextContent extends Component {
     this.refresh = this.refresh.bind(this);
   }
 
-  componentWillReceiveProps() {
-    this.refresh();
+  componentWillReceiveProps(nextProps) {
+    this.refresh(nextProps);
   }
 
-  refresh() {
-    const { block } = this.props;
-    if (!block) {
+  refresh(nextProps) {
+    const { block } = nextProps;
+    if (block) {
       BlockTextReveal = BlockTextRevealNoAnim;
       this.setState({ refreshBlock: true },
         () => {

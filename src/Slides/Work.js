@@ -117,7 +117,7 @@ class Work extends Component {
   changeTextContentBasedOnScroll() {
     const { slideNumber } = this.state;
     let refresh = true;
-    if (slideNumber > 1 && slideNumber % 2 === 0) {
+    if (slideNumber % 2 === 0) {
       refresh = false;
     }
     if (!this.scrollDirectionDown) {
