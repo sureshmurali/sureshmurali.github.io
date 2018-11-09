@@ -4,6 +4,7 @@ import voistrapHomeImg from '../../Assets/Images/Voistrap/Home.png';
 import voistrapMeetingsImg from '../../Assets/Images/Voistrap/Meetings.png';
 import teslaImg from '../../Assets/Images/Tesla.png';
 import whatsMyFoodImg from '../../Assets/Images/WhatsMyFood.png';
+import cmgRNotImg from '../../Assets/Images/CmgRNot.png';
 
 const ImageContainer = styled.div`
 /* border: 1px dashed black; */
@@ -38,7 +39,7 @@ class ImageContent extends Component {
           <PhoneImage src={voistrapHomeImg} alt="voistrapMap" />
         </ImageBox>
         <ImageBox>
-          <PhoneImage src={voistrapMeetingsImg} alt="voistrapMap" />
+          <PhoneImage src={cmgRNotImg} alt="voistrapMap" />
         </ImageBox>
         <ImageBox>
           <PhoneImage src={whatsMyFoodImg} alt="voistrapMap" />
