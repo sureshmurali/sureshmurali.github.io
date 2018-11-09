@@ -62,7 +62,7 @@ display: flex;
 flex-flow: column nowrap;
 align-items: center;
 /* border: 2px solid black; */
-padding-top:10%;
+padding-top:5%;
 height: 100%;
 `;
 

@@ -58,7 +58,7 @@ class Work extends Component {
       },
       {
         number: '05',
-        projectName: 'Calculator app',
+        projectName: 'Wakanda calculator',
         projectDesc: 'iOS app to remember your fav food at each restaurant you eat..',
         projectType: 'iOS APP CONCEPT',
         roles: ['UI Designer'],
