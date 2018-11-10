@@ -24,49 +24,60 @@ max-height: 90vh;
 
 const ImageBox = styled.div`
 margin-top:50vh;
-border: 1px dashed green;
+/* border: 1px dashed green; */
 height: 150vh;
 position: relative;
 `;
 
-const VoistrapPhoneHome = styled.img`
+const VoistrapPhoneHome = styled.img.attrs({
+  style: ({ scroll }) => ({
+    transform: `translateY(-${(scroll - 500) / 15}%)`,
+  }),
+})`
 position: absolute;
 top: 40vh;
-left:10vh;
+left:0vw;
 /* border: 1px dashed red; */
-transform: translateY(-${props => (props.scroll) / 20}%);
 max-height: 80vh; 
 `;
 
-const VoistrapPhoneMeetings = styled.img`
+const VoistrapPhoneMeetings = styled.img.attrs({
+  style: ({ scroll }) => ({
+    transform: `translateY(-${(scroll - 500) / 20}%) scale(0.87)`,
+  }),
+})`
 position: absolute;
-top: 20vw;
-right: 10vw;
+top: 45vh;
+right: 2vw;
 /* border: 1px dashed red; */
 max-height: 80vh;
-transform: translateY(-${props => (props.scroll - 500) / 50}%) scale(0.8);
-/* filter: blur(0.8px); */
+filter: blur(0.7px);
 `;
 
-const VoistrapPhonePeople = styled.img`
-bottom:10vh;
-left: 10vw;
+const VoistrapPhonePeople = styled.img.attrs({
+  style: ({ scroll }) => ({
+    transform: `translateY(-${(scroll - 500) / 50}%) scale(0.5)`,
+  }),
+})`
+bottom:0vh;
+left: 2vw;
 position: absolute;
 /* border: 1px dashed red; */
 max-height: 80vh;
-transform: translateY(-${props => (props.scroll - 500) / 70}%) scale(0.7);
-/* transform: translateY(-${props => (props.scroll - 500) / 15}%); */
-/* filter: blur(0.8px); */
+filter: blur(2px);
 `;
 
-const VoistrapPhoneScore = styled.img`
-bottom:-50vh;
-left:30vw;
+const VoistrapPhoneScore = styled.img.attrs({
+  style: ({ scroll }) => ({
+    transform: `translateY(-${(scroll - 500) / 40}%) scale(0.8)`,
+  }),
+})`
+bottom:-30vh;
+left:20vw;
 position: absolute;
 /* border: 1px dashed red; */
 max-height: 80vh;
-transform: translateY(-${props => (props.scroll - 500) / 25}%) scale(0.9);
-/* filter: blur(0.8px); */
+filter: blur(1px);
 `;
 
 class ImageContent extends Component {
@@ -98,9 +109,10 @@ class ImageContent extends Component {
     return (
       <React.Fragment>
         <VoistrapPhonePeople src={voistrapPeopleImg} scroll={scrollDistance} alt="voistrapPeople" />
+        <VoistrapPhoneScore src={voistrapScoreImg} scroll={scrollDistance} alt="voistrapScore" />
         <VoistrapPhoneMeetings src={voistrapMeetingsImg} scroll={scrollDistance} alt="voistrapMeetings" />
         <VoistrapPhoneHome src={voistrapHomeImg} scroll={scrollDistance} alt="voistrapHome" />
-        <VoistrapPhoneScore src={voistrapScoreImg} scroll={scrollDistance} alt="voistrapScore" />
+
       </React.Fragment>
     );
   }

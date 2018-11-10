@@ -71,7 +71,6 @@ class Work extends Component {
         roles: [''],
       },
     ];
-    console.log(this.workDetails);
     let offset = 0;
     this.workDetails.forEach((ele, ind, arr) => {
       if (ind >= 1) {
@@ -79,7 +78,6 @@ class Work extends Component {
         offset = ind;
       }
     });
-    console.log(this.workDetails);
   }
 
   componentDidMount() {
@@ -105,11 +103,9 @@ class Work extends Component {
 
     if (Math.floor(scrollDistance / vh) !== slideNumber
       && slideNumber < this.workDetails.length - 1) {
-      console.log(Math.floor(scrollDistance / vh));
       this.setState({ slideNumber: Math.floor(scrollDistance / vh) });
     } else if (slideNumber === this.workDetails.length - 1
       && (Math.floor(scrollDistance / vh) < slideNumber)) {
-      console.log(Math.floor(scrollDistance / vh));
       this.setState({ slideNumber: Math.floor(scrollDistance / vh) });
     }
   }
