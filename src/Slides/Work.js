@@ -37,16 +37,16 @@ class Work extends Component {
       },
       {
         number: '02',
-        projectName: 'ComingOrNot',
-        projectDesc: 'Event planner web app that strives to ease the work of an organizer, conduct events and get togethers in a much planned and less chaotic way.',
-        projectType: 'WEB APP',
+        projectName: 'WhatsMyFood',
+        projectDesc: 'iOS app to remember your fav food at each restaurant you eat..',
+        projectType: 'iOS APP',
         roles: ['UI Designer', 'Front-end Developer'],
       },
       {
         number: '03',
-        projectName: 'WhatsMyFood',
-        projectDesc: 'iOS app to remember your fav food at each restaurant you eat..',
-        projectType: 'iOS APP',
+        projectName: 'ComingOrNot',
+        projectDesc: 'Event planner web app that strives to ease the work of an organizer, conduct events and get togethers in a much planned and less chaotic way.',
+        projectType: 'WEB APP',
         roles: ['UI Designer', 'Front-end Developer'],
       },
       {
