@@ -9,7 +9,7 @@ import whatsMyFoodImg from '../../Assets/Images/WhatsMyFood.png';
 import cmgRNotImg from '../../Assets/Images/CmgRNot.png';
 
 const ImageContainer = styled.div`
-border: 1px dashed black;
+/* border: 1px dashed black; */
 margin-left:50vw;
 width:50%;
 height:1100vh;
@@ -18,40 +18,54 @@ flex-flow: column nowrap;
 `;
 
 const PhoneImage = styled.img`
-border: 1px dashed red;
+/* border: 1px dashed red; */
 max-height: 90vh;
 `;
 
 const ImageBox = styled.div`
-margin-top:60vh;
+margin-top:50vh;
 border: 1px dashed green;
-margin-bottom:20vh;
-height: 120vh;
+height: 150vh;
+position: relative;
 `;
 
 const VoistrapPhoneHome = styled.img`
-border: 1px dashed red;
-max-height: 70vh; 
+position: absolute;
+top: 40vh;
+left:10vh;
+/* border: 1px dashed red; */
+transform: translateY(-${props => (props.scroll) / 20}%);
+max-height: 80vh; 
 `;
 
 const VoistrapPhoneMeetings = styled.img`
-border: 1px dashed red;
-max-height: 70vh;
-/* transform: translateY(-${props => (props.scroll - 500) / 15}%); */
+position: absolute;
+top: 20vw;
+right: 10vw;
+/* border: 1px dashed red; */
+max-height: 80vh;
+transform: translateY(-${props => (props.scroll - 500) / 50}%) scale(0.8);
 /* filter: blur(0.8px); */
 `;
 
 const VoistrapPhonePeople = styled.img`
-border: 1px dashed red;
-max-height: 70vh;
+bottom:10vh;
+left: 10vw;
+position: absolute;
+/* border: 1px dashed red; */
+max-height: 80vh;
+transform: translateY(-${props => (props.scroll - 500) / 70}%) scale(0.7);
 /* transform: translateY(-${props => (props.scroll - 500) / 15}%); */
 /* filter: blur(0.8px); */
 `;
 
 const VoistrapPhoneScore = styled.img`
-border: 1px dashed red;
-max-height: 70vh;
-/* transform: translateY(-${props => (props.scroll - 500) / 15}%); */
+bottom:-50vh;
+left:30vw;
+position: absolute;
+/* border: 1px dashed red; */
+max-height: 80vh;
+transform: translateY(-${props => (props.scroll - 500) / 25}%) scale(0.9);
 /* filter: blur(0.8px); */
 `;
 
@@ -76,7 +90,6 @@ class ImageContent extends Component {
   handleScroll(event) {
     const { body, documentElement } = event.srcElement;
     const sd = Math.max(body.scrollTop, documentElement.scrollTop);
-    console.log(sd);
     this.setState({ scrollDistance: sd });
   }
 
@@ -84,9 +97,9 @@ class ImageContent extends Component {
     const { scrollDistance } = this.state;
     return (
       <React.Fragment>
-        <VoistrapPhoneHome src={voistrapHomeImg} scroll={scrollDistance} alt="voistrapHome" />
-        <VoistrapPhoneMeetings src={voistrapMeetingsImg} scroll={scrollDistance} alt="voistrapMeetings" />
         <VoistrapPhonePeople src={voistrapPeopleImg} scroll={scrollDistance} alt="voistrapPeople" />
+        <VoistrapPhoneMeetings src={voistrapMeetingsImg} scroll={scrollDistance} alt="voistrapMeetings" />
+        <VoistrapPhoneHome src={voistrapHomeImg} scroll={scrollDistance} alt="voistrapHome" />
         <VoistrapPhoneScore src={voistrapScoreImg} scroll={scrollDistance} alt="voistrapScore" />
       </React.Fragment>
     );
