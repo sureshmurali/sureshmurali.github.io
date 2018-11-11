@@ -6,6 +6,7 @@ import voistrapHomeImg from '../../Assets/Images/Voistrap/Home.png';
 import teslaImg from '../../Assets/Images/Tesla.png';
 import WhatsMyFoodImages from './ParallaxImages/WhatsMyFoodImages';
 import ComingOrNotImages from './ParallaxImages/ComingOrNotImages';
+import TeslaImages from './ParallaxImages/TeslaImages';
 
 const ImageContainer = styled.div`
 /* border: 1px dashed black; */
@@ -84,7 +85,12 @@ class ImageContent extends Component {
           />
         </ImageBox>
         <ImageBox height={boxHeight}>
-          <PhoneImage src={teslaImg} alt="voistrapMap" />
+          <TeslaImages
+            boxHeight={boxHeight}
+            index={4}
+            scrollDistance={scrollDistance}
+            screenHeight={screenHeight}
+          />
         </ImageBox>
         <ImageBox height={boxHeight}>
           <PhoneImage src={voistrapHomeImg} alt="voistrapMap" />
