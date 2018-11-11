@@ -5,14 +5,13 @@ import TextReveal from '../Components/HeroSlide/TextReveal';
 const Container = styled.div`
     display: flex;
     flex-flow: column nowrap;
-    border: 1px dashed #EEE;
     justify-content: center;
     align-items: center;
     height:100vh;
     width:100%;
     background-color: white;
-    margin-bottom: 40vh;
-`;
+    margin-bottom: 40vh; 
+`;/* Since pageSplitTime is 1.4 */
 
 class Hero extends Component {
   render() {

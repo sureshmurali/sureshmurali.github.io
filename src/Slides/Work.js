@@ -17,6 +17,7 @@ class Work extends Component {
       vh: 0,
       slideNumber: 0,
     };
+    this.pageSplitTimes = 1.4;
     this.lastScrollTop = 0;
     this.scrollDirectionDown = true;
     this.handleScroll = this.handleScroll.bind(this);
@@ -75,7 +76,7 @@ class Work extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    this.setState({ vh: Math.round(window.innerHeight * 1.4) });
+    this.setState({ vh: Math.round(window.innerHeight * this.pageSplitTimes) });
   }
 
   componentWillUnmount() {
@@ -92,6 +93,7 @@ class Work extends Component {
       this.scrollDirectionDown = false;
     }
     this.lastScrollTop = scrollDistance;
+    console.log(scrollDistance);
 
     if (Math.floor(scrollDistance / vh) !== slideNumber
       && slideNumber < this.workDetails.length - 1) {
@@ -121,7 +123,7 @@ class Work extends Component {
     return (
       <Container>
         {this.changeTextContentBasedOnScroll()}
-        <ImageContent />
+        <ImageContent pageSplitTimes={this.pageSplitTimes} />
       </Container>
     );
   }

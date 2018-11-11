@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import VoistrapImages from './ParallaxImages/VoistrapImages';
 import voistrapHomeImg from '../../Assets/Images/Voistrap/Home.png';
 import teslaImg from '../../Assets/Images/Tesla.png';
@@ -21,8 +22,9 @@ max-height: 90vh;
 `;
 
 const ImageBox = styled.div`
-/* border: 1px dashed green; */
-height: 150vh;
+border: 1px dashed green;
+margin-top:40vh;
+height: 100vh;
 position: relative;
 `;
 
@@ -53,26 +55,42 @@ class ImageContent extends Component {
 
   render() {
     const { scrollDistance, screenHeight } = this.state;
+    const { pageSplitTimes } = this.props;
+    const boxHeight = pageSplitTimes * 100;
     return (
       <ImageContainer>
-        <ImageBox>
-          <VoistrapImages scrollDistance={scrollDistance} screenHeight={screenHeight} />
+        <ImageBox height={boxHeight}>
+          <VoistrapImages
+            boxHeight={boxHeight}
+            index={1}
+            scrollDistance={scrollDistance}
+            screenHeight={screenHeight}
+          />
         </ImageBox>
-        <ImageBox>
-          <WhatsMyFoodImages scrollDistance={scrollDistance} screenHeight={screenHeight} />
+        <ImageBox height={boxHeight}>
+          <WhatsMyFoodImages
+            boxHeight={boxHeight}
+            index={2}
+            scrollDistance={scrollDistance}
+            screenHeight={screenHeight}
+          />
         </ImageBox>
-        <ImageBox>
+        <ImageBox height={boxHeight}>
           <PhoneImage src={cmgRNotImg} alt="voistrapMap" />
         </ImageBox>
-        <ImageBox>
+        <ImageBox height={boxHeight}>
           <PhoneImage src={teslaImg} alt="voistrapMap" />
         </ImageBox>
-        <ImageBox>
+        <ImageBox height={boxHeight}>
           <PhoneImage src={voistrapHomeImg} alt="voistrapMap" />
         </ImageBox>
       </ImageContainer>
     );
   }
 }
+
+ImageContent.propTypes = {
+  pageSplitTimes: PropTypes.number.isRequired,
+};
 
 export default ImageContent;
