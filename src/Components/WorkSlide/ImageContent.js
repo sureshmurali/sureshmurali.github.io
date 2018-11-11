@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import VoistrapImages from './ParallaxImages/VoistrapImages';
 import voistrapHomeImg from '../../Assets/Images/Voistrap/Home.png';
 import teslaImg from '../../Assets/Images/Tesla.png';
-import cmgRNotImg from '../../Assets/Images/CmgRNot.png';
 import WhatsMyFoodImages from './ParallaxImages/WhatsMyFoodImages';
+import ComingOrNotImages from './ParallaxImages/ComingOrNotImages';
 
 const ImageContainer = styled.div`
 /* border: 1px dashed black; */
@@ -22,7 +22,7 @@ max-height: 90vh;
 `;
 
 const ImageBox = styled.div`
-border: 1px dashed green;
+/* border: 2px dashed green; */
 margin-top:40vh;
 height: 100vh;
 position: relative;
@@ -76,7 +76,12 @@ class ImageContent extends Component {
           />
         </ImageBox>
         <ImageBox height={boxHeight}>
-          <PhoneImage src={cmgRNotImg} alt="voistrapMap" />
+          <ComingOrNotImages
+            boxHeight={boxHeight}
+            index={3}
+            scrollDistance={scrollDistance}
+            screenHeight={screenHeight}
+          />
         </ImageBox>
         <ImageBox height={boxHeight}>
           <PhoneImage src={teslaImg} alt="voistrapMap" />
