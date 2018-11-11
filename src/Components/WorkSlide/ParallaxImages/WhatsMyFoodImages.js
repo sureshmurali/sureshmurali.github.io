@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import voistrapHomeImg from '../../../Assets/Images/Voistrap/Home.png';
-import voistrapMeetingsImg from '../../../Assets/Images/Voistrap/Meetings.png';
-import voistrapPeopleImg from '../../../Assets/Images/Voistrap/People.png';
-import voistrapScoreImg from '../../../Assets/Images/Voistrap/Score.png';
+import homeImg from '../../../Assets/Images/WhatsMyFood/Home.png';
+import restaurantImg from '../../../Assets/Images/WhatsMyFood/Restaurant.png';
+import addRestaurantImg from '../../../Assets/Images/WhatsMyFood/AddRestaurant.png';
+import addFoodImg from '../../../Assets/Images/WhatsMyFood/AddFood.png';
 
-
-const VoistrapPhoneHome = styled.img.attrs({
+const Restaurant = styled.img.attrs({
   style: ({ scroll }) => ({
     transform: `translate(0px,-${(scroll) / 6}%)`,
   }),
@@ -19,7 +18,7 @@ left:0vw;
 height: 85vh; 
 `;
 
-const VoistrapPhoneMeetings = styled.img.attrs({
+const Home = styled.img.attrs({
   style: ({ scroll }) => ({
     transform: `translate(0px,-${(scroll) / 15}%) scale(0.9)`,
   }),
@@ -32,7 +31,7 @@ height: 85vh;
 filter: blur(0.6px);
 `;
 
-const VoistrapPhoneScore = styled.img.attrs({
+const AddFood = styled.img.attrs({
   style: ({ scroll }) => ({
     transform: `translate(0px,-${(scroll) / 20}%) scale(0.7)`,
   }),
@@ -45,7 +44,7 @@ height: 85vh;
 filter: blur(0.8px);
 `;
 
-const VoistrapPhonePeople = styled.img.attrs({
+const AddRestaurant = styled.img.attrs({
   style: ({ scroll }) => ({
     transform: `translate(0px,-${(scroll) / 100}%) scale(0.6)`,
   }),
@@ -58,25 +57,25 @@ height: 85vh;
 filter: blur(1.2px);
 `;
 
-class VoistrapImages extends Component {
+class WhatsMyFoodImages extends Component {
   render() {
     let { scrollDistance } = this.props;
     const { screenHeight } = this.props;
-    scrollDistance -= screenHeight / 2;
+    scrollDistance -= screenHeight * 2.5;
     return (
       <React.Fragment>
-        <VoistrapPhonePeople src={voistrapPeopleImg} scroll={scrollDistance} alt="voistrapPeople" />
-        <VoistrapPhoneScore src={voistrapScoreImg} scroll={scrollDistance} alt="voistrapScore" />
-        <VoistrapPhoneMeetings src={voistrapMeetingsImg} scroll={scrollDistance} alt="voistrapMeetings" />
-        <VoistrapPhoneHome src={voistrapHomeImg} scroll={scrollDistance} alt="voistrapHome" />
+        <AddFood src={addFoodImg} scroll={scrollDistance} alt="addFood" />
+        <AddRestaurant src={addRestaurantImg} scroll={scrollDistance} alt="addRestaurant" />
+        <Home src={homeImg} scroll={scrollDistance} alt="Home" />
+        <Restaurant src={restaurantImg} scroll={scrollDistance} alt="Restaurant" />
       </React.Fragment>
     );
   }
 }
 
-VoistrapImages.propTypes = {
+WhatsMyFoodImages.propTypes = {
   scrollDistance: PropTypes.number.isRequired,
   screenHeight: PropTypes.number.isRequired,
 };
 
-export default VoistrapImages;
+export default WhatsMyFoodImages;

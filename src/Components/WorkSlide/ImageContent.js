@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import VoistrapImages from './ParallaxImages/VoistrapImages';
 import voistrapHomeImg from '../../Assets/Images/Voistrap/Home.png';
 import teslaImg from '../../Assets/Images/Tesla.png';
-import whatsMyFoodImg from '../../Assets/Images/WhatsMyFood.png';
 import cmgRNotImg from '../../Assets/Images/CmgRNot.png';
+import WhatsMyFoodImages from './ParallaxImages/WhatsMyFoodImages';
 
 const ImageContainer = styled.div`
 /* border: 1px dashed black; */
@@ -22,7 +22,7 @@ max-height: 90vh;
 
 const ImageBox = styled.div`
 margin-top:50vh;
-/* border: 1px dashed green; */
+border: 1px dashed green;
 height: 150vh;
 position: relative;
 `;
@@ -31,6 +31,7 @@ class ImageContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      screenHeight: 0,
       scrollDistance: 0,
     };
     this.handleScroll = this.handleScroll.bind(this);
@@ -38,7 +39,7 @@ class ImageContent extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    this.setState({ vh: Math.round(window.innerHeight) });
+    this.setState({ screenHeight: Math.round(window.innerHeight) });
   }
 
   componentWillUnmount() {
@@ -52,14 +53,14 @@ class ImageContent extends Component {
   }
 
   render() {
-    const { scrollDistance } = this.state;
+    const { scrollDistance, screenHeight } = this.state;
     return (
       <ImageContainer>
         <ImageBox>
-          <VoistrapImages scrollDistance={scrollDistance} />
+          <VoistrapImages scrollDistance={scrollDistance} screenHeight={screenHeight} />
         </ImageBox>
         <ImageBox>
-          <PhoneImage src={whatsMyFoodImg} alt="voistrapMap" />
+          <WhatsMyFoodImages scrollDistance={scrollDistance} screenHeight={screenHeight} />
         </ImageBox>
         <ImageBox>
           <PhoneImage src={cmgRNotImg} alt="voistrapMap" />
