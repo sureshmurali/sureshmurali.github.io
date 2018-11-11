@@ -71,18 +71,11 @@ class Work extends Component {
         roles: [''],
       },
     ];
-    let offset = 0;
-    this.workDetails.forEach((ele, ind, arr) => {
-      if (ind >= 1) {
-        arr.splice(ind + offset, 0, arr[ind + offset]);
-        offset = ind;
-      }
-    });
   }
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    this.setState({ vh: Math.round(window.innerHeight) });
+    this.setState({ vh: Math.round(window.innerHeight * 1.5) });
   }
 
   componentWillUnmount() {
@@ -93,7 +86,6 @@ class Work extends Component {
     const { body, documentElement } = event.srcElement;
     const { vh, slideNumber } = this.state;
     const scrollDistance = Math.max(body.scrollTop, documentElement.scrollTop);
-
     if (scrollDistance > this.lastScrollTop) {
       this.scrollDirectionDown = true;
     } else {
@@ -112,13 +104,7 @@ class Work extends Component {
 
   changeTextContentBasedOnScroll() {
     const { slideNumber } = this.state;
-    let refresh = true;
-    if (slideNumber % 2 === 0) {
-      refresh = false;
-    }
-    if (!this.scrollDirectionDown) {
-      refresh = !refresh;
-    }
+    const refresh = true;
     return (
       <TextContent
         number={this.workDetails[slideNumber].number}

@@ -21,8 +21,7 @@ max-height: 90vh;
 `;
 
 const ImageBox = styled.div`
-margin-top:50vh;
-border: 1px dashed green;
+/* border: 1px dashed green; */
 height: 150vh;
 position: relative;
 `;
