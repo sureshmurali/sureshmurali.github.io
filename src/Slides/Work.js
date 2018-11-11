@@ -75,7 +75,7 @@ class Work extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    this.setState({ vh: Math.round(window.innerHeight * 1.5) });
+    this.setState({ vh: Math.round(window.innerHeight * 1.4) });
   }
 
   componentWillUnmount() {

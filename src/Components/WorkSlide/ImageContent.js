@@ -8,7 +8,7 @@ import WhatsMyFoodImages from './ParallaxImages/WhatsMyFoodImages';
 
 const ImageContainer = styled.div`
 /* border: 1px dashed black; */
-margin-left:50vw;
+margin-left:50%;
 width:50%;
 height:1100vh;
 display: flex;

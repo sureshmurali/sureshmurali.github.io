@@ -11,7 +11,7 @@ const Container = styled.div`
     height:100vh;
     width:100%;
     background-color: white;
-    margin-bottom: 50vh;
+    margin-bottom: 40vh;
 `;
 
 class Hero extends Component {
