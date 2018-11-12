@@ -9,7 +9,7 @@ import teslaBatteryImg from '../../../Assets/Images/Tesla/Battery.png';
 
 const Heat = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) / 6.5}%)`,
+    transform: `translate(0px,-${(scroll) * 15}%)`,
   }),
 })`
 position: absolute;
@@ -21,7 +21,7 @@ height: 80vh;
 
 const Tyre = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) / 12}%) scale(0.9)`,
+    transform: `translate(0px,-${(scroll) * 8}%) scale(0.9)`,
   }),
 })`
 position: absolute;
@@ -34,7 +34,7 @@ filter: blur(0.6px);
 
 const Battery = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) / 24}%) scale(0.7)`,
+    transform: `translate(0px,-${(scroll) * 5}%) scale(0.7)`,
   }),
 })`
 bottom:-75vh;
@@ -47,7 +47,7 @@ filter: blur(0.8px);
 
 const Lock = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) / 80}%) scale(0.6)`,
+    transform: `translate(0px,-${(scroll) * 2}%) scale(0.6)`,
   }),
 })`
 bottom:-55vh;
