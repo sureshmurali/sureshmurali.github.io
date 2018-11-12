@@ -60,18 +60,21 @@ filter: blur(1.2px);
 
 class TeslaImages extends Component {
   render() {
-    let { scrollDistance } = this.props;
-    const { boxHeight, index, screenHeight } = this.props;
+    let { scrollPercent } = this.props;
+    const {
+      boxHeight, index, scrollHeight, screenHeight,
+    } = this.props;
     const heighttoBeReducedinVH = ((boxHeight * index) - 100);
     const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    scrollDistance -= scrollOffset;
+    const scrollOffsetInPercent = scrollOffset * 100 / scrollHeight;
+    scrollPercent -= scrollOffsetInPercent;
 
     return (
       <React.Fragment>
-        <Lock src={teslaLockImg} scroll={scrollDistance} alt="teslaLock" />
-        <Battery src={teslaBatteryImg} scroll={scrollDistance} alt="teslaBattery" />
-        <Tyre src={teslaTyreImg} scroll={scrollDistance} alt="teslaTyre" />
-        <Heat src={teslaHeatImg} scroll={scrollDistance} alt="teslaHeat" />
+        <Lock src={teslaLockImg} scroll={scrollPercent} alt="teslaLock" />
+        <Battery src={teslaBatteryImg} scroll={scrollPercent} alt="teslaBattery" />
+        <Tyre src={teslaTyreImg} scroll={scrollPercent} alt="teslaTyre" />
+        <Heat src={teslaHeatImg} scroll={scrollPercent} alt="teslaHeat" />
       </React.Fragment>
     );
   }
@@ -81,7 +84,8 @@ TeslaImages.propTypes = {
   boxHeight: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   screenHeight: PropTypes.number.isRequired,
-  scrollDistance: PropTypes.number.isRequired,
+  scrollHeight: PropTypes.number.isRequired,
+  scrollPercent: PropTypes.number.isRequired,
 };
 
 export default TeslaImages;
