@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import VoistrapImages from './ParallaxImages/VoistrapImages';
 import voistrapHomeImg from '../../Assets/Images/Voistrap/Home.png';
-import teslaImg from '../../Assets/Images/Tesla.png';
 import WhatsMyFoodImages from './ParallaxImages/WhatsMyFoodImages';
 import ComingOrNotImages from './ParallaxImages/ComingOrNotImages';
 import TeslaImages from './ParallaxImages/TeslaImages';
