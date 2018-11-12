@@ -8,7 +8,7 @@ import addFoodImg from '../../../Assets/Images/WhatsMyFood/AddFood.png';
 
 const Restaurant = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) / 6.5}%)`,
+    transform: `translate(0px,-${(scroll) * 15}%)`,
   }),
 })`
 position: absolute;
@@ -20,7 +20,7 @@ height: 80vh;
 
 const Home = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) / 12}%) scale(0.9)`,
+    transform: `translate(0px,-${(scroll) * 8}%) scale(0.9)`,
   }),
 })`
 position: absolute;
@@ -33,7 +33,7 @@ filter: blur(0.6px);
 
 const AddFood = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) / 24}%) scale(0.7)`,
+    transform: `translate(0px,-${(scroll) * 5}%) scale(0.7)`,
   }),
 })`
 bottom:-75vh;
@@ -46,7 +46,7 @@ filter: blur(0.8px);
 
 const AddRestaurant = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) / 80}%) scale(0.6)`,
+    transform: `translate(0px,-${(scroll) * 2}%) scale(0.6)`,
   }),
 })`
 bottom:-55vh;
@@ -59,18 +59,21 @@ filter: blur(1.2px);
 
 class WhatsMyFoodImages extends Component {
   render() {
-    let { scrollDistance } = this.props;
-    const { boxHeight, index, screenHeight } = this.props;
+    let { scrollPercent } = this.props;
+    const {
+      boxHeight, index, scrollHeight, screenHeight,
+    } = this.props;
     const heighttoBeReducedinVH = ((boxHeight * index) - 100);
     const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    scrollDistance -= scrollOffset;
+    const scrollOffsetInPercent = scrollOffset * 100 / scrollHeight;
+    scrollPercent -= scrollOffsetInPercent;
 
     return (
       <React.Fragment>
-        <AddFood src={addFoodImg} scroll={scrollDistance} alt="addFood" />
-        <AddRestaurant src={addRestaurantImg} scroll={scrollDistance} alt="addRestaurant" />
-        <Home src={homeImg} scroll={scrollDistance} alt="Home" />
-        <Restaurant src={restaurantImg} scroll={scrollDistance} alt="Restaurant" />
+        <AddFood src={addFoodImg} scroll={scrollPercent} alt="addFood" />
+        <AddRestaurant src={addRestaurantImg} scroll={scrollPercent} alt="addRestaurant" />
+        <Home src={homeImg} scroll={scrollPercent} alt="Home" />
+        <Restaurant src={restaurantImg} scroll={scrollPercent} alt="Restaurant" />
       </React.Fragment>
     );
   }
@@ -80,7 +83,8 @@ WhatsMyFoodImages.propTypes = {
   boxHeight: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   screenHeight: PropTypes.number.isRequired,
-  scrollDistance: PropTypes.number.isRequired,
+  scrollHeight: PropTypes.number.isRequired,
+  scrollPercent: PropTypes.number.isRequired,
 };
 
 export default WhatsMyFoodImages;
