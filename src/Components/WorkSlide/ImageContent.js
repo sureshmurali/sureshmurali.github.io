@@ -8,7 +8,7 @@ import ComingOrNotImages from './ParallaxImages/ComingOrNotImages';
 import TeslaImages from './ParallaxImages/TeslaImages';
 
 const ImageContainer = styled.div`
-/* border: 1px dashed black; */
+border: 1px dashed black;
 margin-left:50%;
 width:50%;
 height:1100vh;
@@ -22,7 +22,7 @@ max-height: 90vh;
 `;
 
 const ImageBox = styled.div`
-/* border: 2px dashed green; */
+border: 2px dashed green;
 margin-top:40vh;
 height: 100vh;
 position: relative;
@@ -33,14 +33,18 @@ class ImageContent extends Component {
     super(props);
     this.state = {
       screenHeight: 0,
-      scrollDistance: 0,
+      scrollHeight: 0,
+      scrollPercent: 0,
     };
     this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    this.setState({ screenHeight: Math.round(window.innerHeight) });
+    this.setState({ scrollHeight: Math.round(window.document.documentElement.scrollHeight) });
+    this.setState({ screenHeight: Math.round(window.document.documentElement.clientHeight) });
+    console.log('scrollHeight', Math.round(window.document.documentElement.scrollHeight));
+    console.log('screenHeight', Math.round(window.document.documentElement.clientHeight));
   }
 
   componentWillUnmount() {
@@ -50,11 +54,12 @@ class ImageContent extends Component {
   handleScroll(event) {
     const { body, documentElement } = event.srcElement;
     const sd = Math.max(body.scrollTop, documentElement.scrollTop);
-    this.setState({ scrollDistance: sd });
+    const sp = (sd / (documentElement.scrollHeight - documentElement.clientHeight) * 100);
+    this.setState({ scrollPercent: sp });
   }
 
   render() {
-    const { scrollDistance, screenHeight } = this.state;
+    const { scrollPercent, scrollHeight, screenHeight } = this.state;
     const { pageSplitTimes } = this.props;
     const boxHeight = pageSplitTimes * 100;
     return (
@@ -63,32 +68,36 @@ class ImageContent extends Component {
           <VoistrapImages
             boxHeight={boxHeight}
             index={1}
-            scrollDistance={scrollDistance}
+            scrollPercent={scrollPercent}
             screenHeight={screenHeight}
+            scrollHeight={scrollHeight}
           />
         </ImageBox>
         <ImageBox height={boxHeight}>
           <WhatsMyFoodImages
             boxHeight={boxHeight}
             index={2}
-            scrollDistance={scrollDistance}
+            scrollPercent={scrollPercent}
             screenHeight={screenHeight}
+            scrollHeight={scrollHeight}
           />
         </ImageBox>
         <ImageBox height={boxHeight}>
           <ComingOrNotImages
             boxHeight={boxHeight}
             index={3}
-            scrollDistance={scrollDistance}
+            scrollPercent={scrollPercent}
             screenHeight={screenHeight}
+            scrollHeight={scrollHeight}
           />
         </ImageBox>
         <ImageBox height={boxHeight}>
           <TeslaImages
             boxHeight={boxHeight}
             index={4}
-            scrollDistance={scrollDistance}
+            scrollPercent={scrollPercent}
             screenHeight={screenHeight}
+            scrollHeight={scrollHeight}
           />
         </ImageBox>
         <ImageBox height={boxHeight}>
