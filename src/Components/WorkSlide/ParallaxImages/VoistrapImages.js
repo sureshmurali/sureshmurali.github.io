@@ -9,7 +9,7 @@ import voistrapScoreImg from '../../../Assets/Images/Voistrap/Score.png';
 
 const VoistrapPhoneHome = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) / 6.5}%)`,
+    transform: `translate(0px,-${(scroll) * 15}%)`,
   }),
 })`
 position: absolute;
@@ -21,7 +21,7 @@ height: 80vh;
 
 const VoistrapPhoneMeetings = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) / 12}%) scale(0.9)`,
+    transform: `translate(0px,-${(scroll) * 8}%) scale(0.9)`,
   }),
 })`
 position: absolute;
@@ -34,7 +34,7 @@ filter: blur(0.6px);
 
 const VoistrapPhoneScore = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) / 24}%) scale(0.7)`,
+    transform: `translate(0px,-${(scroll) * 5}%) scale(0.7)`,
   }),
 })`
 bottom:-75vh;
@@ -47,7 +47,7 @@ filter: blur(0.8px);
 
 const VoistrapPhonePeople = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) / 80}%) scale(0.6)`,
+    transform: `translate(0px,-${(scroll) * 2}%) scale(0.6)`,
   }),
 })`
 bottom:-55vh;
@@ -60,18 +60,24 @@ filter: blur(1.2px);
 
 class VoistrapImages extends Component {
   render() {
-    let { scrollDistance } = this.props;
-    const { boxHeight, index, screenHeight } = this.props;
+    let { scrollPercent } = this.props;
+    const {
+      boxHeight, index, scrollHeight, screenHeight,
+    } = this.props;
     const heighttoBeReducedinVH = ((boxHeight * index) - 100);
     const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    scrollDistance -= scrollOffset;
+    console.log('scrollOffset ', scrollOffset);
+    const scrollOffsetInPercent = scrollOffset * 100 / scrollHeight;
+    console.log('scrollOffsetPercent ', scrollOffsetInPercent);
+    console.log('scrollPercent ', scrollPercent);
+    scrollPercent -= scrollOffsetInPercent;
 
     return (
       <React.Fragment>
-        <VoistrapPhonePeople src={voistrapPeopleImg} scroll={scrollDistance} alt="voistrapPeople" />
-        <VoistrapPhoneScore src={voistrapScoreImg} scroll={scrollDistance} alt="voistrapScore" />
-        <VoistrapPhoneMeetings src={voistrapMeetingsImg} scroll={scrollDistance} alt="voistrapMeetings" />
-        <VoistrapPhoneHome src={voistrapHomeImg} scroll={scrollDistance} alt="voistrapHome" />
+        <VoistrapPhonePeople src={voistrapPeopleImg} scroll={scrollPercent} alt="voistrapPeople" />
+        <VoistrapPhoneScore src={voistrapScoreImg} scroll={scrollPercent} alt="voistrapScore" />
+        <VoistrapPhoneMeetings src={voistrapMeetingsImg} scroll={scrollPercent} alt="voistrapMeetings" />
+        <VoistrapPhoneHome src={voistrapHomeImg} scroll={scrollPercent} alt="voistrapHome" />
       </React.Fragment>
     );
   }
@@ -81,7 +87,8 @@ VoistrapImages.propTypes = {
   boxHeight: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   screenHeight: PropTypes.number.isRequired,
-  scrollDistance: PropTypes.number.isRequired,
+  scrollHeight: PropTypes.number.isRequired,
+  scrollPercent: PropTypes.number.isRequired,
 };
 
 export default VoistrapImages;
