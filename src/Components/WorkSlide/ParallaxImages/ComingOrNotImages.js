@@ -7,7 +7,7 @@ import cmgOrNotIphoneImg from '../../../Assets/Images/ComingOrNot/Iphone.png';
 
 const Iphone = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) / 6.5}%)`,
+    transform: `translate(0px,-${(scroll) * 12}%)`,
   }),
 })`
 position: absolute;
@@ -19,7 +19,7 @@ height: 80vh;
 
 const Tablet = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) / 40}%) scale(0.86)`,
+    transform: `translate(0px,-${(scroll) * 3}%) scale(0.86)`,
   }),
 })`
 position: absolute;
@@ -32,16 +32,19 @@ filter: blur(0.6px);
 
 class ComingOrNotImages extends Component {
   render() {
-    let { scrollDistance } = this.props;
-    const { boxHeight, index, screenHeight } = this.props;
+    let { scrollPercent } = this.props;
+    const {
+      boxHeight, index, scrollHeight, screenHeight,
+    } = this.props;
     const heighttoBeReducedinVH = ((boxHeight * index) - 100);
     const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    scrollDistance -= scrollOffset;
+    const scrollOffsetInPercent = scrollOffset * 100 / scrollHeight;
+    scrollPercent -= scrollOffsetInPercent;
 
     return (
       <React.Fragment>
-        <Tablet src={cmgOrNotTabletImg} scroll={scrollDistance} alt="cmgOrNotTablet" />
-        <Iphone src={cmgOrNotIphoneImg} scroll={scrollDistance} alt="cmgOrNotIphone" />
+        <Tablet src={cmgOrNotTabletImg} scroll={scrollPercent} alt="cmgOrNotTablet" />
+        <Iphone src={cmgOrNotIphoneImg} scroll={scrollPercent} alt="cmgOrNotIphone" />
       </React.Fragment>
     );
   }
@@ -51,7 +54,8 @@ ComingOrNotImages.propTypes = {
   boxHeight: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   screenHeight: PropTypes.number.isRequired,
-  scrollDistance: PropTypes.number.isRequired,
+  scrollHeight: PropTypes.number.isRequired,
+  scrollPercent: PropTypes.number.isRequired,
 };
 
 export default ComingOrNotImages;
