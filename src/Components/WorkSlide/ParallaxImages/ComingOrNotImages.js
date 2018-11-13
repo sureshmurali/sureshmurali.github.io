@@ -11,7 +11,7 @@ const Iphone = styled.img.attrs({
   }),
 })`
 position: absolute;
-bottom:-90vh;
+bottom:-70vh;
 left: 0vw;
 /* border: 1px dashed red; */
 height: 80vh;
@@ -23,8 +23,8 @@ const Tablet = styled.img.attrs({
   }),
 })`
 position: absolute;
-bottom: -30vh;
-right:2vw;
+bottom: -10vh;
+right:1vw;
 /* border: 1px dashed red; */
 height: 80vh; 
 filter: blur(0.6px);
@@ -38,7 +38,7 @@ class ComingOrNotImages extends Component {
     } = this.props;
     const heighttoBeReducedinVH = ((boxHeight * index) - 100);
     const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    const scrollOffsetInPercent = scrollOffset * 100 / scrollHeight;
+    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight) + index - 1;
     scrollPercent -= scrollOffsetInPercent;
 
     return (
