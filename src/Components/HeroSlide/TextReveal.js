@@ -20,9 +20,11 @@ const moveUp = init => keyframes`
 const hideWhiteBlocks = () => keyframes`
 0%{
     opacity: 1;
+    height: 35vh;
 }
 100%{
     opacity: 0;
+    height: 0vh;
 }
 `;
 
@@ -40,7 +42,7 @@ background-color: white;
 margin-right:100%;
 width: 120%;
 height: 35vh;
-animation: ${hideWhiteBlocks} 2s linear forwards;
+animation: ${hideWhiteBlocks} 0.5s linear forwards;
 animation-delay: 2s;
 /* border: 1px solid grey; */
 `;
