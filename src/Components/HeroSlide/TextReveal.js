@@ -17,6 +17,15 @@ const moveUp = init => keyframes`
 }
 `;
 
+const hideWhiteBlocks = () => keyframes`
+0%{
+    opacity: 1;
+}
+100%{
+    opacity: 0;
+}
+`;
+
 const TextToReveal = styled.div`
   font-family: ${props => props.fontFam};
   font-size: ${props => props.fontSizeInPx}px;
@@ -31,6 +40,8 @@ background-color: white;
 margin-right:100%;
 width: 120%;
 height: 35vh;
+animation: ${hideWhiteBlocks} 2s linear forwards;
+animation-delay: 2s;
 /* border: 1px solid grey; */
 `;
 
