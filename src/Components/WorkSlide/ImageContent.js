@@ -8,7 +8,7 @@ import ComingOrNotImages from './ParallaxImages/ComingOrNotImages';
 import TeslaImages from './ParallaxImages/TeslaImages';
 
 const ImageContainer = styled.div`
-border: 1px dashed black;
+border: 0.1px dashed black;
 margin-left:50%;
 width:50%;
 height:1100vh;
@@ -22,7 +22,7 @@ max-height: 90vh;
 `;
 
 const ImageBox = styled.div`
-border: 2px dashed green;
+outline: 0.1px dashed green;
 margin-top:40vh;
 height: 100vh;
 position: relative;
