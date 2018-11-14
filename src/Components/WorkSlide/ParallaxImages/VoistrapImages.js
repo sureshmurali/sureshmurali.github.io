@@ -67,12 +67,8 @@ class VoistrapImages extends Component {
     const heighttoBeReducedinVH = ((boxHeight * index) - 100);
     const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
     const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
-    // console.log('Voistrap scrollOffsetPercent ', scrollOffsetInPercent);
     console.log('scrollPercent ', scrollPercent);
     scrollPercent -= scrollOffsetInPercent;
-    if (scrollPercent > 0 && scrollPercent < 0.1) {
-      console.log('Voistrap');
-    }
     return (
       <React.Fragment>
         <VoistrapPhonePeople src={voistrapPeopleImg} scroll={scrollPercent} alt="voistrapPeople" />
