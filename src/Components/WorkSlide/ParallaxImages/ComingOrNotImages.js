@@ -19,12 +19,12 @@ height: 80vh;
 
 const Tablet = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 3}%) scale(0.86)`,
+    transform: `translate(0px,-${(scroll) * 2}%) scale(0.94)`,
   }),
 })`
 position: absolute;
-bottom: -10vh;
-right:1vw;
+bottom: -40vh;
+right:0vw;
 /* border: 1px dashed red; */
 height: 80vh; 
 filter: blur(0.6px);
