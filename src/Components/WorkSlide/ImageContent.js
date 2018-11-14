@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import VoistrapImages from './ParallaxImages/VoistrapImages';
-import voistrapHomeImg from '../../Assets/Images/Voistrap/Home.png';
 import WhatsMyFoodImages from './ParallaxImages/WhatsMyFoodImages';
 import ComingOrNotImages from './ParallaxImages/ComingOrNotImages';
 import TeslaImages from './ParallaxImages/TeslaImages';
+import KosenImages from './ParallaxImages/KosenImages';
+import VoistrapWebImages from './ParallaxImages/VoistrapWebImages';
 
 const ImageContainer = styled.div`
-border: 0.1px dashed black;
+/* border: 0.1px dashed black; */
 margin-left:50%;
 width:50%;
 height:1100vh;
@@ -16,13 +17,8 @@ display: flex;
 flex-flow: column nowrap;
 `;
 
-const PhoneImage = styled.img`
-/* border: 1px dashed red; */
-max-height: 90vh;
-`;
-
 const ImageBox = styled.div`
-outline: 0.1px dashed green;
+/* outline: 0.1px dashed green; */
 margin-top:40vh;
 height: 100vh;
 position: relative;
@@ -101,7 +97,22 @@ class ImageContent extends Component {
           />
         </ImageBox>
         <ImageBox height={boxHeight}>
-          <PhoneImage src={voistrapHomeImg} alt="voistrapMap" />
+          <KosenImages
+            boxHeight={boxHeight}
+            index={5}
+            scrollPercent={scrollPercent}
+            screenHeight={screenHeight}
+            scrollHeight={scrollHeight}
+          />
+        </ImageBox>
+        <ImageBox height={boxHeight}>
+          <VoistrapWebImages
+            boxHeight={boxHeight}
+            index={5}
+            scrollPercent={scrollPercent}
+            screenHeight={screenHeight}
+            scrollHeight={scrollHeight}
+          />
         </ImageBox>
       </ImageContainer>
     );
