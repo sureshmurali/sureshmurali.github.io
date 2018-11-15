@@ -1,4 +1,9 @@
 @font-face {
+font-family: 'AvenirLight';
+src: url('./Fonts/Avenir/Avenir-Light-07.ttf');
+}
+
+@font-face {
 font-family: 'AvenirRoman';
 src: url('./Fonts/Avenir/Avenir-Roman-12.ttf');
 }
