@@ -26,7 +26,8 @@ const Bubbles = styled.img.attrs({
 })`
 position: absolute;
 bottom:-150vh;
-right: -2vw;
+right: 0vw;
+transform-origin: right center;
 /* border: 1px dashed red; */
 height: 50vh;
 filter: blur(0.6px);
@@ -51,7 +52,8 @@ const Paths = styled.img.attrs({
   }),
 })`
 bottom:-65vh;
-right: -6vw;
+right: 1vw;
+transform-origin: right center;
 position: absolute;
 /* border: 1px dashed red; */
 height: 50vh;
