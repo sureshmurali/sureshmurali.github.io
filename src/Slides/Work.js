@@ -7,7 +7,6 @@ const Container = styled.div`
     display: flex;
     flex-flow: row nowrap;
     /* border: 1px dashed red; */
-    height:100vh;
 `;
 
 class Work extends Component {
