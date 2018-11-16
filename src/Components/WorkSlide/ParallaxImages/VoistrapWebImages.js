@@ -12,6 +12,7 @@ const Dots = styled.img.attrs({
     transform: `translate(0px,-${(scroll) * 26}%)`,
   }),
 })`
+transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -300vh;
 left:0vw;
