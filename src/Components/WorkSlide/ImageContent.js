@@ -47,8 +47,8 @@ class ImageContent extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
-  handleScroll(event) {
-    const { body, documentElement } = event.srcElement;
+  handleScroll() {
+    const { body, documentElement } = window.document;
     const sd = Math.max(body.scrollTop, documentElement.scrollTop);
     const sp = (sd / (documentElement.scrollHeight - documentElement.clientHeight) * 100);
     this.setState({ scrollPercent: sp });
