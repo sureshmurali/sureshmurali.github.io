@@ -10,6 +10,7 @@ const Iphone = styled.img.attrs({
     transform: `translate(0px,-${(scroll) * 12}%)`,
   }),
 })`
+transition: transform 0.2s ease-out;
 position: absolute;
 bottom:-70vh;
 left: 0vw;
@@ -22,6 +23,7 @@ const Tablet = styled.img.attrs({
     transform: `translate(0px,-${(scroll) * 2}%) scale(0.94)`,
   }),
 })`
+transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -40vh;
 right:0vw;
