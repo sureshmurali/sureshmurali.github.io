@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-    height:60vh;/* Since pageSplitTime is 1.4 */
+    height: 140vh;/* Since pageSplitTime is 1.4 */
     width:100%;
     /* border: 1px solid blue; */
     position: relative;
 `;
 
-const ContactTitle = styled.div.attrs({
+const SkillsTitle = styled.div.attrs({
   style: ({ scrollPercent }) => ({
-    transform: `translateX(${(scrollPercent) * 7}%)`,
+    transform: `translateX(-${(scrollPercent) * 8}%)`,
   }),
 })`
   transition: transform 0.5s ease-out;
@@ -18,11 +18,11 @@ const ContactTitle = styled.div.attrs({
   font-size: 200px;
   position: absolute;
   color: #EEE;
-  top:0%;
-  left:-45%;
+  top:25%;
+  right:-40%;
 `;
 
-const SocialMediaIcons = styled.div`
+const SkillsList = styled.div`
   align-items: center;
   font-size: 40px;
   font-family: 'AvenirLight';
@@ -33,7 +33,7 @@ const SocialMediaIcons = styled.div`
   transform: translateY(130%);
 `;
 
-class Contact extends Component {
+class Skills extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,8 +58,9 @@ class Contact extends Component {
     const { body, documentElement } = event.srcElement;
     const sd = Math.max(body.scrollTop, documentElement.scrollTop);
     let sp = (sd / (documentElement.scrollHeight - documentElement.clientHeight) * 100);
-    const minlimit = (documentElement.clientHeight * 1040) / documentElement.scrollHeight;
-    if (sp >= minlimit && sp <= 100) {
+    const minlimit = (documentElement.clientHeight * 900) / documentElement.scrollHeight;
+    const maxlimit = (documentElement.clientHeight * 1180) / documentElement.scrollHeight;
+    if (sp >= minlimit && sp <= maxlimit + 3) {
       sp -= minlimit;
       this.setState({ scrollPercent: sp });
     }
@@ -69,14 +70,14 @@ class Contact extends Component {
     const { scrollPercent } = this.state;
     return (
       <Container>
-        <ContactTitle scrollPercent={scrollPercent}>CONTACT</ContactTitle>
-        <SocialMediaIcons>
+        <SkillsTitle scrollPercent={scrollPercent}>SKILLS</SkillsTitle>
+        <SkillsList>
         Front-end developer who cares deeply about user experience.
         Serious passion for UI design and new technologies.
-        </SocialMediaIcons>
+        </SkillsList>
       </Container>
     );
   }
 }
 
-export default Contact;
+export default Skills;
