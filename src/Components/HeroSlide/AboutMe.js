@@ -6,6 +6,7 @@ const Container = styled.div`
     width:100%;
     /* border: 1px solid blue; */
     position: relative;
+    overflow: hidden;
 `;
 
 const AboutMeTitle = styled.div.attrs({
