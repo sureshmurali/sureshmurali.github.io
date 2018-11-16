@@ -10,6 +10,7 @@ const JapaneseTab = styled.img.attrs({
     transform: `translate(0px,-${(scroll) * 15}%)`,
   }),
 })`
+transition: transform 0.2s ease-out;
 position: absolute;
 bottom:-140vh;
 left: 0vw;
@@ -23,6 +24,7 @@ const EnglishTab = styled.img.attrs({
     transform: `translate(0px,-${(scroll) * 8}%) scale(0.9)`,
   }),
 })`
+transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -120vh;
 right:0.5vw;
@@ -36,6 +38,7 @@ const PlayerTab = styled.img.attrs({
     transform: `translate(0px,-${(scroll) * 2}%) scale(0.6)`,
   }),
 })`
+transition: transform 0.2s ease-out;
 bottom:-65vh;
 left: 1vw;
 position: absolute;
