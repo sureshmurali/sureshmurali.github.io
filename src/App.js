@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import Hero from './Slides/Hero';
 import Work from './Slides/Work';
+import Contact from './Slides/Contact';
 import './Assets/index.css';
 
 const GlobalStyle = createGlobalStyle`
@@ -16,6 +17,7 @@ class App extends Component {
       <React.Fragment>
         <Hero />
         <Work />
+        <Contact />
         <GlobalStyle />
       </React.Fragment>
     );
