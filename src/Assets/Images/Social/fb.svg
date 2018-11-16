@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="29px" height="60px" viewBox="0 0 29 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>fb</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Landing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD" transform="translate(-420.000000, -2855.000000)" fill="#000000">
+            <g id="Contact" transform="translate(-15.000000, 2610.000000)">
+                <g id="Group" transform="translate(144.000000, 238.000000)">
+                    <path d="M310.284224,67 L297.425456,67 L297.425456,36.9962131 L291,36.9962131 L291,26.6579147 L297.425456,26.6579147 L297.425456,20.4511487 C297.425456,12.0176723 301.051683,7 311.360699,7 L319.941069,7 L319.941069,17.3420853 L314.578338,17.3420853 C310.565129,17.3420853 310.299939,18.7867963 310.299939,21.4830851 L310.28226,26.6579147 L320,26.6579147 L318.86263,36.9962131 L310.28226,36.9962131 L310.28226,67 L310.284224,67 Z" id="fb"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
