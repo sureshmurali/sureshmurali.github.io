@@ -32,6 +32,11 @@ const hideWhiteBlocks = () => keyframes`
 const TextToReveal = styled.div`
   font-family: ${props => props.fontFam};
   text-align:center;
+  @media ${device.tablet} {
+    font-size: 100px;
+    animation: ${props => (props.reveal ? moveUp(100) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
+    transform: translateY(${100 * 1.4}px);
+  }
   @media ${device.laptopL} {
     font-size: 150px;
     animation: ${props => (props.reveal ? moveUp(150) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;

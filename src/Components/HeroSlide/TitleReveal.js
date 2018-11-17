@@ -34,6 +34,11 @@ const TextToReveal = styled.div`
   text-align:center;
   animation: ${props => (props.reveal ? moveUp(props.fontSizeInPx) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
   transform: translateY(${props => (props.fontSizeInPx * 1.4)}px);
+  @media ${device.tablet} {
+    font-size: 28px;
+    animation: ${props => (props.reveal ? moveUp(28) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
+    transform: translateY(${28 * 1.4}px);
+  }
   @media ${device.laptopL} {
     font-size: 50px;
     animation: ${props => (props.reveal ? moveUp(50) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
