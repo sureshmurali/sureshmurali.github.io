@@ -1,11 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import device from '../../Assets/Responsive/breakpoints';
 
 const LogoImage = styled.img`
-height: 90px;
-width: 90px;
 /* border: 1px solid black; */
+@media ${device.laptopL} {
+    height: 90px;
+    width: 90px;
+  }
+  @media ${device.desktop} {
+    height: 180px;
+    width: 180px;
+  }
 `;
 
 class SocialLogo extends React.Component {

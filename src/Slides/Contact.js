@@ -7,6 +7,7 @@ import instaImg from '../Assets/Images/Social/insta.svg';
 import dribbbleImg from '../Assets/Images/Social/dribbble.svg';
 import linkedInImg from '../Assets/Images/Social/linkedin.svg';
 import SocialLogo from '../Components/ContactSlide/SocialLogo';
+import device from '../Assets/Responsive/breakpoints';
 
 const Container = styled.div`
     height:80vh;/* Since pageSplitTime is 1.4 */
@@ -28,13 +29,16 @@ const ContactTitle = styled.div.attrs({
   color: #EEE;
   top:12%;
   left:-70%;
+  @media ${device.laptopL} {
+    font-size: 200px;
+  }
+  @media ${device.desktop} {
+    font-size: 350px;
+  }
 `;
 
 const SocialMediaIcons = styled.div`
   /* border: 1px solid black; */
-  font-size: 40px;
-  font-family: 'AvenirLight';
-  text-align: left;
   margin-left: 20%;
   margin-right: 3%;
   z-index: 1;
