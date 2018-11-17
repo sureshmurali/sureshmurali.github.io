@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import device from '../Assets/Responsive/breakpoints';
 
 const Container = styled.div`
     height: 120vh;/* Since pageSplitTime is 1.4 */
@@ -16,11 +17,16 @@ const SkillsTitle = styled.div.attrs({
 })`
   transition: transform 0.5s ease-out;
   font-family: 'AvenirHeavy';
-  font-size: 200px;
   position: absolute;
   color: #EEE;
   top:40%;
   right:-50%;
+  @media ${device.laptopL} {
+    font-size: 200px;
+  }
+  @media ${device.desktop} {
+    font-size: 350px;
+  }
 `;
 
 const SkillsList = styled.div`
@@ -29,13 +35,18 @@ const SkillsList = styled.div`
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
-  font-size: 40px;
   font-family: 'AvenirRoman';
   text-align: left;
   margin-left: 30%;
   margin-right: 15%;
   z-index: 1;
   transform: translateY(30%);
+  @media ${device.laptopL} {
+    font-size: 40px;
+  }
+  @media ${device.desktop} {
+    font-size: 70px;
+  }
 `;
 
 class Skills extends Component {
