@@ -51,7 +51,11 @@ class ImageContent extends Component {
     const { body, documentElement } = window.document;
     const sd = Math.max(body.scrollTop, documentElement.scrollTop);
     const sp = (sd / (documentElement.scrollHeight - documentElement.clientHeight) * 100);
-    this.setState({ scrollPercent: sp });
+    const minlimit = (documentElement.clientHeight * 100) / documentElement.scrollHeight;
+    const maxlimit = (documentElement.clientHeight * 1040) / documentElement.scrollHeight;
+    if (sp >= minlimit && sp <= maxlimit) {
+      this.setState({ scrollPercent: sp });
+    }
   }
 
   render() {
