@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import twitterImg from '../Assets/Images/Social/twitter.svg';
+import githubImg from '../Assets/Images/Social/git.svg';
+import mailImg from '../Assets/Images/Social/mail.svg';
+import instaImg from '../Assets/Images/Social/insta.svg';
+import dribbbleImg from '../Assets/Images/Social/dribbble.svg';
+import linkedInImg from '../Assets/Images/Social/linkedin.svg';
+import SocialLogo from '../Components/ContactSlide/SocialLogo';
 
 const Container = styled.div`
-    height:60vh;/* Since pageSplitTime is 1.4 */
+    height:80vh;/* Since pageSplitTime is 1.4 */
     width:100%;
     /* border: 1px solid blue; */
     position: relative;
@@ -11,7 +18,7 @@ const Container = styled.div`
 
 const ContactTitle = styled.div.attrs({
   style: ({ scrollPercent }) => ({
-    transform: `translateX(${(scrollPercent) * 7}%)`,
+    transform: `translateX(${(scrollPercent) * 8}%)`,
   }),
 })`
   transition: transform 0.5s ease-out;
@@ -19,19 +26,22 @@ const ContactTitle = styled.div.attrs({
   font-size: 200px;
   position: absolute;
   color: #EEE;
-  top:0%;
-  left:-45%;
+  top:12%;
+  left:-70%;
 `;
 
 const SocialMediaIcons = styled.div`
-  align-items: center;
+  /* border: 1px solid black; */
   font-size: 40px;
   font-family: 'AvenirLight';
   text-align: left;
-  margin-left: 30%;
-  margin-right: 5%;
+  margin-left: 20%;
+  margin-right: 3%;
   z-index: 1;
-  transform: translateY(130%);
+  transform: translateY(210%);
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
 `;
 
 class Contact extends Component {
@@ -72,8 +82,12 @@ class Contact extends Component {
       <Container>
         <ContactTitle scrollPercent={scrollPercent}>CONTACT</ContactTitle>
         <SocialMediaIcons>
-        Front-end developer who cares deeply about user experience.
-        Serious passion for UI design and new technologies.
+          <SocialLogo imgURL={twitterImg} alternate="twitter" redirectURL="https://twitter.com/sureshmurali29" />
+          <SocialLogo imgURL={githubImg} alternate="github" redirectURL="https://github.com/sureshmurali" />
+          <SocialLogo imgURL={mailImg} alternate="mail" redirectURL="mailto:sureshmurali29@gmail.com" />
+          <SocialLogo imgURL={instaImg} alternate="insta" redirectURL="https://www.instagram.com/suresh_murali/" />
+          <SocialLogo imgURL={dribbbleImg} alternate="dribbble" redirectURL="https://dribbble.com/sureshmurali29" />
+          <SocialLogo imgURL={linkedInImg} alternate="linkedin" redirectURL="https://www.linkedin.com/in/sureshmurali29" />
         </SocialMediaIcons>
       </Container>
     );
