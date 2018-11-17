@@ -19,26 +19,23 @@ const SkillsTitle = styled.div.attrs({
   font-size: 200px;
   position: absolute;
   color: #EEE;
-  top:30%;
-  right:-60%;
+  top:40%;
+  right:-50%;
 `;
 
 const SkillsList = styled.div`
   /* border: 1px solid #EFEFEF; */
-  position: absolute;
-  width: 50%;
-  top:45%;
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  font-size: 30px;
-  font-family: 'AvenirLight';
+  font-size: 40px;
+  font-family: 'AvenirRoman';
   text-align: left;
-  margin-left: 40%;
-  margin-right: 5%;
+  margin-left: 30%;
+  margin-right: 15%;
   z-index: 1;
-  /* transform: translateY(230%); */
+  transform: translateY(30%);
 `;
 
 class Skills extends Component {
@@ -81,17 +78,27 @@ class Skills extends Component {
         <SkillsTitle scrollPercent={scrollPercent}>SKILLS</SkillsTitle>
         <SkillsList>
           <div>
-            <b>DESIGN</b>
-            <br />
             Research & Wireframing
             <br />
             Rapid prototyping
             <br />
             Interaction Design
             <br />
+            <br />
+            Sketch
+            <br />
+            Studio
+            <br />
+            Figma
+            <br />
           </div>
           <div>
-            <b>DEVELOPMENT</b>
+            Principle
+            <br />
+            Zeplin
+            <br />
+            Invision
+            <br />
             <br />
             React
             <br />

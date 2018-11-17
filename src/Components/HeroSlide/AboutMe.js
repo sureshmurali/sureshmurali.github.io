@@ -54,7 +54,7 @@ class AboutMe extends Component {
     const { body, documentElement } = event.srcElement;
     const sd = Math.max(body.scrollTop, documentElement.scrollTop);
     const sp = (sd / (documentElement.scrollHeight - documentElement.clientHeight) * 100);
-    const maxlimit = (documentElement.clientHeight * 140) / documentElement.scrollHeight;
+    const maxlimit = (documentElement.clientHeight * 150) / documentElement.scrollHeight;
     if (sp >= 0 && sp <= maxlimit) {
       this.setState({ scrollPercent: sp });
     }
