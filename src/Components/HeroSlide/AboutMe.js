@@ -19,7 +19,7 @@ const AboutMeTitle = styled.div.attrs({
   font-size: 200px;
   position: absolute;
   color: #EEE;
-  top:25%;
+  top:5%;
   left:-15%;
 `;
 
@@ -30,16 +30,13 @@ const AboutMeDescription = styled.div`
   text-align: left;
   margin-left: 30%;
   margin-right: 5%;
-  z-index: 1;
-  transform: translateY(130%);
+  transform: translateY(90%);
 `;
 
 class AboutMe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      screenHeight: 0,
-      scrollHeight: 0,
       scrollPercent: 0,
     };
     this.handleScroll = this.handleScroll.bind(this);
@@ -47,8 +44,6 @@ class AboutMe extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    this.setState({ scrollHeight: Math.round(window.document.documentElement.scrollHeight) });
-    this.setState({ screenHeight: Math.round(window.document.documentElement.clientHeight) });
   }
 
   componentWillUnmount() {
