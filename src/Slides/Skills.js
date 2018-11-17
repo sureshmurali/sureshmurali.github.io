@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-    height: 140vh;/* Since pageSplitTime is 1.4 */
+    height: 120vh;/* Since pageSplitTime is 1.4 */
     width:100%;
     /* border: 1px solid blue; */
     position: relative;
@@ -11,7 +11,7 @@ const Container = styled.div`
 
 const SkillsTitle = styled.div.attrs({
   style: ({ scrollPercent }) => ({
-    transform: `translateX(-${(scrollPercent) * 8}%)`,
+    transform: `translateX(-${(scrollPercent) * 10}%)`,
   }),
 })`
   transition: transform 0.5s ease-out;
@@ -19,23 +19,26 @@ const SkillsTitle = styled.div.attrs({
   font-size: 200px;
   position: absolute;
   color: #EEE;
-  top:25%;
-  right:-40%;
+  top:30%;
+  right:-60%;
 `;
 
 const SkillsList = styled.div`
-  border: 1px solid #EFEFEF;
+  /* border: 1px solid #EFEFEF; */
+  position: absolute;
+  width: 50%;
+  top:45%;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
   align-items: center;
-  font-size: 40px;
+  font-size: 30px;
   font-family: 'AvenirLight';
   text-align: left;
-  margin-left: 20%;
+  margin-left: 40%;
   margin-right: 5%;
   z-index: 1;
-  transform: translateY(120%);
+  /* transform: translateY(230%); */
 `;
 
 class Skills extends Component {
@@ -63,7 +66,7 @@ class Skills extends Component {
     const { body, documentElement } = event.srcElement;
     const sd = Math.max(body.scrollTop, documentElement.scrollTop);
     let sp = (sd / (documentElement.scrollHeight - documentElement.clientHeight) * 100);
-    const minlimit = (documentElement.clientHeight * 900) / documentElement.scrollHeight;
+    const minlimit = (documentElement.clientHeight * 950) / documentElement.scrollHeight;
     const maxlimit = (documentElement.clientHeight * 1180) / documentElement.scrollHeight;
     if (sp >= minlimit && sp <= maxlimit + 3) {
       sp -= minlimit;
@@ -86,18 +89,15 @@ class Skills extends Component {
             <br />
             Interaction Design
             <br />
-            Interviews / Surveys
           </div>
           <div>
             <b>DEVELOPMENT</b>
             <br />
-            Responsive design
+            React
             <br />
-            Unit Testing
+            React Native
             <br />
-            Functional Testing
-            <br />
-            Web performance
+            Angular 1
             <br />
           </div>
         </SkillsList>
