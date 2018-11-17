@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import TextReveal from './TextReveal';
+import NameReveal from './NameReveal';
+import TitleReveal from './TitleReveal';
 
 const Container = styled.div`
     display: flex;
@@ -17,9 +18,9 @@ class NameAndJobTitle extends Component {
   render() {
     return (
       <Container>
-        <TextReveal text="Suresh Murali" fontFam="Valencia" fontSizeInPx="150" timeDelay={500} />
+        <NameReveal text="Suresh Murali" fontFam="Valencia" timeDelay={500} />
         <br />
-        <TextReveal text="UI/UX Designer & Front-end Developer" fontFam="AvenirRoman" fontSizeInPx="50" timeDelay={1300} />
+        <TitleReveal text="UI/UX Designer & Front-end Developer" fontFam="AvenirRoman" timeDelay={1300} />
       </Container>
     );
   }

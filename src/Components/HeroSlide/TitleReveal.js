@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
+import device from '../../Assets/Responsive/breakpoints';
 
 const Stage = styled.div`
 position: relative;
@@ -30,10 +31,19 @@ const hideWhiteBlocks = () => keyframes`
 
 const TextToReveal = styled.div`
   font-family: ${props => props.fontFam};
-  font-size: ${props => props.fontSizeInPx}px;
   text-align:center;
   animation: ${props => (props.reveal ? moveUp(props.fontSizeInPx) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
   transform: translateY(${props => (props.fontSizeInPx * 1.4)}px);
+  @media ${device.laptopL} {
+    font-size: 50px;
+    animation: ${props => (props.reveal ? moveUp(50) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
+    transform: translateY(${50 * 1.4}px);
+  }
+  @media ${device.desktop} {
+    font-size: 60px;
+    animation: ${props => (props.reveal ? moveUp(60) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
+    transform: translateY(${60 * 1.4}px);
+  }
 `;
 
 const WhiteBlock = styled.div`
@@ -48,7 +58,7 @@ animation-delay: 2s;
 `;
 
 
-class TextReveal extends Component {
+class TitleReveal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -69,13 +79,12 @@ class TextReveal extends Component {
   }
 
   render() {
-    const { text, fontFam, fontSizeInPx } = this.props;
+    const { text, fontFam } = this.props;
     const { reveal } = this.state;
     return (
       <Stage>
         <TextToReveal
           fontFam={fontFam}
-          fontSizeInPx={fontSizeInPx}
           reveal={reveal}
         >
           {text}
@@ -86,14 +95,13 @@ class TextReveal extends Component {
   }
 }
 
-TextReveal.propTypes = {
+TitleReveal.propTypes = {
   text: PropTypes.string.isRequired,
   fontFam: PropTypes.string,
-  fontSizeInPx: PropTypes.string.isRequired,
   timeDelay: PropTypes.number.isRequired,
 };
 
-TextReveal.defaultProps = {
+TitleReveal.defaultProps = {
   fontFam: 'Avenir Helvetica Ariel',
 };
-export default TextReveal;
+export default TitleReveal;
