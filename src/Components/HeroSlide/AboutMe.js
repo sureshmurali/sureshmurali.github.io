@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import device from '../../Assets/Responsive/breakpoints';
 
 const Container = styled.div`
     height: 40vh;/* Since pageSplitTime is 1.4 */
@@ -16,21 +17,32 @@ const AboutMeTitle = styled.div.attrs({
 })`
   transition: transform 0.5s ease-out;
   font-family: 'AvenirHeavy';
-  font-size: 200px;
   position: absolute;
   color: #EEE;
   top:5%;
   left:-15%;
+  @media ${device.laptopL} {
+    font-size: 200px;
+  }
+  @media ${device.desktop} {
+    font-size: 350px;
+  }
 `;
 
 const AboutMeDescription = styled.div`
   align-items: center;
-  font-size: 40px;
   font-family: 'AvenirLight';
   text-align: left;
   margin-left: 30%;
   margin-right: 5%;
-  transform: translateY(90%);
+  @media ${device.laptopL} {
+    transform: translateY(90%);
+    font-size: 40px;
+  }
+  @media ${device.desktop} {
+    transform: translateY(80%);
+    font-size: 70px;
+  }
 `;
 
 class AboutMe extends Component {
