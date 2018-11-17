@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
+import device from '../../Assets/Responsive/breakpoints';
 
 const TextContainer = styled.div`
 position: fixed;
@@ -15,34 +16,59 @@ width: 50%;
 
 const ProjectName = styled.div`
   font-family: 'AvenirHeavy';
-  font-size: 80px;
+  @media ${device.laptopL} {
+    font-size: 80px;
+  }
+  @media ${device.desktop} {
+    font-size: 120px;
+  }
   /* border: 1px dashed black; */
 `;
 
 const ProjectDesc = styled.div`
   padding-top:2%;
   font-family: 'AvenirBook';
-  font-size: 30px; /** NEED RESPO */
+  @media ${device.laptopL} {
+    font-size: 30px;
+  }
+  @media ${device.desktop} {
+    font-size: 50px;
+  }
   /* border: 1px dashed black; */
 `;
 
 const MyRole = styled.div`
   padding-top:5%;
   font-family: 'AvenirMedium';
-  font-size: 30px;
+  @media ${device.laptopL} {
+    font-size: 30px;
+  }
+  @media ${device.desktop} {
+    font-size: 50px;
+  }
   /* border: 1px dashed black; */
 `;
 
 const ProjectID = styled.div`
   font-family: 'AvenirHeavy';
-  font-size: 35px;
+  @media ${device.laptopL} {
+    font-size: 30px;
+  }
+  @media ${device.desktop} {
+    font-size: 58px;
+  }
   /* border: 1px dashed black; */
   padding: 5%;
 `;
 
 const ProjectType = styled.div`
   font-family: 'AvenirHeavy';
-  font-size: 30px;
+  @media ${device.laptopL} {
+    font-size: 30px;
+  }
+  @media ${device.desktop} {
+    font-size: 58px;
+  }
   /* border: 1px dashed black; */
   padding: 5%;
 `;
@@ -100,6 +126,8 @@ color: #FFF;
 animation: ${appearText} 0.0001s linear forwards;
 animation-delay: 0.5s;
 position: relative;
+
+
 
 &::after{
 content:'';
