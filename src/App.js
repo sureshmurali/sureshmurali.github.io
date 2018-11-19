@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
+import MediaQuery from 'react-responsive';
 import Hero from './Slides/Hero';
 import Work from './Slides/Work';
 import Skills from './Slides/Skills';
@@ -16,10 +17,16 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <Hero />
-        <Work />
-        <Skills />
-        <Contact />
+        <MediaQuery query="(min-device-width: 1224px)">
+          <Hero />
+          <Work />
+          <Skills />
+          <Contact />
+        </MediaQuery>
+        <MediaQuery query="(max-device-width: 1224px)">
+          <div>You are a tablet or mobile phone</div>
+          <Hero />
+        </MediaQuery>
         <GlobalStyle />
       </React.Fragment>
     );
