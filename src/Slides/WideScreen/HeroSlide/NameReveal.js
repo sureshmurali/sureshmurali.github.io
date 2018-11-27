@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
-import device from '../../Assets/Responsive/breakpoints';
+import device from '../../../Assets/Responsive/breakpoints';
 
 const Stage = styled.div`
 position: relative;
@@ -32,22 +32,20 @@ const hideWhiteBlocks = () => keyframes`
 const TextToReveal = styled.div`
   font-family: ${props => props.fontFam};
   text-align:center;
-  animation: ${props => (props.reveal ? moveUp(props.fontSizeInPx) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
-  transform: translateY(${props => (props.fontSizeInPx * 1.4)}px);
   @media ${device.tablet} {
-    font-size: 28px;
-    animation: ${props => (props.reveal ? moveUp(28) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
-    transform: translateY(${28 * 1.4}px);
+    font-size: 100px;
+    animation: ${props => (props.reveal ? moveUp(100) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
+    transform: translateY(${100 * 1.4}px);
   }
   @media ${device.laptopL} {
-    font-size: 50px;
-    animation: ${props => (props.reveal ? moveUp(50) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
-    transform: translateY(${50 * 1.4}px);
+    font-size: 150px;
+    animation: ${props => (props.reveal ? moveUp(150) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
+    transform: translateY(${150 * 1.4}px);
   }
   @media ${device.desktop} {
-    font-size: 60px;
-    animation: ${props => (props.reveal ? moveUp(60) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
-    transform: translateY(${60 * 1.4}px);
+    font-size: 200px;
+    animation: ${props => (props.reveal ? moveUp(200) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
+    transform: translateY(${200 * 1.4}px);
   }
 `;
 
@@ -63,7 +61,7 @@ animation-delay: 2s;
 `;
 
 
-class TitleReveal extends Component {
+class NameReveal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -100,13 +98,13 @@ class TitleReveal extends Component {
   }
 }
 
-TitleReveal.propTypes = {
+NameReveal.propTypes = {
   text: PropTypes.string.isRequired,
   fontFam: PropTypes.string,
   timeDelay: PropTypes.number.isRequired,
 };
 
-TitleReveal.defaultProps = {
+NameReveal.defaultProps = {
   fontFam: 'Avenir Helvetica Ariel',
 };
-export default TitleReveal;
+export default NameReveal;

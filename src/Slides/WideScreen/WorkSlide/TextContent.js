@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
-import device from '../../Assets/Responsive/breakpoints';
+import device from '../../../Assets/Responsive/breakpoints';
 
 const TextContainer = styled.section`
 position: fixed;

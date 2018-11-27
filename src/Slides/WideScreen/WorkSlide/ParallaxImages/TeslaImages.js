@@ -1,53 +1,68 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import englishHome from '../../../Assets/Images/Kosen/EnglishHome.png';
-import jpnHome from '../../../Assets/Images/Kosen/JpnHome.png';
-import player from '../../../Assets/Images/Kosen/Player.png';
+import teslaTyreImg from '../../../../Assets/Images/Tesla/Tyre.png';
+import teslaHeatImg from '../../../../Assets/Images/Tesla/Heat.png';
+import teslaLockImg from '../../../../Assets/Images/Tesla/Lock.png';
+import teslaBatteryImg from '../../../../Assets/Images/Tesla/Battery.png';
 
-const JapaneseTab = styled.img.attrs({
+
+const Heat = styled.img.attrs({
   style: ({ scroll }) => ({
     transform: `translate(0px,-${(scroll) * 15}%)`,
   }),
 })`
 transition: transform 0.2s ease-out;
 position: absolute;
-bottom:-140vh;
-left: 0vw;
+bottom: -90vh;
+left:0vw;
 /* border: 1px dashed red; */
-height: 80vh;
-
+height: 80vh; 
 `;
 
-const EnglishTab = styled.img.attrs({
+const Tyre = styled.img.attrs({
   style: ({ scroll }) => ({
     transform: `translate(0px,-${(scroll) * 8}%) scale(0.9)`,
   }),
 })`
 transition: transform 0.2s ease-out;
 position: absolute;
-bottom: -120vh;
-right:0.5vw;
+bottom:-45vh;
+right: 2vw;
 /* border: 1px dashed red; */
+height: 80vh;
 filter: blur(0.6px);
-height: 80vh; 
 `;
 
-const PlayerTab = styled.img.attrs({
+const Battery = styled.img.attrs({
+  style: ({ scroll }) => ({
+    transform: `translate(0px,-${(scroll) * 5}%) scale(0.7)`,
+  }),
+})`
+transition: transform 0.2s ease-out;
+bottom:-75vh;
+left:2vw;
+position: absolute;
+/* border: 1px dashed red; */
+height: 80vh;
+filter: blur(0.8px);
+`;
+
+const Lock = styled.img.attrs({
   style: ({ scroll }) => ({
     transform: `translate(0px,-${(scroll) * 2}%) scale(0.6)`,
   }),
 })`
 transition: transform 0.2s ease-out;
-bottom:-65vh;
-left: 1vw;
+bottom:-55vh;
+right: 5vw;
 position: absolute;
 /* border: 1px dashed red; */
 height: 80vh;
-filter: blur(1px);
+filter: blur(1.2px);
 `;
 
-class KosenImages extends Component {
+class TeslaImages extends Component {
   render() {
     let { scrollPercent } = this.props;
     const {
@@ -55,24 +70,21 @@ class KosenImages extends Component {
     } = this.props;
     const heighttoBeReducedinVH = ((boxHeight * index) - 100);
     const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
-    // console.log('Voistrap scrollOffsetPercent ', scrollOffsetInPercent);
-    console.log('scrollPercent ', scrollPercent);
+    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight) + index - 1;
     scrollPercent -= scrollOffsetInPercent;
-    if (scrollPercent > 0 && scrollPercent < 0.1) {
-      console.log('Voistrap');
-    }
+
     return (
       <React.Fragment>
-        <PlayerTab src={player} scroll={scrollPercent} alt="kosenPlayer" />
-        <EnglishTab src={englishHome} scroll={scrollPercent} alt="kosenEnglish" />
-        <JapaneseTab src={jpnHome} scroll={scrollPercent} alt="kosenJapanese" />
+        <Lock src={teslaLockImg} scroll={scrollPercent} alt="teslaLock" />
+        <Battery src={teslaBatteryImg} scroll={scrollPercent} alt="teslaBattery" />
+        <Tyre src={teslaTyreImg} scroll={scrollPercent} alt="teslaTyre" />
+        <Heat src={teslaHeatImg} scroll={scrollPercent} alt="teslaHeat" />
       </React.Fragment>
     );
   }
 }
 
-KosenImages.propTypes = {
+TeslaImages.propTypes = {
   boxHeight: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   screenHeight: PropTypes.number.isRequired,
@@ -80,4 +92,4 @@ KosenImages.propTypes = {
   scrollPercent: PropTypes.number.isRequired,
 };
 
-export default KosenImages;
+export default TeslaImages;

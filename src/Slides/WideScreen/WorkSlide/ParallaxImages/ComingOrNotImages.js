@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import cmgOrNotTabletImg from '../../../Assets/Images/ComingOrNot/Tablet.png';
-import cmgOrNotIphoneImg from '../../../Assets/Images/ComingOrNot/Iphone.png';
+import cmgOrNotTabletImg from '../../../../Assets/Images/ComingOrNot/Tablet.png';
+import cmgOrNotIphoneImg from '../../../../Assets/Images/ComingOrNot/Iphone.png';
 
 
 const Iphone = styled.img.attrs({

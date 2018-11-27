@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import NameAndJobTitle from '../../Components/HeroSlide/NameAndJobTitle';
-import AboutMe from '../../Components/HeroSlide/AboutMe';
+import NameAndJobTitle from './NameAndJobTitle';
+import AboutMe from './AboutMe';
 
 class Hero extends Component {
   render() {

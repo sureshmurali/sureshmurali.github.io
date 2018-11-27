@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import teslaTyreImg from '../../../Assets/Images/Tesla/Tyre.png';
-import teslaHeatImg from '../../../Assets/Images/Tesla/Heat.png';
-import teslaLockImg from '../../../Assets/Images/Tesla/Lock.png';
-import teslaBatteryImg from '../../../Assets/Images/Tesla/Battery.png';
+import voistrapHomeImg from '../../../../Assets/Images/Voistrap/Home.png';
+import voistrapMeetingsImg from '../../../../Assets/Images/Voistrap/Meetings.png';
+import voistrapPeopleImg from '../../../../Assets/Images/Voistrap/People.png';
+import voistrapScoreImg from '../../../../Assets/Images/Voistrap/Score.png';
 
 
-const Heat = styled.img.attrs({
+const VoistrapPhoneHome = styled.img.attrs({
   style: ({ scroll }) => ({
     transform: `translate(0px,-${(scroll) * 15}%)`,
   }),
@@ -20,7 +20,7 @@ left:0vw;
 height: 80vh; 
 `;
 
-const Tyre = styled.img.attrs({
+const VoistrapPhoneMeetings = styled.img.attrs({
   style: ({ scroll }) => ({
     transform: `translate(0px,-${(scroll) * 8}%) scale(0.9)`,
   }),
@@ -34,7 +34,7 @@ height: 80vh;
 filter: blur(0.6px);
 `;
 
-const Battery = styled.img.attrs({
+const VoistrapPhoneScore = styled.img.attrs({
   style: ({ scroll }) => ({
     transform: `translate(0px,-${(scroll) * 5}%) scale(0.7)`,
   }),
@@ -48,7 +48,7 @@ height: 80vh;
 filter: blur(0.8px);
 `;
 
-const Lock = styled.img.attrs({
+const VoistrapPhonePeople = styled.img.attrs({
   style: ({ scroll }) => ({
     transform: `translate(0px,-${(scroll) * 2}%) scale(0.6)`,
   }),
@@ -62,7 +62,7 @@ height: 80vh;
 filter: blur(1.2px);
 `;
 
-class TeslaImages extends Component {
+class VoistrapImages extends Component {
   render() {
     let { scrollPercent } = this.props;
     const {
@@ -70,21 +70,21 @@ class TeslaImages extends Component {
     } = this.props;
     const heighttoBeReducedinVH = ((boxHeight * index) - 100);
     const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight) + index - 1;
+    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
+    console.log('scrollPercent ', scrollPercent);
     scrollPercent -= scrollOffsetInPercent;
-
     return (
       <React.Fragment>
-        <Lock src={teslaLockImg} scroll={scrollPercent} alt="teslaLock" />
-        <Battery src={teslaBatteryImg} scroll={scrollPercent} alt="teslaBattery" />
-        <Tyre src={teslaTyreImg} scroll={scrollPercent} alt="teslaTyre" />
-        <Heat src={teslaHeatImg} scroll={scrollPercent} alt="teslaHeat" />
+        <VoistrapPhonePeople src={voistrapPeopleImg} scroll={scrollPercent} alt="voistrapPeople" />
+        <VoistrapPhoneScore src={voistrapScoreImg} scroll={scrollPercent} alt="voistrapScore" />
+        <VoistrapPhoneMeetings src={voistrapMeetingsImg} scroll={scrollPercent} alt="voistrapMeetings" />
+        <VoistrapPhoneHome src={voistrapHomeImg} scroll={scrollPercent} alt="voistrapHome" />
       </React.Fragment>
     );
   }
 }
 
-TeslaImages.propTypes = {
+VoistrapImages.propTypes = {
   boxHeight: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   screenHeight: PropTypes.number.isRequired,
@@ -92,4 +92,4 @@ TeslaImages.propTypes = {
   scrollPercent: PropTypes.number.isRequired,
 };
 
-export default TeslaImages;
+export default VoistrapImages;

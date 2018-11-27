@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import device from '../../Assets/Responsive/breakpoints';
+import device from '../../../Assets/Responsive/breakpoints';
 
 const LogoImage = styled.img`
 /* border: 1px solid black; */

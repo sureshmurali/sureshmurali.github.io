@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import twitterImg from '../../Assets/Images/Social/twitter.svg';
-import githubImg from '../../Assets/Images/Social/git.svg';
-import mailImg from '../../Assets/Images/Social/mail.svg';
-import instaImg from '../../Assets/Images/Social/insta.svg';
-import dribbbleImg from '../../Assets/Images/Social/dribbble.svg';
-import linkedInImg from '../../Assets/Images/Social/linkedin.svg';
-import SocialLogo from '../../Components/ContactSlide/SocialLogo';
-import device from '../../Assets/Responsive/breakpoints';
+import twitterImg from '../../../Assets/Images/Social/twitter.svg';
+import githubImg from '../../../Assets/Images/Social/git.svg';
+import mailImg from '../../../Assets/Images/Social/mail.svg';
+import instaImg from '../../../Assets/Images/Social/insta.svg';
+import dribbbleImg from '../../../Assets/Images/Social/dribbble.svg';
+import linkedInImg from '../../../Assets/Images/Social/linkedin.svg';
+import SocialLogo from './SocialLogo';
+import device from '../../../Assets/Responsive/breakpoints';
 
 const Container = styled.section`
     height:80vh;/* Since pageSplitTime is 1.4 */
