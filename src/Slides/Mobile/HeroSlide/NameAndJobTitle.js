@@ -54,7 +54,7 @@ class NameAndJobTitle extends Component {
     return (
       <Container>
         <Name>Suresh Murali</Name>
-        <Title>UI/UX DESIGNER & FRONT-END DEVELOPER</Title>
+        <Title>FRONT-END DEVELOPER & UI/UX DESIGNER</Title>
       </Container>
     );
   }
