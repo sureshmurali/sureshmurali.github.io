@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import MediaQuery from 'react-responsive';
-import Hero from './Slides/Hero';
-import Work from './Slides/Work';
-import Skills from './Slides/Skills';
-import Contact from './Slides/Contact';
+import WideScreenHero from './Slides/WideScreen/Hero';
+import WideScreenWork from './Slides/WideScreen/Work';
+import WideScreenSkills from './Slides/WideScreen/Skills';
+import WideScreenContact from './Slides/WideScreen/Contact';
 import './Assets/index.css';
 
 const GlobalStyle = createGlobalStyle`
@@ -18,14 +18,13 @@ class App extends Component {
     return (
       <React.Fragment>
         <MediaQuery query="(min-device-width: 1224px)">
-          <Hero />
-          <Work />
-          <Skills />
-          <Contact />
+          <WideScreenHero />
+          <WideScreenWork />
+          <WideScreenSkills />
+          <WideScreenContact />
         </MediaQuery>
         <MediaQuery query="(max-device-width: 1224px)">
           <div>You are a tablet or mobile phone</div>
-          <Hero />
         </MediaQuery>
         <GlobalStyle />
       </React.Fragment>

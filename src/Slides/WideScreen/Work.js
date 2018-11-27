@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import TextContent from '../Components/WorkSlide/TextContent';
-import ImageContent from '../Components/WorkSlide/ImageContent';
+import TextContent from '../../Components/WorkSlide/TextContent';
+import ImageContent from '../../Components/WorkSlide/ImageContent';
 
 const Container = styled.div`
     display: flex;

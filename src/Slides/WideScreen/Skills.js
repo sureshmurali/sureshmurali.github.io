@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import device from '../Assets/Responsive/breakpoints';
+import device from '../../Assets/Responsive/breakpoints';
 
 const Container = styled.div`
     height: 120vh;/* Since pageSplitTime is 1.4 */
