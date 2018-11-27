@@ -89,7 +89,7 @@ class Skills extends Component {
         <SkillsTitle scrollPercent={scrollPercent}>SKILLS</SkillsTitle>
         <SkillsList>
           <div>
-            Sketch     
+            Sketch
             <br />
             Principle
             <br />

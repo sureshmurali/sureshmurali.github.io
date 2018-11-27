@@ -16,10 +16,25 @@ const LogoImage = styled.img`
 `;
 
 class SocialLogo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.notifySlack = this.notifySlack.bind(this);
+  }
+
+  notifySlack() {
+    const { alternate } = this.props;
+    console.log(alternate);
+    fetch(process.env.SLACK_URL, {
+      credentials: 'omit',
+      method: 'POST',
+      body: JSON.stringify({ text: `🚀 ${alternate}` }),
+    });
+  }
+
   render() {
     const { imgURL, alternate, redirectURL } = this.props;
     return (
-      <a href={redirectURL} target="_blank" rel="noopener noreferrer">
+      <a href={redirectURL} onClick={this.notifySlack} target="_blank" rel="noopener noreferrer">
         <LogoImage src={imgURL} alt={alternate} />
       </a>
 

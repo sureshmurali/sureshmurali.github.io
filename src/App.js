@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import parser from 'ua-parser-js';
 import { createGlobalStyle } from 'styled-components';
 import MediaQuery from 'react-responsive';
 import WideScreenHero from './Slides/WideScreen/HeroSlide/Hero';
@@ -18,6 +19,23 @@ html, body { margin: 0;}
 `;
 
 class App extends Component {
+  componentDidMount() {
+    fetch(process.env.IPINFO_URL)
+      .then(data => data.json())
+      .then((ipInfo) => {
+        const ua = parser(navigator.userAgent);
+        const message = `${ipInfo.region}, ${ipInfo.city}
+         • ${ua.browser.name} ${ua.browser.version}
+         • ${ua.os.name} ${ua.os.version}
+         • ${ipInfo.org}`;
+        fetch(process.env.SLACK_URL, {
+          credentials: 'omit',
+          method: 'POST',
+          body: JSON.stringify({ text: message }),
+        });
+      });
+  }
+
   render() {
     return (
       <React.Fragment>

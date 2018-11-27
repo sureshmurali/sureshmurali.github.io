@@ -57,7 +57,6 @@ class KosenImages extends Component {
     const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
     const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
     // console.log('Voistrap scrollOffsetPercent ', scrollOffsetInPercent);
-    console.log('scrollPercent ', scrollPercent);
     scrollPercent -= scrollOffsetInPercent;
     if (scrollPercent > 0 && scrollPercent < 0.1) {
       console.log('Voistrap');

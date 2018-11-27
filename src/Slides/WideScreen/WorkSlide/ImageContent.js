@@ -39,8 +39,6 @@ class ImageContent extends Component {
     window.addEventListener('scroll', this.handleScroll);
     this.setState({ scrollHeight: Math.round(window.document.documentElement.scrollHeight) });
     this.setState({ screenHeight: Math.round(window.document.documentElement.clientHeight) });
-    console.log('scrollHeight', Math.round(window.document.documentElement.scrollHeight));
-    console.log('screenHeight', Math.round(window.document.documentElement.clientHeight));
   }
 
   componentWillUnmount() {

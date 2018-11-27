@@ -29,10 +29,12 @@
     "parcel-bundler": "^1.10.3"
   },
   "dependencies": {
+    "dotenv": "^6.1.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.0",
     "react-responsive": "^6.0.1",
-    "styled-components": "^4.0.3"
+    "styled-components": "^4.0.3",
+    "ua-parser-js": "^0.7.19"
   }
 }
