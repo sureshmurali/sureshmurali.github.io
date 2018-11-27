@@ -9,7 +9,7 @@ import linkedInImg from '../../Assets/Images/Social/linkedin.svg';
 import SocialLogo from '../../Components/ContactSlide/SocialLogo';
 import device from '../../Assets/Responsive/breakpoints';
 
-const Container = styled.div`
+const Container = styled.section`
     height:80vh;/* Since pageSplitTime is 1.4 */
     width:100%;
     /* border: 1px solid blue; */
