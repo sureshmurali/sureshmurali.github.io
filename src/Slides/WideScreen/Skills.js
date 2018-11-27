@@ -32,13 +32,13 @@ const SkillsTitle = styled.div.attrs({
 const SkillsList = styled.div`
   /* border: 1px solid #EFEFEF; */
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
   font-family: 'AvenirRoman';
   text-align: left;
-  margin-left: 30%;
-  margin-right: 15%;
+  margin-left: 15%;
+  margin-right: 10%;
   z-index: 1;
   transform: translateY(30%);
   @media ${device.laptopL} {
@@ -89,33 +89,33 @@ class Skills extends Component {
         <SkillsTitle scrollPercent={scrollPercent}>SKILLS</SkillsTitle>
         <SkillsList>
           <div>
-            Research & Wireframing
+            Sketch     
             <br />
-            Rapid prototyping
+            Principle
             <br />
-            Interaction Design
+            Invision
             <br />
             <br />
-            Sketch
+            Functional Programming
             <br />
-            Studio
+            CSS Flexbox / Grids
             <br />
-            Figma
+            Scalable Vector Graphics
             <br />
           </div>
           <div>
-            Principle
+            Responsive Design
             <br />
-            Zeplin
+            Testing & Debugging
             <br />
-            Invision
+            Application Architecture
             <br />
             <br />
             React
             <br />
             React Native
             <br />
-            Angular 1
+            Node.js
             <br />
           </div>
         </SkillsList>
