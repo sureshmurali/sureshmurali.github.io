@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
 import device from '../../Assets/Responsive/breakpoints';
 
-const TextContainer = styled.div`
+const TextContainer = styled.section`
 position: fixed;
 top:0;
 left:0;
