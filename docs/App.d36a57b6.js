@@ -298,7 +298,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 
 module.exports = checkPropTypes;
 },{"./lib/ReactPropTypesSecret":"../node_modules/prop-types/lib/ReactPropTypesSecret.js"}],"../node_modules/react/cjs/react.development.js":[function(require,module,exports) {
-/** @license React v16.6.0
+/** @license React v16.6.1
  * react.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -317,7 +317,7 @@ if ("development" !== "production") {
     var checkPropTypes = require('prop-types/checkPropTypes'); // TODO: this is special because it gets imported during build.
 
 
-    var ReactVersion = '16.6.0'; // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
+    var ReactVersion = '16.6.3'; // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
     // nor polyfill, then a plain number is used for performance.
 
     var hasSymbol = typeof Symbol === 'function' && Symbol.for;
@@ -349,6 +349,25 @@ if ("development" !== "production") {
 
       return null;
     }
+
+    var enableHooks = false; // Helps identify side effects in begin-phase lifecycle hooks and setState reducers:
+    // In some cases, StrictMode should also double-render lifecycles.
+    // This can be confusing for tests though,
+    // And it can be bad for performance in production.
+    // This feature flag can be used to control the behavior:
+    // To preserve the "Pause on caught exceptions" behavior of the debugger, we
+    // replay the begin phase of a failed component inside invokeGuardedCallback.
+    // Warn about deprecated, async-unsafe lifecycles; relates to RFC #6:
+    // Gather advanced timing metrics for Profiler subtrees.
+    // Trace which interactions trigger each commit.
+    // Only used in www builds.
+    // Only used in www builds.
+    // React Fire: prevent the value and checked attributes from syncing
+    // with their related DOM properties
+    // These APIs will no longer be "unstable" in the upcoming 16.7 release,
+    // Control this behavior with a flag to support 16.6 minor releases in the meanwhile.
+
+    var enableStableConcurrentModeAPIs = false;
     /**
      * Use invariant() to assert state which your program assumes to be true.
      *
@@ -359,7 +378,6 @@ if ("development" !== "production") {
      * The invariant message will be stripped in production, but the invariant
      * will remain to ensure logic does not differ in production.
      */
-
 
     var validateFormat = function () {};
 
@@ -479,61 +497,13 @@ if ("development" !== "production") {
         }
 
         if (typeof console !== 'undefined') {
-          var _args$map = args.map(function (item) {
+          var argsWithFormat = args.map(function (item) {
             return '' + item;
-          }),
-              a = _args$map[0],
-              b = _args$map[1],
-              c = _args$map[2],
-              d = _args$map[3],
-              e = _args$map[4],
-              f = _args$map[5],
-              g = _args$map[6],
-              h = _args$map[7];
+          });
+          argsWithFormat.unshift('Warning: ' + format); // We intentionally don't use spread (or .apply) directly because it
+          // breaks IE9: https://github.com/facebook/react/issues/13610
 
-          var message = 'Warning: ' + format; // We intentionally don't use spread (or .apply) because it breaks IE9:
-          // https://github.com/facebook/react/issues/13610
-
-          switch (args.length) {
-            case 0:
-              console.error(message);
-              break;
-
-            case 1:
-              console.error(message, a);
-              break;
-
-            case 2:
-              console.error(message, a, b);
-              break;
-
-            case 3:
-              console.error(message, a, b, c);
-              break;
-
-            case 4:
-              console.error(message, a, b, c, d);
-              break;
-
-            case 5:
-              console.error(message, a, b, c, d, e);
-              break;
-
-            case 6:
-              console.error(message, a, b, c, d, e, f);
-              break;
-
-            case 7:
-              console.error(message, a, b, c, d, e, f, g);
-              break;
-
-            case 8:
-              console.error(message, a, b, c, d, e, f, g, h);
-              break;
-
-            default:
-              throw new Error('warningWithoutStack() currently supports at most 8 arguments.');
-          }
+          Function.prototype.apply.call(console.error, console, argsWithFormat);
         }
 
         try {
@@ -541,12 +511,10 @@ if ("development" !== "production") {
           // This error was thrown as a convenience so that you can use this stack
           // to find the callsite that caused this warning to fire.
           var argIndex = 0;
-
-          var _message = 'Warning: ' + format.replace(/%s/g, function () {
+          var message = 'Warning: ' + format.replace(/%s/g, function () {
             return args[argIndex++];
           });
-
-          throw new Error(_message);
+          throw new Error(message);
         } catch (x) {}
       };
     }
@@ -1637,6 +1605,9 @@ if ("development" !== "production") {
         // Secondary renderers store their context values on separate fields.
         _currentValue: defaultValue,
         _currentValue2: defaultValue,
+        // Used to track how many concurrent renderers this context currently
+        // supports within in a single renderer. Such as parallel server rendering.
+        _threadCount: 0,
         // These are circular
         Provider: null,
         Consumer: null
@@ -1687,6 +1658,14 @@ if ("development" !== "production") {
               context._currentValue2 = _currentValue2;
             }
           },
+          _threadCount: {
+            get: function () {
+              return context._threadCount;
+            },
+            set: function (_threadCount) {
+              context._threadCount = _threadCount;
+            }
+          },
           Consumer: {
             get: function () {
               if (!hasWarnedAboutUsingNestedContextConsumers) {
@@ -1720,7 +1699,9 @@ if ("development" !== "production") {
 
     function forwardRef(render) {
       {
-        if (typeof render !== 'function') {
+        if (render != null && render.$$typeof === REACT_MEMO_TYPE) {
+          warningWithoutStack$1(false, 'forwardRef requires a render function but received a `memo` ' + 'component. Instead of forwardRef(memo(...)), use ' + 'memo(forwardRef(...)).');
+        } else if (typeof render !== 'function') {
           warningWithoutStack$1(false, 'forwardRef requires a render function but was given %s.', render === null ? 'null' : typeof render);
         } else {
           !( // Do not warn for 0 arguments because it could be due to usage of the 'arguments' object
@@ -1753,6 +1734,75 @@ if ("development" !== "production") {
         type: type,
         compare: compare === undefined ? null : compare
       };
+    }
+
+    function resolveDispatcher() {
+      var dispatcher = ReactCurrentOwner.currentDispatcher;
+      !(dispatcher !== null) ? invariant(false, 'Hooks can only be called inside the body of a function component.') : void 0;
+      return dispatcher;
+    }
+
+    function useContext(Context, observedBits) {
+      var dispatcher = resolveDispatcher();
+      {
+        // TODO: add a more generic warning for invalid values.
+        if (Context._context !== undefined) {
+          var realContext = Context._context; // Don't deduplicate because this legitimately causes bugs
+          // and nobody should be using this in existing code.
+
+          if (realContext.Consumer === Context) {
+            warning$1(false, 'Calling useContext(Context.Consumer) is not supported, may cause bugs, and will be ' + 'removed in a future major release. Did you mean to call useContext(Context) instead?');
+          } else if (realContext.Provider === Context) {
+            warning$1(false, 'Calling useContext(Context.Provider) is not supported. ' + 'Did you mean to call useContext(Context) instead?');
+          }
+        }
+      }
+      return dispatcher.useContext(Context, observedBits);
+    }
+
+    function useState(initialState) {
+      var dispatcher = resolveDispatcher();
+      return dispatcher.useState(initialState);
+    }
+
+    function useReducer(reducer, initialState, initialAction) {
+      var dispatcher = resolveDispatcher();
+      return dispatcher.useReducer(reducer, initialState, initialAction);
+    }
+
+    function useRef(initialValue) {
+      var dispatcher = resolveDispatcher();
+      return dispatcher.useRef(initialValue);
+    }
+
+    function useEffect(create, inputs) {
+      var dispatcher = resolveDispatcher();
+      return dispatcher.useEffect(create, inputs);
+    }
+
+    function useMutationEffect(create, inputs) {
+      var dispatcher = resolveDispatcher();
+      return dispatcher.useMutationEffect(create, inputs);
+    }
+
+    function useLayoutEffect(create, inputs) {
+      var dispatcher = resolveDispatcher();
+      return dispatcher.useLayoutEffect(create, inputs);
+    }
+
+    function useCallback(callback, inputs) {
+      var dispatcher = resolveDispatcher();
+      return dispatcher.useCallback(callback, inputs);
+    }
+
+    function useMemo(create, inputs) {
+      var dispatcher = resolveDispatcher();
+      return dispatcher.useMemo(create, inputs);
+    }
+
+    function useImperativeMethods(ref, create, inputs) {
+      var dispatcher = resolveDispatcher();
+      return dispatcher.useImperativeMethods(ref, create, inputs);
     }
     /**
      * ReactElementValidator provides a wrapper around a element factory
@@ -2075,9 +2125,7 @@ if ("development" !== "production") {
       memo: memo,
       Fragment: REACT_FRAGMENT_TYPE,
       StrictMode: REACT_STRICT_MODE_TYPE,
-      unstable_ConcurrentMode: REACT_CONCURRENT_MODE_TYPE,
       Suspense: REACT_SUSPENSE_TYPE,
-      unstable_Profiler: REACT_PROFILER_TYPE,
       createElement: createElementWithValidation,
       cloneElement: cloneElementWithValidation,
       createFactory: createFactoryWithValidation,
@@ -2085,6 +2133,28 @@ if ("development" !== "production") {
       version: ReactVersion,
       __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: ReactSharedInternals
     };
+
+    if (enableStableConcurrentModeAPIs) {
+      React.ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
+      React.Profiler = REACT_PROFILER_TYPE;
+    } else {
+      React.unstable_ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
+      React.unstable_Profiler = REACT_PROFILER_TYPE;
+    }
+
+    if (enableHooks) {
+      React.useCallback = useCallback;
+      React.useContext = useContext;
+      React.useEffect = useEffect;
+      React.useImperativeMethods = useImperativeMethods;
+      React.useLayoutEffect = useLayoutEffect;
+      React.useMemo = useMemo;
+      React.useMutationEffect = useMutationEffect;
+      React.useReducer = useReducer;
+      React.useRef = useRef;
+      React.useState = useState;
+    }
+
     var React$2 = Object.freeze({
       default: React
     });
@@ -27632,7 +27702,7 @@ var device = {
 };
 var _default = device;
 exports.default = _default;
-},{}],"Components/HeroSlide/NameReveal.js":[function(require,module,exports) {
+},{}],"Slides/WideScreen/HeroSlide/NameReveal.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27646,7 +27716,7 @@ var _styledComponents = _interopRequireWildcard(require("styled-components"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _breakpoints = _interopRequireDefault(require("../../Assets/Responsive/breakpoints"));
+var _breakpoints = _interopRequireDefault(require("../../../Assets/Responsive/breakpoints"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27806,7 +27876,7 @@ NameReveal.defaultProps = {
 };
 var _default = NameReveal;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"Components/HeroSlide/TitleReveal.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"Slides/WideScreen/HeroSlide/TitleReveal.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -27820,7 +27890,7 @@ var _styledComponents = _interopRequireWildcard(require("styled-components"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _breakpoints = _interopRequireDefault(require("../../Assets/Responsive/breakpoints"));
+var _breakpoints = _interopRequireDefault(require("../../../Assets/Responsive/breakpoints"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27984,7 +28054,7 @@ TitleReveal.defaultProps = {
 };
 var _default = TitleReveal;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"Components/HeroSlide/NameAndJobTitle.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"Slides/WideScreen/HeroSlide/NameAndJobTitle.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28067,7 +28137,7 @@ function (_Component) {
 
 var _default = NameAndJobTitle;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","./NameReveal":"Components/HeroSlide/NameReveal.js","./TitleReveal":"Components/HeroSlide/TitleReveal.js"}],"Components/HeroSlide/AboutMe.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","./NameReveal":"Slides/WideScreen/HeroSlide/NameReveal.js","./TitleReveal":"Slides/WideScreen/HeroSlide/TitleReveal.js"}],"Slides/WideScreen/HeroSlide/AboutMe.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28079,7 +28149,7 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
-var _breakpoints = _interopRequireDefault(require("../../Assets/Responsive/breakpoints"));
+var _breakpoints = _interopRequireDefault(require("../../../Assets/Responsive/breakpoints"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28104,7 +28174,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["\n  align-items: center;\n  font-family: 'AvenirLight';\n  text-align: left;\n  margin-left: 30%;\n  margin-right: 5%;\n  @media ", " {\n    transform: translateY(90%);\n    font-size: 40px;\n  }\n  @media ", " {\n    transform: translateY(80%);\n    font-size: 70px;\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  align-items: center;\n  font-family: 'AvenirLight';\n  text-align: left;\n  margin-left: 30%;\n  margin-right: 5%;\n  @media ", " {\n    transform: translateY(87%);\n    font-size: 38px;\n  }\n  @media ", " {\n    transform: translateY(80%);\n    font-size: 70px;\n  }\n"]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -28135,7 +28205,7 @@ function _templateObject() {
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var Container = _styledComponents.default.div(_templateObject());
+var Container = _styledComponents.default.section(_templateObject());
 
 var AboutMeTitle = _styledComponents.default.div.attrs({
   style: function style(_ref) {
@@ -28207,7 +28277,7 @@ function (_Component) {
 
 var _default = AboutMe;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"Slides/Hero.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../../../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"Slides/WideScreen/HeroSlide/Hero.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28217,9 +28287,9 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _NameAndJobTitle = _interopRequireDefault(require("../Components/HeroSlide/NameAndJobTitle"));
+var _NameAndJobTitle = _interopRequireDefault(require("./NameAndJobTitle"));
 
-var _AboutMe = _interopRequireDefault(require("../Components/HeroSlide/AboutMe"));
+var _AboutMe = _interopRequireDefault(require("./AboutMe"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28266,7 +28336,7 @@ function (_Component) {
 
 var _default = Hero;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../Components/HeroSlide/NameAndJobTitle":"Components/HeroSlide/NameAndJobTitle.js","../Components/HeroSlide/AboutMe":"Components/HeroSlide/AboutMe.js"}],"Components/WorkSlide/TextContent.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./NameAndJobTitle":"Slides/WideScreen/HeroSlide/NameAndJobTitle.js","./AboutMe":"Slides/WideScreen/HeroSlide/AboutMe.js"}],"Slides/WideScreen/WorkSlide/TextContent.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28280,7 +28350,7 @@ var _styledComponents = _interopRequireWildcard(require("styled-components"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _breakpoints = _interopRequireDefault(require("../../Assets/Responsive/breakpoints"));
+var _breakpoints = _interopRequireDefault(require("../../../Assets/Responsive/breakpoints"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28436,7 +28506,7 @@ function _templateObject() {
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var TextContainer = _styledComponents.default.div(_templateObject());
+var TextContainer = _styledComponents.default.section(_templateObject());
 
 var ProjectName = _styledComponents.default.div(_templateObject2(), _breakpoints.default.laptopL, _breakpoints.default.desktop);
 
@@ -28559,7 +28629,7 @@ TextContent.propTypes = {
 };
 var _default = TextContent;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"Assets/Images/Voistrap/Home.png":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"Assets/Images/Voistrap/Home.png":[function(require,module,exports) {
 module.exports = "/Home.29168386.png";
 },{}],"Assets/Images/Voistrap/Meetings.png":[function(require,module,exports) {
 module.exports = "/Meetings.5a06b4a3.png";
@@ -28567,7 +28637,7 @@ module.exports = "/Meetings.5a06b4a3.png";
 module.exports = "/People.c935de5c.png";
 },{}],"Assets/Images/Voistrap/Score.png":[function(require,module,exports) {
 module.exports = "/Score.6469139a.png";
-},{}],"Components/WorkSlide/ParallaxImages/VoistrapImages.js":[function(require,module,exports) {
+},{}],"Slides/WideScreen/WorkSlide/ParallaxImages/VoistrapImages.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28581,13 +28651,13 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _Home = _interopRequireDefault(require("../../../Assets/Images/Voistrap/Home.png"));
+var _Home = _interopRequireDefault(require("../../../../Assets/Images/Voistrap/Home.png"));
 
-var _Meetings = _interopRequireDefault(require("../../../Assets/Images/Voistrap/Meetings.png"));
+var _Meetings = _interopRequireDefault(require("../../../../Assets/Images/Voistrap/Meetings.png"));
 
-var _People = _interopRequireDefault(require("../../../Assets/Images/Voistrap/People.png"));
+var _People = _interopRequireDefault(require("../../../../Assets/Images/Voistrap/People.png"));
 
-var _Score = _interopRequireDefault(require("../../../Assets/Images/Voistrap/Score.png"));
+var _Score = _interopRequireDefault(require("../../../../Assets/Images/Voistrap/Score.png"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28746,7 +28816,7 @@ VoistrapImages.propTypes = {
 };
 var _default = VoistrapImages;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../Assets/Images/Voistrap/Home.png":"Assets/Images/Voistrap/Home.png","../../../Assets/Images/Voistrap/Meetings.png":"Assets/Images/Voistrap/Meetings.png","../../../Assets/Images/Voistrap/People.png":"Assets/Images/Voistrap/People.png","../../../Assets/Images/Voistrap/Score.png":"Assets/Images/Voistrap/Score.png"}],"Assets/Images/WhatsMyFood/Home.png":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../../Assets/Images/Voistrap/Home.png":"Assets/Images/Voistrap/Home.png","../../../../Assets/Images/Voistrap/Meetings.png":"Assets/Images/Voistrap/Meetings.png","../../../../Assets/Images/Voistrap/People.png":"Assets/Images/Voistrap/People.png","../../../../Assets/Images/Voistrap/Score.png":"Assets/Images/Voistrap/Score.png"}],"Assets/Images/WhatsMyFood/Home.png":[function(require,module,exports) {
 module.exports = "/Home.acf0346b.png";
 },{}],"Assets/Images/WhatsMyFood/Restaurant.png":[function(require,module,exports) {
 module.exports = "/Restaurant.879d330f.png";
@@ -28754,7 +28824,7 @@ module.exports = "/Restaurant.879d330f.png";
 module.exports = "/AddRestaurant.668a5733.png";
 },{}],"Assets/Images/WhatsMyFood/AddFood.png":[function(require,module,exports) {
 module.exports = "/AddFood.0e8a8539.png";
-},{}],"Components/WorkSlide/ParallaxImages/WhatsMyFoodImages.js":[function(require,module,exports) {
+},{}],"Slides/WideScreen/WorkSlide/ParallaxImages/WhatsMyFoodImages.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28768,13 +28838,13 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _Home = _interopRequireDefault(require("../../../Assets/Images/WhatsMyFood/Home.png"));
+var _Home = _interopRequireDefault(require("../../../../Assets/Images/WhatsMyFood/Home.png"));
 
-var _Restaurant = _interopRequireDefault(require("../../../Assets/Images/WhatsMyFood/Restaurant.png"));
+var _Restaurant = _interopRequireDefault(require("../../../../Assets/Images/WhatsMyFood/Restaurant.png"));
 
-var _AddRestaurant = _interopRequireDefault(require("../../../Assets/Images/WhatsMyFood/AddRestaurant.png"));
+var _AddRestaurant = _interopRequireDefault(require("../../../../Assets/Images/WhatsMyFood/AddRestaurant.png"));
 
-var _AddFood = _interopRequireDefault(require("../../../Assets/Images/WhatsMyFood/AddFood.png"));
+var _AddFood = _interopRequireDefault(require("../../../../Assets/Images/WhatsMyFood/AddFood.png"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28938,11 +29008,11 @@ WhatsMyFoodImages.propTypes = {
 };
 var _default = WhatsMyFoodImages;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../Assets/Images/WhatsMyFood/Home.png":"Assets/Images/WhatsMyFood/Home.png","../../../Assets/Images/WhatsMyFood/Restaurant.png":"Assets/Images/WhatsMyFood/Restaurant.png","../../../Assets/Images/WhatsMyFood/AddRestaurant.png":"Assets/Images/WhatsMyFood/AddRestaurant.png","../../../Assets/Images/WhatsMyFood/AddFood.png":"Assets/Images/WhatsMyFood/AddFood.png"}],"Assets/Images/ComingOrNot/Tablet.png":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../../Assets/Images/WhatsMyFood/Home.png":"Assets/Images/WhatsMyFood/Home.png","../../../../Assets/Images/WhatsMyFood/Restaurant.png":"Assets/Images/WhatsMyFood/Restaurant.png","../../../../Assets/Images/WhatsMyFood/AddRestaurant.png":"Assets/Images/WhatsMyFood/AddRestaurant.png","../../../../Assets/Images/WhatsMyFood/AddFood.png":"Assets/Images/WhatsMyFood/AddFood.png"}],"Assets/Images/ComingOrNot/Tablet.png":[function(require,module,exports) {
 module.exports = "/Tablet.3851521b.png";
 },{}],"Assets/Images/ComingOrNot/Iphone.png":[function(require,module,exports) {
 module.exports = "/Iphone.024150c9.png";
-},{}],"Components/WorkSlide/ParallaxImages/ComingOrNotImages.js":[function(require,module,exports) {
+},{}],"Slides/WideScreen/WorkSlide/ParallaxImages/ComingOrNotImages.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28956,9 +29026,9 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _Tablet = _interopRequireDefault(require("../../../Assets/Images/ComingOrNot/Tablet.png"));
+var _Tablet = _interopRequireDefault(require("../../../../Assets/Images/ComingOrNot/Tablet.png"));
 
-var _Iphone = _interopRequireDefault(require("../../../Assets/Images/ComingOrNot/Iphone.png"));
+var _Iphone = _interopRequireDefault(require("../../../../Assets/Images/ComingOrNot/Iphone.png"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29070,7 +29140,7 @@ ComingOrNotImages.propTypes = {
 };
 var _default = ComingOrNotImages;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../Assets/Images/ComingOrNot/Tablet.png":"Assets/Images/ComingOrNot/Tablet.png","../../../Assets/Images/ComingOrNot/Iphone.png":"Assets/Images/ComingOrNot/Iphone.png"}],"Assets/Images/Tesla/Tyre.png":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../../Assets/Images/ComingOrNot/Tablet.png":"Assets/Images/ComingOrNot/Tablet.png","../../../../Assets/Images/ComingOrNot/Iphone.png":"Assets/Images/ComingOrNot/Iphone.png"}],"Assets/Images/Tesla/Tyre.png":[function(require,module,exports) {
 module.exports = "/Tyre.f04a1585.png";
 },{}],"Assets/Images/Tesla/Heat.png":[function(require,module,exports) {
 module.exports = "/Heat.1692c848.png";
@@ -29078,7 +29148,7 @@ module.exports = "/Heat.1692c848.png";
 module.exports = "/Lock.82896f69.png";
 },{}],"Assets/Images/Tesla/Battery.png":[function(require,module,exports) {
 module.exports = "/Battery.0e582a33.png";
-},{}],"Components/WorkSlide/ParallaxImages/TeslaImages.js":[function(require,module,exports) {
+},{}],"Slides/WideScreen/WorkSlide/ParallaxImages/TeslaImages.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29092,13 +29162,13 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _Tyre = _interopRequireDefault(require("../../../Assets/Images/Tesla/Tyre.png"));
+var _Tyre = _interopRequireDefault(require("../../../../Assets/Images/Tesla/Tyre.png"));
 
-var _Heat = _interopRequireDefault(require("../../../Assets/Images/Tesla/Heat.png"));
+var _Heat = _interopRequireDefault(require("../../../../Assets/Images/Tesla/Heat.png"));
 
-var _Lock = _interopRequireDefault(require("../../../Assets/Images/Tesla/Lock.png"));
+var _Lock = _interopRequireDefault(require("../../../../Assets/Images/Tesla/Lock.png"));
 
-var _Battery = _interopRequireDefault(require("../../../Assets/Images/Tesla/Battery.png"));
+var _Battery = _interopRequireDefault(require("../../../../Assets/Images/Tesla/Battery.png"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29256,13 +29326,13 @@ TeslaImages.propTypes = {
 };
 var _default = TeslaImages;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../Assets/Images/Tesla/Tyre.png":"Assets/Images/Tesla/Tyre.png","../../../Assets/Images/Tesla/Heat.png":"Assets/Images/Tesla/Heat.png","../../../Assets/Images/Tesla/Lock.png":"Assets/Images/Tesla/Lock.png","../../../Assets/Images/Tesla/Battery.png":"Assets/Images/Tesla/Battery.png"}],"Assets/Images/Kosen/EnglishHome.png":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../../Assets/Images/Tesla/Tyre.png":"Assets/Images/Tesla/Tyre.png","../../../../Assets/Images/Tesla/Heat.png":"Assets/Images/Tesla/Heat.png","../../../../Assets/Images/Tesla/Lock.png":"Assets/Images/Tesla/Lock.png","../../../../Assets/Images/Tesla/Battery.png":"Assets/Images/Tesla/Battery.png"}],"Assets/Images/Kosen/EnglishHome.png":[function(require,module,exports) {
 module.exports = "/EnglishHome.6564ba02.png";
 },{}],"Assets/Images/Kosen/JpnHome.png":[function(require,module,exports) {
 module.exports = "/JpnHome.05334996.png";
 },{}],"Assets/Images/Kosen/Player.png":[function(require,module,exports) {
 module.exports = "/Player.faa20486.png";
-},{}],"Components/WorkSlide/ParallaxImages/KosenImages.js":[function(require,module,exports) {
+},{}],"Slides/WideScreen/WorkSlide/ParallaxImages/KosenImages.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29276,11 +29346,11 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _EnglishHome = _interopRequireDefault(require("../../../Assets/Images/Kosen/EnglishHome.png"));
+var _EnglishHome = _interopRequireDefault(require("../../../../Assets/Images/Kosen/EnglishHome.png"));
 
-var _JpnHome = _interopRequireDefault(require("../../../Assets/Images/Kosen/JpnHome.png"));
+var _JpnHome = _interopRequireDefault(require("../../../../Assets/Images/Kosen/JpnHome.png"));
 
-var _Player = _interopRequireDefault(require("../../../Assets/Images/Kosen/Player.png"));
+var _Player = _interopRequireDefault(require("../../../../Assets/Images/Kosen/Player.png"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29422,7 +29492,7 @@ KosenImages.propTypes = {
 };
 var _default = KosenImages;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../Assets/Images/Kosen/EnglishHome.png":"Assets/Images/Kosen/EnglishHome.png","../../../Assets/Images/Kosen/JpnHome.png":"Assets/Images/Kosen/JpnHome.png","../../../Assets/Images/Kosen/Player.png":"Assets/Images/Kosen/Player.png"}],"Assets/Images/Showcase/Dots.png":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../../Assets/Images/Kosen/EnglishHome.png":"Assets/Images/Kosen/EnglishHome.png","../../../../Assets/Images/Kosen/JpnHome.png":"Assets/Images/Kosen/JpnHome.png","../../../../Assets/Images/Kosen/Player.png":"Assets/Images/Kosen/Player.png"}],"Assets/Images/Showcase/Dots.png":[function(require,module,exports) {
 module.exports = "/Dots.b481a8f1.png";
 },{}],"Assets/Images/Showcase/Bubble.png":[function(require,module,exports) {
 module.exports = "/Bubble.6a009001.png";
@@ -29430,7 +29500,7 @@ module.exports = "/Bubble.6a009001.png";
 module.exports = "/Paths.faabbc38.png";
 },{}],"Assets/Images/Showcase/BigBubble.png":[function(require,module,exports) {
 module.exports = "/BigBubble.05d71ef5.png";
-},{}],"Components/WorkSlide/ParallaxImages/VoistrapWebImages.js":[function(require,module,exports) {
+},{}],"Slides/WideScreen/WorkSlide/ParallaxImages/VoistrapWebImages.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29444,13 +29514,13 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _Dots = _interopRequireDefault(require("../../../Assets/Images/Showcase/Dots.png"));
+var _Dots = _interopRequireDefault(require("../../../../Assets/Images/Showcase/Dots.png"));
 
-var _Bubble = _interopRequireDefault(require("../../../Assets/Images/Showcase/Bubble.png"));
+var _Bubble = _interopRequireDefault(require("../../../../Assets/Images/Showcase/Bubble.png"));
 
-var _Paths = _interopRequireDefault(require("../../../Assets/Images/Showcase/Paths.png"));
+var _Paths = _interopRequireDefault(require("../../../../Assets/Images/Showcase/Paths.png"));
 
-var _BigBubble = _interopRequireDefault(require("../../../Assets/Images/Showcase/BigBubble.png"));
+var _BigBubble = _interopRequireDefault(require("../../../../Assets/Images/Showcase/BigBubble.png"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29608,7 +29678,7 @@ VoistrapWebImages.propTypes = {
 };
 var _default = VoistrapWebImages;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../Assets/Images/Showcase/Dots.png":"Assets/Images/Showcase/Dots.png","../../../Assets/Images/Showcase/Bubble.png":"Assets/Images/Showcase/Bubble.png","../../../Assets/Images/Showcase/Paths.png":"Assets/Images/Showcase/Paths.png","../../../Assets/Images/Showcase/BigBubble.png":"Assets/Images/Showcase/BigBubble.png"}],"Components/WorkSlide/ImageContent.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../../Assets/Images/Showcase/Dots.png":"Assets/Images/Showcase/Dots.png","../../../../Assets/Images/Showcase/Bubble.png":"Assets/Images/Showcase/Bubble.png","../../../../Assets/Images/Showcase/Paths.png":"Assets/Images/Showcase/Paths.png","../../../../Assets/Images/Showcase/BigBubble.png":"Assets/Images/Showcase/BigBubble.png"}],"Slides/WideScreen/WorkSlide/ImageContent.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29806,7 +29876,7 @@ ImageContent.propTypes = {
 };
 var _default = ImageContent;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","./ParallaxImages/VoistrapImages":"Components/WorkSlide/ParallaxImages/VoistrapImages.js","./ParallaxImages/WhatsMyFoodImages":"Components/WorkSlide/ParallaxImages/WhatsMyFoodImages.js","./ParallaxImages/ComingOrNotImages":"Components/WorkSlide/ParallaxImages/ComingOrNotImages.js","./ParallaxImages/TeslaImages":"Components/WorkSlide/ParallaxImages/TeslaImages.js","./ParallaxImages/KosenImages":"Components/WorkSlide/ParallaxImages/KosenImages.js","./ParallaxImages/VoistrapWebImages":"Components/WorkSlide/ParallaxImages/VoistrapWebImages.js"}],"Slides/Work.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","./ParallaxImages/VoistrapImages":"Slides/WideScreen/WorkSlide/ParallaxImages/VoistrapImages.js","./ParallaxImages/WhatsMyFoodImages":"Slides/WideScreen/WorkSlide/ParallaxImages/WhatsMyFoodImages.js","./ParallaxImages/ComingOrNotImages":"Slides/WideScreen/WorkSlide/ParallaxImages/ComingOrNotImages.js","./ParallaxImages/TeslaImages":"Slides/WideScreen/WorkSlide/ParallaxImages/TeslaImages.js","./ParallaxImages/KosenImages":"Slides/WideScreen/WorkSlide/ParallaxImages/KosenImages.js","./ParallaxImages/VoistrapWebImages":"Slides/WideScreen/WorkSlide/ParallaxImages/VoistrapWebImages.js"}],"Slides/WideScreen/WorkSlide/Work.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29818,9 +29888,9 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
-var _TextContent = _interopRequireDefault(require("../Components/WorkSlide/TextContent"));
+var _TextContent = _interopRequireDefault(require("./TextContent"));
 
-var _ImageContent = _interopRequireDefault(require("../Components/WorkSlide/ImageContent"));
+var _ImageContent = _interopRequireDefault(require("./ImageContent"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29999,7 +30069,7 @@ function (_Component) {
 
 var _default = Work;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../Components/WorkSlide/TextContent":"Components/WorkSlide/TextContent.js","../Components/WorkSlide/ImageContent":"Components/WorkSlide/ImageContent.js"}],"Slides/Skills.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","./TextContent":"Slides/WideScreen/WorkSlide/TextContent.js","./ImageContent":"Slides/WideScreen/WorkSlide/ImageContent.js"}],"Slides/WideScreen/Skills.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30011,7 +30081,7 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
-var _breakpoints = _interopRequireDefault(require("../Assets/Responsive/breakpoints"));
+var _breakpoints = _interopRequireDefault(require("../../Assets/Responsive/breakpoints"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30149,7 +30219,7 @@ function (_Component) {
 
 var _default = Skills;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"Assets/Images/Social/twitter.svg":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"Assets/Images/Social/twitter.svg":[function(require,module,exports) {
 module.exports = "/twitter.920364fd.svg";
 },{}],"Assets/Images/Social/git.svg":[function(require,module,exports) {
 module.exports = "/git.1a000b88.svg";
@@ -30161,7 +30231,7 @@ module.exports = "/insta.54ac694c.svg";
 module.exports = "/dribbble.72bc2d7b.svg";
 },{}],"Assets/Images/Social/linkedin.svg":[function(require,module,exports) {
 module.exports = "/linkedin.a58775df.svg";
-},{}],"Components/ContactSlide/SocialLogo.js":[function(require,module,exports) {
+},{}],"Slides/WideScreen/ContactSlide/SocialLogo.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30175,7 +30245,7 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _breakpoints = _interopRequireDefault(require("../../Assets/Responsive/breakpoints"));
+var _breakpoints = _interopRequireDefault(require("../../../Assets/Responsive/breakpoints"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30250,7 +30320,7 @@ SocialLogo.propTypes = {
 };
 var _default = SocialLogo;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"Slides/Contact.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","prop-types":"../node_modules/prop-types/index.js","../../../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"Slides/WideScreen/ContactSlide/Contact.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30262,21 +30332,21 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
-var _twitter = _interopRequireDefault(require("../Assets/Images/Social/twitter.svg"));
+var _twitter = _interopRequireDefault(require("../../../Assets/Images/Social/twitter.svg"));
 
-var _git = _interopRequireDefault(require("../Assets/Images/Social/git.svg"));
+var _git = _interopRequireDefault(require("../../../Assets/Images/Social/git.svg"));
 
-var _mail = _interopRequireDefault(require("../Assets/Images/Social/mail.svg"));
+var _mail = _interopRequireDefault(require("../../../Assets/Images/Social/mail.svg"));
 
-var _insta = _interopRequireDefault(require("../Assets/Images/Social/insta.svg"));
+var _insta = _interopRequireDefault(require("../../../Assets/Images/Social/insta.svg"));
 
-var _dribbble = _interopRequireDefault(require("../Assets/Images/Social/dribbble.svg"));
+var _dribbble = _interopRequireDefault(require("../../../Assets/Images/Social/dribbble.svg"));
 
-var _linkedin = _interopRequireDefault(require("../Assets/Images/Social/linkedin.svg"));
+var _linkedin = _interopRequireDefault(require("../../../Assets/Images/Social/linkedin.svg"));
 
-var _SocialLogo = _interopRequireDefault(require("../Components/ContactSlide/SocialLogo"));
+var _SocialLogo = _interopRequireDefault(require("./SocialLogo"));
 
-var _breakpoints = _interopRequireDefault(require("../Assets/Responsive/breakpoints"));
+var _breakpoints = _interopRequireDefault(require("../../../Assets/Responsive/breakpoints"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30332,7 +30402,7 @@ function _templateObject() {
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var Container = _styledComponents.default.div(_templateObject());
+var Container = _styledComponents.default.section(_templateObject());
 
 var ContactTitle = _styledComponents.default.div.attrs({
   style: function style(_ref) {
@@ -30437,7 +30507,248 @@ function (_Component) {
 
 var _default = Contact;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../Assets/Images/Social/twitter.svg":"Assets/Images/Social/twitter.svg","../Assets/Images/Social/git.svg":"Assets/Images/Social/git.svg","../Assets/Images/Social/mail.svg":"Assets/Images/Social/mail.svg","../Assets/Images/Social/insta.svg":"Assets/Images/Social/insta.svg","../Assets/Images/Social/dribbble.svg":"Assets/Images/Social/dribbble.svg","../Assets/Images/Social/linkedin.svg":"Assets/Images/Social/linkedin.svg","../Components/ContactSlide/SocialLogo":"Components/ContactSlide/SocialLogo.js","../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"../node_modules/parcel-bundler/lib/builtins/bundle-url.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../../../Assets/Images/Social/twitter.svg":"Assets/Images/Social/twitter.svg","../../../Assets/Images/Social/git.svg":"Assets/Images/Social/git.svg","../../../Assets/Images/Social/mail.svg":"Assets/Images/Social/mail.svg","../../../Assets/Images/Social/insta.svg":"Assets/Images/Social/insta.svg","../../../Assets/Images/Social/dribbble.svg":"Assets/Images/Social/dribbble.svg","../../../Assets/Images/Social/linkedin.svg":"Assets/Images/Social/linkedin.svg","./SocialLogo":"Slides/WideScreen/ContactSlide/SocialLogo.js","../../../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"Slides/Mobile/HeroSlide/NameAndJobTitle.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+var _breakpoints = _interopRequireDefault(require("../../../Assets/Responsive/breakpoints"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["\n  font-family: 'AvenirRoman';\n  text-align:center;\n  margin-top: 10px;\n  @media ", " {\n    font-size: 13px;\n  }\n  @media ", " {\n    font-size: 15px;\n  }\n  @media ", " {\n    font-size: 17px;\n  }\n  @media ", " {\n    font-size: 20px;\n  }\n"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n  font-family: 'Valencia';\n  text-align:center;\n  padding-right: 10px;\n  @media ", " {\n    font-size: 70px;\n  }\n  @media ", " {\n    font-size: 80px;\n  }\n  @media ", " {\n    font-size: 90px;\n  }\n  @media ", " {\n    font-size: 100px;\n  }\n"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: center;\n    height:50vh;\n    width:100%;\n    background-color: white;\n    /* border: 1px solid blue; */\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var Container = _styledComponents.default.section(_templateObject());
+
+var Name = _styledComponents.default.div(_templateObject2(), _breakpoints.default.mobileS, _breakpoints.default.mobileM, _breakpoints.default.mobileL, _breakpoints.default.tablet);
+
+var Title = _styledComponents.default.div(_templateObject3(), _breakpoints.default.mobileS, _breakpoints.default.mobileM, _breakpoints.default.mobileL, _breakpoints.default.tablet);
+
+var NameAndJobTitle =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(NameAndJobTitle, _Component);
+
+  function NameAndJobTitle() {
+    _classCallCheck(this, NameAndJobTitle);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(NameAndJobTitle).apply(this, arguments));
+  }
+
+  _createClass(NameAndJobTitle, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement(Container, null, _react.default.createElement(Name, null, "Suresh Murali"), _react.default.createElement(Title, null, "UI/UX DESIGNER & FRONT-END DEVELOPER"));
+    }
+  }]);
+
+  return NameAndJobTitle;
+}(_react.Component);
+
+var _default = NameAndJobTitle;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../../../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"Slides/Mobile/HeroSlide/AboutMe.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+var _breakpoints = _interopRequireDefault(require("../../../Assets/Responsive/breakpoints"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n  font-family: 'AvenirLight';\n  font-size: 24px;\n  text-align: center;\n  @media ", " {\n    padding: 30px;\n    font-size: 18px;\n  }\n  @media ", " {\n    padding: 30px;\n    font-size: 23px;\n  }\n  @media ", " {\n    padding: 30px;\n    font-size: 24px;\n  }\n  @media ", " {\n    padding: 80px;\n    font-size: 30px;\n  }\n"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n    height: 30vh;/* Since pageSplitTime is 1.4 */\n    width:100%;\n    /* border: 1px solid blue; */\n    display: flex;\n    flex-flow: row nowrap;\n    justify-content: center;\n    align-items: center;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var Container = _styledComponents.default.section(_templateObject());
+
+var AboutMeDescription = _styledComponents.default.span(_templateObject2(), _breakpoints.default.mobileS, _breakpoints.default.mobileM, _breakpoints.default.mobileL, _breakpoints.default.tablet);
+
+var AboutMe =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(AboutMe, _Component);
+
+  function AboutMe() {
+    _classCallCheck(this, AboutMe);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(AboutMe).apply(this, arguments));
+  }
+
+  _createClass(AboutMe, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement(Container, null, _react.default.createElement(AboutMeDescription, null, "Front-end developer who cares deeply about user experience. Serious passion for UI design and new technologies."));
+    }
+  }]);
+
+  return AboutMe;
+}(_react.Component);
+
+var _default = AboutMe;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../../../Assets/Responsive/breakpoints":"Assets/Responsive/breakpoints.js"}],"Slides/Mobile/HeroSlide/Hero.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _NameAndJobTitle = _interopRequireDefault(require("./NameAndJobTitle"));
+
+var _AboutMe = _interopRequireDefault(require("./AboutMe"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Hero =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Hero, _Component);
+
+  function Hero() {
+    _classCallCheck(this, Hero);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Hero).apply(this, arguments));
+  }
+
+  _createClass(Hero, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(_NameAndJobTitle.default, null), _react.default.createElement(_AboutMe.default, null));
+    }
+  }]);
+
+  return Hero;
+}(_react.Component);
+
+var _default = Hero;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./NameAndJobTitle":"Slides/Mobile/HeroSlide/NameAndJobTitle.js","./AboutMe":"Slides/Mobile/HeroSlide/AboutMe.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -30469,7 +30780,7 @@ function getBaseURL(url) {
 
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
-},{}],"../node_modules/parcel-bundler/lib/builtins/css-loader.js":[function(require,module,exports) {
+},{}],"../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
 var bundle = require('./bundle-url');
 
 function updateLink(link) {
@@ -30504,12 +30815,12 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"../node_modules/parcel-bundler/lib/builtins/bundle-url.js"}],"Assets/index.css":[function(require,module,exports) {
+},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"Assets/index.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./Fonts/Avenir/Avenir-Light-07.ttf":[["Avenir-Light-07.0f87d3ed.ttf","Assets/Fonts/Avenir/Avenir-Light-07.ttf"],"Assets/Fonts/Avenir/Avenir-Light-07.ttf"],"./Fonts/Avenir/Avenir-Roman-12.ttf":[["Avenir-Roman-12.5e177e9c.ttf","Assets/Fonts/Avenir/Avenir-Roman-12.ttf"],"Assets/Fonts/Avenir/Avenir-Roman-12.ttf"],"./Fonts/Avenir/Avenir-Book-01.ttf":[["Avenir-Book-01.d88b5c28.ttf","Assets/Fonts/Avenir/Avenir-Book-01.ttf"],"Assets/Fonts/Avenir/Avenir-Book-01.ttf"],"./Fonts/Avenir/Avenir-Medium-09.ttf":[["Avenir-Medium-09.2c564d4e.ttf","Assets/Fonts/Avenir/Avenir-Medium-09.ttf"],"Assets/Fonts/Avenir/Avenir-Medium-09.ttf"],"./Fonts/Avenir/Avenir-Heavy-05.ttf":[["Avenir-Heavy-05.cab84c3f.ttf","Assets/Fonts/Avenir/Avenir-Heavy-05.ttf"],"Assets/Fonts/Avenir/Avenir-Heavy-05.ttf"],"./Fonts/Valencia/Valencia.ttf":[["Valencia.a0ebc654.ttf","Assets/Fonts/Valencia/Valencia.ttf"],"Assets/Fonts/Valencia/Valencia.ttf"],"_css_loader":"../node_modules/parcel-bundler/lib/builtins/css-loader.js"}],"App.js":[function(require,module,exports) {
+},{"./Fonts/Avenir/Avenir-Light-07.ttf":[["Avenir-Light-07.0f87d3ed.ttf","Assets/Fonts/Avenir/Avenir-Light-07.ttf"],"Assets/Fonts/Avenir/Avenir-Light-07.ttf"],"./Fonts/Avenir/Avenir-Roman-12.ttf":[["Avenir-Roman-12.5e177e9c.ttf","Assets/Fonts/Avenir/Avenir-Roman-12.ttf"],"Assets/Fonts/Avenir/Avenir-Roman-12.ttf"],"./Fonts/Avenir/Avenir-Book-01.ttf":[["Avenir-Book-01.d88b5c28.ttf","Assets/Fonts/Avenir/Avenir-Book-01.ttf"],"Assets/Fonts/Avenir/Avenir-Book-01.ttf"],"./Fonts/Avenir/Avenir-Medium-09.ttf":[["Avenir-Medium-09.2c564d4e.ttf","Assets/Fonts/Avenir/Avenir-Medium-09.ttf"],"Assets/Fonts/Avenir/Avenir-Medium-09.ttf"],"./Fonts/Avenir/Avenir-Heavy-05.ttf":[["Avenir-Heavy-05.cab84c3f.ttf","Assets/Fonts/Avenir/Avenir-Heavy-05.ttf"],"Assets/Fonts/Avenir/Avenir-Heavy-05.ttf"],"./Fonts/Valencia/Valencia.ttf":[["Valencia.a0ebc654.ttf","Assets/Fonts/Valencia/Valencia.ttf"],"Assets/Fonts/Valencia/Valencia.ttf"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireWildcard(require("react"));
@@ -30520,13 +30831,15 @@ var _styledComponents = require("styled-components");
 
 var _reactResponsive = _interopRequireDefault(require("react-responsive"));
 
-var _Hero = _interopRequireDefault(require("./Slides/Hero"));
+var _Hero = _interopRequireDefault(require("./Slides/WideScreen/HeroSlide/Hero"));
 
-var _Work = _interopRequireDefault(require("./Slides/Work"));
+var _Work = _interopRequireDefault(require("./Slides/WideScreen/WorkSlide/Work"));
 
-var _Skills = _interopRequireDefault(require("./Slides/Skills"));
+var _Skills = _interopRequireDefault(require("./Slides/WideScreen/Skills"));
 
-var _Contact = _interopRequireDefault(require("./Slides/Contact"));
+var _Contact = _interopRequireDefault(require("./Slides/WideScreen/ContactSlide/Contact"));
+
+var _Hero2 = _interopRequireDefault(require("./Slides/Mobile/HeroSlide/Hero"));
 
 require("./Assets/index.css");
 
@@ -30584,7 +30897,7 @@ function (_Component) {
         query: "(min-device-width: 1224px)"
       }, _react.default.createElement(_Hero.default, null), _react.default.createElement(_Work.default, null), _react.default.createElement(_Skills.default, null), _react.default.createElement(_Contact.default, null)), _react.default.createElement(_reactResponsive.default, {
         query: "(max-device-width: 1224px)"
-      }, _react.default.createElement("div", null, "You are a tablet or mobile phone"), _react.default.createElement(_Hero.default, null)), _react.default.createElement(GlobalStyle, null));
+      }, _react.default.createElement(_Hero2.default, null)), _react.default.createElement(GlobalStyle, null));
     }
   }]);
 
@@ -30592,7 +30905,7 @@ function (_Component) {
 }(_react.Component);
 
 (0, _reactDom.render)(_react.default.createElement(App), document.getElementById('root'));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","react-responsive":"../node_modules/react-responsive/dist/react-responsive.js","./Slides/Hero":"Slides/Hero.js","./Slides/Work":"Slides/Work.js","./Slides/Skills":"Slides/Skills.js","./Slides/Contact":"Slides/Contact.js","./Assets/index.css":"Assets/index.css"}],"../node_modules/parcel-bundler/lib/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","react-responsive":"../node_modules/react-responsive/dist/react-responsive.js","./Slides/WideScreen/HeroSlide/Hero":"Slides/WideScreen/HeroSlide/Hero.js","./Slides/WideScreen/WorkSlide/Work":"Slides/WideScreen/WorkSlide/Work.js","./Slides/WideScreen/Skills":"Slides/WideScreen/Skills.js","./Slides/WideScreen/ContactSlide/Contact":"Slides/WideScreen/ContactSlide/Contact.js","./Slides/Mobile/HeroSlide/Hero":"Slides/Mobile/HeroSlide/Hero.js","./Assets/index.css":"Assets/index.css"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -30619,7 +30932,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55341" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65430" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
@@ -30761,5 +31074,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},["../node_modules/parcel-bundler/lib/builtins/hmr-runtime.js","App.js"], null)
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","App.js"], null)
 //# sourceMappingURL=/App.d36a57b6.map
