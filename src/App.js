@@ -20,6 +20,9 @@ html, body { margin: 0;}
 
 class App extends Component {
   componentDidMount() {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
     fetch(process.env.IPINFO_URL)
       .then(data => data.json())
       .then((ipInfo) => {
