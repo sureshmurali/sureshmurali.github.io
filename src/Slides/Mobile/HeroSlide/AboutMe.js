@@ -13,12 +13,12 @@ const Container = styled.section`
 `;
 
 const AboutMeDescription = styled.span`
-  font-family: 'AvenirLight';
+  font-family: 'AvenirRoman';
   font-size: 24px;
   text-align: center;
   @media ${device.mobileS} {
     padding: 30px;
-    font-size: 18px;
+    font-size: 20px;
   }
   @media ${device.mobileM} {
     padding: 30px;
