@@ -72,9 +72,6 @@ class WhatsMyFoodImages extends Component {
     const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight) + index - 1;
     // console.log('WMF scrollOffsetPercent ', scrollOffsetInPercent);
     scrollPercent -= scrollOffsetInPercent;
-    if (scrollPercent > 0 && scrollPercent < 0.1) {
-      console.log('WMF');
-    }
     return (
       <React.Fragment>
         <AddFood src={addFoodImg} scroll={scrollPercent} alt="addFood" />
