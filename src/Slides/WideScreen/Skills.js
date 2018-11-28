@@ -89,11 +89,11 @@ class Skills extends Component {
         <SkillsTitle scrollPercent={scrollPercent}>SKILLS</SkillsTitle>
         <SkillsList>
           <div>
-            Sketch
+            React
             <br />
-            Principle
+            React Native
             <br />
-            Invision
+            Node.js
             <br />
             <br />
             Functional Programming
@@ -111,9 +111,9 @@ class Skills extends Component {
             Application Architecture
             <br />
             <br />
-            React
+            Sketch
             <br />
-            React Native
+            Principle
             <br />
             Node.js
             <br />

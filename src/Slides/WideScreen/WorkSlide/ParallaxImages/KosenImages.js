@@ -56,11 +56,7 @@ class KosenImages extends Component {
     const heighttoBeReducedinVH = ((boxHeight * index) - 100);
     const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
     const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
-    // console.log('Voistrap scrollOffsetPercent ', scrollOffsetInPercent);
     scrollPercent -= scrollOffsetInPercent;
-    if (scrollPercent > 0 && scrollPercent < 0.1) {
-      console.log('Voistrap');
-    }
     return (
       <React.Fragment>
         <PlayerTab src={player} scroll={scrollPercent} alt="kosenPlayer" />

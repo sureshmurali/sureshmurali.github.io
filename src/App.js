@@ -9,7 +9,7 @@ import WideScreenSkills from './Slides/WideScreen/Skills';
 import WideScreenContact from './Slides/WideScreen/ContactSlide/Contact';
 import MobileHero from './Slides/Mobile/HeroSlide/Hero';
 // import MobileWork from './Slides/Mobile/WorkSlide/Work';
-// import MobileSkills from './Slides/Mobile/Skills';
+import MobileSkills from './Slides/Mobile/Skills';
 // import MobileContact from './Slides/Mobile/ContactSlide/Contact';
 import './Assets/index.css';
 
@@ -50,9 +50,9 @@ class App extends Component {
         </MediaQuery>
         <MediaQuery query="(max-device-width: 1224px)">
           <MobileHero />
-          {/* <MobileWork />
+          {/* <MobileWork /> */}
           <MobileSkills />
-          <MobileContact /> */}
+          {/* <MobileContact /> */}
         </MediaQuery>
         <GlobalStyle />
       </React.Fragment>

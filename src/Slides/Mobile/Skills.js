@@ -2,120 +2,100 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import device from '../../Assets/Responsive/breakpoints';
 
-const Container = styled.div`
-    height: 120vh;/* Since pageSplitTime is 1.4 */
+const Container = styled.section`
+    height: 125vh;/* Since pageSplitTime is 1.4 */
     width:100%;
     /* border: 1px solid blue; */
-    position: relative;
-    overflow: hidden;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-content: center;
+    @media ${device.mobileS} {
+    padding-left:30px;
+    }
+    @media ${device.mobileM} {
+    padding-left:30px;
+    }
+    @media ${device.mobileL} {
+    padding-left:30px;
+    }
+    @media ${device.tablet} {
+    padding-left:60px;
+    }
 `;
 
-const SkillsTitle = styled.div.attrs({
-  style: ({ scrollPercent }) => ({
-    transform: `translateX(-${(scrollPercent) * 10}%)`,
-  }),
-})`
-  transition: transform 0.5s ease-out;
+const SkillsTitle = styled.div`
   font-family: 'AvenirHeavy';
-  position: absolute;
-  color: #EEE;
-  top:40%;
-  right:-50%;
-  @media ${device.laptopL} {
-    font-size: 200px;
-  }
-  @media ${device.desktop} {
-    font-size: 350px;
-  }
-`;
-
-const SkillsList = styled.div`
-  /* border: 1px solid #EFEFEF; */
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-items: center;
-  font-family: 'AvenirRoman';
-  text-align: left;
-  margin-left: 30%;
-  margin-right: 15%;
-  z-index: 1;
-  transform: translateY(30%);
-  @media ${device.laptopL} {
+  color: #333;
+  @media ${device.mobileS} {
     font-size: 40px;
   }
-  @media ${device.desktop} {
+  @media ${device.mobileM} {
+    font-size: 50px;
+  }
+  @media ${device.mobileL} {
+    font-size: 60px;
+  }
+  @media ${device.tablet} {
     font-size: 70px;
   }
 `;
 
+const SkillsList = styled.div`
+  font-family: 'AvenirRoman';
+  z-index: 1;
+  
+  @media ${device.mobileS} {
+    margin-top: 20px;
+    font-size: 20px;
+  }
+  @media ${device.mobileM} {
+    margin-top: 20px;
+    font-size: 23px;
+  }
+  @media ${device.mobileL} {
+    margin-top: 20px;
+    font-size: 25px;
+  }
+  @media ${device.tablet} {
+    margin-top: 30px;
+    font-size: 30px;
+  }
+`;
+
 class Skills extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      screenHeight: 0,
-      scrollHeight: 0,
-      scrollPercent: 0,
-    };
-    this.handleScroll = this.handleScroll.bind(this);
-  }
-
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
-    this.setState({ scrollHeight: Math.round(window.document.documentElement.scrollHeight) });
-    this.setState({ screenHeight: Math.round(window.document.documentElement.clientHeight) });
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  handleScroll(event) {
-    const { body, documentElement } = event.srcElement;
-    const sd = Math.max(body.scrollTop, documentElement.scrollTop);
-    let sp = (sd / (documentElement.scrollHeight - documentElement.clientHeight) * 100);
-    const minlimit = (documentElement.clientHeight * 950) / documentElement.scrollHeight;
-    const maxlimit = (documentElement.clientHeight * 1180) / documentElement.scrollHeight;
-    if (sp >= minlimit && sp <= maxlimit + 3) {
-      sp -= minlimit;
-      this.setState({ scrollPercent: sp });
-    }
-  }
-
   render() {
-    const { scrollPercent } = this.state;
     return (
       <Container>
-        <SkillsTitle scrollPercent={scrollPercent}>SKILLS</SkillsTitle>
+        <SkillsTitle>SKILLS</SkillsTitle>
         <SkillsList>
           <div>
-            Research & Wireframing
-            <br />
-            Rapid prototyping
-            <br />
-            Interaction Design
-            <br />
-            <br />
-            Sketch
-            <br />
-            Studio
-            <br />
-            Figma
-            <br />
-          </div>
-          <div>
-            Principle
-            <br />
-            Zeplin
-            <br />
-            Invision
-            <br />
-            <br />
             React
             <br />
             React Native
             <br />
-            Angular 1
+            Node.js
+            <br />
+            <br />
+            Functional Programming
+            <br />
+            CSS Flexbox / Grids
+            <br />
+            Scalable Vector Graphics
+            <br />
+            <br />
+            Responsive Design
+            <br />
+            Testing & Debugging
+            <br />
+            Application Architecture
+            <br />
+            <br />
+            Sketch
+            <br />
+            Principle
+            <br />
+            Invision
             <br />
           </div>
         </SkillsList>
