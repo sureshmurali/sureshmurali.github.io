@@ -10,81 +10,47 @@ import SocialLogo from './SocialLogo';
 import device from '../../../Assets/Responsive/breakpoints';
 
 const Container = styled.section`
-    height:80vh;/* Since pageSplitTime is 1.4 */
+    height: 100vh;
     width:100%;
-    /* border: 1px solid blue; */
-    position: relative;
-    overflow: hidden;
+    border: 1px solid blue;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-content: center;
+    @media ${device.mobileS} {
+    padding-left:30px;
+    }
+    @media ${device.mobileM} {
+    padding-left:30px;
+    }
+    @media ${device.mobileL} {
+    padding-left:30px;
+    }
+    @media ${device.tablet} {
+    padding-left:60px;
+    }
 `;
 
-const ContactTitle = styled.div.attrs({
-  style: ({ scrollPercent }) => ({
-    transform: `translateX(${(scrollPercent) * 8}%)`,
-  }),
-})`
+const ContactTitle = styled.div`
   transition: transform 0.5s ease-out;
   font-family: 'AvenirHeavy';
-  font-size: 200px;
-  position: absolute;
+  font-size: 50px;
   color: #EEE;
-  top:12%;
-  left:-70%;
-  @media ${device.laptopL} {
-    font-size: 200px;
-  }
-  @media ${device.desktop} {
-    font-size: 350px;
-  }
 `;
 
 const SocialMediaIcons = styled.div`
   /* border: 1px solid black; */
-  margin-left: 20%;
-  margin-right: 3%;
   z-index: 1;
-  transform: translateY(210%);
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
+  display: grid;
+  grid-template: 80px 80px 80px / 1fr 1fr;
+  grid-gap: 10px;
 `;
 
 class Contact extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      screenHeight: 0,
-      scrollHeight: 0,
-      scrollPercent: 0,
-    };
-    this.handleScroll = this.handleScroll.bind(this);
-  }
-
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
-    this.setState({ scrollHeight: Math.round(window.document.documentElement.scrollHeight) });
-    this.setState({ screenHeight: Math.round(window.document.documentElement.clientHeight) });
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  handleScroll(event) {
-    const { body, documentElement } = event.srcElement;
-    const sd = Math.max(body.scrollTop, documentElement.scrollTop);
-    let sp = (sd / (documentElement.scrollHeight - documentElement.clientHeight) * 100);
-    const minlimit = (documentElement.clientHeight * 1040) / documentElement.scrollHeight;
-    if (sp >= minlimit && sp <= 100) {
-      sp -= minlimit;
-      this.setState({ scrollPercent: sp });
-    }
-  }
-
   render() {
-    const { scrollPercent } = this.state;
     return (
       <Container>
-        <ContactTitle scrollPercent={scrollPercent}>CONTACT</ContactTitle>
+        <ContactTitle>CONTACT</ContactTitle>
         <SocialMediaIcons>
           <SocialLogo imgURL={twitterImg} alternate="twitter" redirectURL="https://twitter.com/sureshmurali29" />
           <SocialLogo imgURL={githubImg} alternate="github" redirectURL="https://github.com/sureshmurali" />
