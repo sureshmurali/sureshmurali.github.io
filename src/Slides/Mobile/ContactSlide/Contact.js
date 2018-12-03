@@ -32,14 +32,25 @@ const Container = styled.section`
 `;
 
 const ContactTitle = styled.div`
-  transition: transform 0.5s ease-out;
   font-family: 'AvenirHeavy';
-  font-size: 50px;
-  color: #EEE;
+  color: #333;
+  @media ${device.mobileS} {
+    font-size: 40px;
+  }
+  @media ${device.mobileM} {
+    font-size: 50px;
+  }
+  @media ${device.mobileL} {
+    font-size: 60px;
+  }
+  @media ${device.tablet} {
+    font-size: 70px;
+  }
 `;
 
 const SocialMediaIcons = styled.div`
-  /* border: 1px solid black; */
+  border: 1px solid black;
+  margin-top: 30px;
   z-index: 1;
   display: grid;
   grid-template: 80px 80px 80px / 1fr 1fr;
