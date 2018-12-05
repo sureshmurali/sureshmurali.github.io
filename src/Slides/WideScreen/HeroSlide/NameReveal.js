@@ -7,6 +7,7 @@ const Stage = styled.div`
 position: relative;
 /* border:1px solid black; */
 z-index: 1;
+width:100%;
 `;
 
 const moveUp = init => keyframes`
