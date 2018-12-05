@@ -115,7 +115,7 @@ class Skills extends Component {
             <br />
             Principle
             <br />
-            Node.js
+            Invision
             <br />
           </div>
         </SkillsList>
