@@ -26,7 +26,7 @@ const Container = styled.section`
 
 const SkillsTitle = styled.div`
   font-family: 'AvenirHeavy';
-  color: #333;
+  color: #000;
   @media ${device.mobileS} {
     font-size: 40px;
   }

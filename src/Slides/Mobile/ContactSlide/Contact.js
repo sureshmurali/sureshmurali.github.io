@@ -12,7 +12,7 @@ import device from '../../../Assets/Responsive/breakpoints';
 const Container = styled.section`
     height: 100vh;
     width:100%;
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
@@ -33,7 +33,7 @@ const Container = styled.section`
 
 const ContactTitle = styled.div`
   font-family: 'AvenirHeavy';
-  color: #333;
+  color: #000;
   @media ${device.mobileS} {
     font-size: 40px;
   }
@@ -49,12 +49,12 @@ const ContactTitle = styled.div`
 `;
 
 const SocialMediaIcons = styled.div`
-  border: 1px solid black;
-  margin-top: 30px;
+  /* border: 1px solid black; */
+  margin-top: 60px;
   z-index: 1;
   display: grid;
   grid-template: 80px 80px 80px / 1fr 1fr;
-  grid-gap: 10px;
+  grid-gap: 40px;
 `;
 
 class Contact extends Component {
