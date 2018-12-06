@@ -30,6 +30,10 @@ const Container = styled.section`
     padding-left:60px;
     margin-bottom:60px;
     }
+    @media ${device.laptop} {
+    padding-left:90px;
+    margin-bottom:90px;
+    }
 `;
 
 const ContactTitle = styled.div`
@@ -46,6 +50,9 @@ const ContactTitle = styled.div`
   }
   @media ${device.tablet} {
     font-size: 90px;
+  }
+  @media ${device.laptop} {
+    font-size: 95px;
   }
 `;
 
@@ -69,6 +76,10 @@ const SocialMediaIcons = styled.div`
   @media ${device.tablet} {
     margin-top: 80px;
     grid-gap: 170px;
+  }
+  @media ${device.laptop} {
+    margin-top: 120px;
+    grid-gap: 200px;
   }
 `;
 

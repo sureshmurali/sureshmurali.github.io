@@ -22,6 +22,9 @@ const Container = styled.section`
     @media ${device.tablet} {
     padding-left:60px;
     }
+    @media ${device.laptop} {
+    padding-left:90px;
+    }
 `;
 
 const SkillsTitle = styled.div`
@@ -37,7 +40,10 @@ const SkillsTitle = styled.div`
     font-size: 60px;
   }
   @media ${device.tablet} {
-    font-size: 70px;
+    font-size: 90px;
+  }
+  @media ${device.laptop} {
+    font-size: 95px;
   }
 `;
 
@@ -59,7 +65,11 @@ const SkillsList = styled.div`
   }
   @media ${device.tablet} {
     margin-top: 30px;
-    font-size: 30px;
+    font-size: 35px;
+  }
+  @media ${device.laptop} {
+    margin-top: 60px;
+    font-size: 45px;
   }
 `;
 

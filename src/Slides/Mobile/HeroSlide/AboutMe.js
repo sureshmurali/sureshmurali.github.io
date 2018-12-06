@@ -30,7 +30,11 @@ const AboutMeDescription = styled.span`
   }
   @media ${device.tablet} {
     padding: 80px;
-    font-size: 30px;
+    font-size: 40px;
+  }
+  @media ${device.laptop} {
+    padding: 90px;
+    font-size: 45px;
   }
 `;
 

@@ -27,7 +27,10 @@ const Name = styled.div`
     font-size: 90px;
   }
   @media ${device.tablet} {
-    font-size: 100px;
+    font-size: 150px;
+  }
+  @media ${device.laptop} {
+    font-size: 160px;
   }
 `;
 
@@ -45,7 +48,10 @@ const Title = styled.div`
     font-size: 17px;
   }
   @media ${device.tablet} {
-    font-size: 20px;
+    font-size: 30px;
+  }
+  @media ${device.laptop} {
+    font-size: 35px;
   }
 `;
 
