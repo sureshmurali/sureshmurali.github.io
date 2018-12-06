@@ -5,13 +5,21 @@ import device from '../../../Assets/Responsive/breakpoints';
 
 const LogoImage = styled.img`
 /* border: 1px solid black; */
-@media ${device.laptopL} {
-    height: 90px;
-    width: 90px;
+  @media ${device.mobileS} {
+    height: 65px;
+    width: 65px;
   }
-  @media ${device.desktop} {
-    height: 180px;
-    width: 180px;
+  @media ${device.mobileM} {
+    height: 80px;
+    width: 80px;
+  }
+  @media ${device.mobileL} {
+    height: 100px;
+    width: 100px;
+  }
+  @media ${device.tablet} {
+    height: 130px;
+    width: 130px;
   }
 `;
 
