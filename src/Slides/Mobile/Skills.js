@@ -52,19 +52,19 @@ const SkillsList = styled.div`
   z-index: 1;
   
   @media ${device.mobileS} {
-    margin-top: 20px;
+    margin-top: 30px;
     font-size: 20px;
   }
   @media ${device.mobileM} {
-    margin-top: 20px;
+    margin-top: 35px;
     font-size: 23px;
   }
   @media ${device.mobileL} {
-    margin-top: 20px;
+    margin-top: 35px;
     font-size: 25px;
   }
   @media ${device.tablet} {
-    margin-top: 30px;
+    margin-top: 45px;
     font-size: 35px;
   }
   @media ${device.laptop} {
