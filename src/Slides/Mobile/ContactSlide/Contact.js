@@ -28,6 +28,7 @@ const Container = styled.section`
     }
     @media ${device.tablet} {
     padding-left:60px;
+    margin-bottom:60px;
     }
 `;
 
@@ -44,17 +45,31 @@ const ContactTitle = styled.div`
     font-size: 60px;
   }
   @media ${device.tablet} {
-    font-size: 70px;
+    font-size: 90px;
   }
 `;
 
 const SocialMediaIcons = styled.div`
   /* border: 1px solid black; */
-  margin-top: 60px;
   z-index: 1;
   display: grid;
   grid-template: 80px 80px 80px / 1fr 1fr;
-  grid-gap: 40px;
+  @media ${device.mobileS} {
+    margin-top: 60px;
+    grid-gap: 40px;
+  }
+  @media ${device.mobileM} {
+    margin-top: 60px;
+    grid-gap: 60px;
+  }
+  @media ${device.mobileL} {
+    margin-top: 60px;
+    grid-gap: 70px;
+  }
+  @media ${device.tablet} {
+    margin-top: 80px;
+    grid-gap: 170px;
+  }
 `;
 
 class Contact extends Component {
