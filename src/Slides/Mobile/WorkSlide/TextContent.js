@@ -11,16 +11,25 @@ display: flex;
 flex-flow: column nowrap;
 /* border: 1px dashed black; */
 height:100vh;
-width: 50%;
+width: 100%;
 `;
 
 const ProjectName = styled.div`
   font-family: 'AvenirHeavy';
-  @media ${device.laptopL} {
-    font-size: 80px;
+  @media ${device.mobileS} {
+    font-size: 50px;
   }
-  @media ${device.desktop} {
-    font-size: 120px;
+  @media ${device.mobileM} {
+    font-size: 55px;
+  }
+  @media ${device.mobileL} {
+    font-size: 60px;
+  }
+  @media ${device.tablet} {
+    font-size: 65px;
+  }
+  @media ${device.laptop} {
+    font-size: 90px;
   }
   /* border: 1px dashed black; */
 `;
@@ -79,7 +88,6 @@ flex-flow: column nowrap;
 /* border: 1px dashed black; */
 width: 100%;
 padding: 5%;
-padding-left:10%;
 `;
 
 

@@ -64,7 +64,7 @@ class ImageContent extends Component {
     const boxHeight = pageSplitTimes * 100;
     return (
       <ImageContainer>
-        <ImageBox height={boxHeight}>
+        {/* <ImageBox height={boxHeight}>
           <VoistrapImages
             boxHeight={boxHeight}
             index={1}
@@ -117,7 +117,7 @@ class ImageContent extends Component {
             screenHeight={screenHeight}
             scrollHeight={scrollHeight}
           />
-        </ImageBox>
+        </ImageBox> */}
       </ImageContainer>
     );
   }
