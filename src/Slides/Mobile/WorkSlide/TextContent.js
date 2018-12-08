@@ -17,16 +17,16 @@ width: 100%;
 const ProjectName = styled.div`
   font-family: 'AvenirHeavy';
   @media ${device.mobileS} {
-    font-size: 50px;
+    font-size: 40px;
   }
   @media ${device.mobileM} {
-    font-size: 55px;
+    font-size: 45px;
   }
   @media ${device.mobileL} {
-    font-size: 60px;
+    font-size: 50px;
   }
   @media ${device.tablet} {
-    font-size: 65px;
+    font-size: 60px;
   }
   @media ${device.laptop} {
     font-size: 90px;

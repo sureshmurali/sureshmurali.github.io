@@ -65,7 +65,7 @@ class Work extends Component {
       },
       {
         number: '06',
-        projectName: 'Voistrap PC',
+        projectName: 'Voistrap demo',
         projectDesc: 'Web app project to give workplace insights using indoor localization, voice and schedule.',
         projectType: 'WEB APP',
         roles: ['Full Stack Developer', 'UI Designer'],
