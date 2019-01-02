@@ -16,7 +16,7 @@ class Work extends Component {
       vh: 0,
       slideNumber: 0,
     };
-    this.pageSplitTimes = 1.4;
+    this.pageSplitTimes = 1.3;
     this.lastScrollTop = 0;
     this.scrollDirectionDown = true;
     this.handleScroll = this.handleScroll.bind(this);

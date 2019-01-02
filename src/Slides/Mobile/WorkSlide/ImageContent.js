@@ -10,16 +10,15 @@ import VoistrapWebImages from './ParallaxImages/VoistrapWebImages';
 
 const ImageContainer = styled.div`
 /* border: 0.1px dashed black; */
-margin-left:50%;
-width:50%;
+width:100%;
 height:900vh;
 display: flex;
 flex-flow: column nowrap;
 `;
 
 const ImageBox = styled.div`
-/* outline: 0.1px dashed green; */
-margin-top:40vh;
+outline: 0.1px dashed green;
+margin-top:30vh;
 height: 100vh;
 position: relative;
 `;
@@ -64,7 +63,7 @@ class ImageContent extends Component {
     const boxHeight = pageSplitTimes * 100;
     return (
       <ImageContainer>
-        {/* <ImageBox height={boxHeight}>
+        <ImageBox height={boxHeight}>
           <VoistrapImages
             boxHeight={boxHeight}
             index={1}
@@ -73,7 +72,7 @@ class ImageContent extends Component {
             scrollHeight={scrollHeight}
           />
         </ImageBox>
-        <ImageBox height={boxHeight}>
+        {/* <ImageBox height={boxHeight}>
           <WhatsMyFoodImages
             boxHeight={boxHeight}
             index={2}
