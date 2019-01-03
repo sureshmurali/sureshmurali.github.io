@@ -12,6 +12,7 @@ const ImageContainer = styled.div`
 /* border: 0.1px dashed black; */
 width:100%;
 height:900vh;
+margin-bottom:30vh;
 display: flex;
 flex-flow: column nowrap;
 `;
@@ -99,7 +100,7 @@ class ImageContent extends Component {
             scrollHeight={scrollHeight}
           />
         </ImageBox>
-        {/*  <ImageBox height={boxHeight}>
+        <ImageBox height={boxHeight}>
           <KosenImages
             boxHeight={boxHeight}
             index={5}
@@ -111,12 +112,12 @@ class ImageContent extends Component {
         <ImageBox height={boxHeight}>
           <VoistrapWebImages
             boxHeight={boxHeight}
-            index={5}
+            index={6}
             scrollPercent={scrollPercent}
             screenHeight={screenHeight}
             scrollHeight={scrollHeight}
           />
-        </ImageBox> */}
+        </ImageBox>
       </ImageContainer>
     );
   }
