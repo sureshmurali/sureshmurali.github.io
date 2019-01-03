@@ -72,7 +72,7 @@ class ImageContent extends Component {
             scrollHeight={scrollHeight}
           />
         </ImageBox>
-        {/* <ImageBox height={boxHeight}>
+        <ImageBox height={boxHeight}>
           <WhatsMyFoodImages
             boxHeight={boxHeight}
             index={2}
@@ -81,7 +81,7 @@ class ImageContent extends Component {
             scrollHeight={scrollHeight}
           />
         </ImageBox>
-        <ImageBox height={boxHeight}>
+        {/* <ImageBox height={boxHeight}>
           <ComingOrNotImages
             boxHeight={boxHeight}
             index={3}
