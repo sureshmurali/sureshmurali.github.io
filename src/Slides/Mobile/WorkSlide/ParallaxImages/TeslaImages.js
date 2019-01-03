@@ -43,7 +43,7 @@ const Battery = styled.img.attrs({
 })`
 transition: transform 0.2s ease-out;
 bottom:-110vh;
-left:15vw;
+left:10vw;
 transform-origin: left center;
 position: absolute;
 /* border: 1px dashed red; */
