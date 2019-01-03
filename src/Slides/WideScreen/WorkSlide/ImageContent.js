@@ -110,7 +110,7 @@ class ImageContent extends Component {
         <ImageBox height={boxHeight}>
           <VoistrapWebImages
             boxHeight={boxHeight}
-            index={5}
+            index={6}
             scrollPercent={scrollPercent}
             screenHeight={screenHeight}
             scrollHeight={scrollHeight}
