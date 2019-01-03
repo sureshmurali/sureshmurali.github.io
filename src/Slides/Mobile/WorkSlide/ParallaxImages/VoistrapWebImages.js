@@ -9,56 +9,58 @@ import bigBubble from '../../../../Assets/Images/Showcase/BigBubble.png';
 
 const Dots = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 26}%)`,
+    transform: `translate(0px,-${(scroll) * 38}%) scale(0.99)`,
   }),
 })`
 transition: transform 0.2s ease-out;
 position: absolute;
-bottom: -300vh;
-left:0vw;
+bottom: -250vh;
+left:2vw;
+transform-origin: left center;
 /* border: 1px dashed red; */
-height: 50vh; 
+width: 80vw; 
 `;
 
 const Bubbles = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 12}%) scale(0.9)`,
+    transform: `translate(0px,-${(scroll) * 24}%) scale(0.9)`,
   }),
 })`
 position: absolute;
-bottom:-150vh;
-right: 0vw;
+bottom:-210vh;
+right: 2vw;
 transform-origin: right center;
 /* border: 1px dashed red; */
-height: 50vh;
-filter: blur(0.6px);
+width: 80vw;
+filter: blur(0.2px);
 `;
 
 const BigBubble = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 6}%) scale(0.7)`,
+    transform: `translate(0px,-${(scroll) * 12}%) scale(0.8)`,
   }),
 })`
-bottom:-100vh;
-left:-4vw;
+bottom:-160vh;
+left:2vw;
+transform-origin: left center;
 position: absolute;
 /* border: 1px dashed red; */
-height: 50vh;
-filter: blur(0.8px);
+width: 80vw;
+filter: blur(0.5px);
 `;
 
 const Paths = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 2}%) scale(0.6)`,
+    transform: `translate(0px,-${(scroll) * 3}%) scale(0.7)`,
   }),
 })`
-bottom:-65vh;
-right: 1vw;
+bottom:-120vh;
+right: 2vw;
 transform-origin: right center;
 position: absolute;
 /* border: 1px dashed red; */
-height: 50vh;
-filter: blur(1.2px);
+width: 80vw;
+filter: blur(0.8px);
 `;
 
 class VoistrapWebImages extends Component {

@@ -7,32 +7,32 @@ import player from '../../../../Assets/Images/Kosen/Player.png';
 
 const JapaneseTab = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 14}%) scale(0.8)`,
+    transform: `translate(0px,-${(scroll) * 13}%) scale(0.8)`,
   }),
 })`
 transition: transform 0.2s ease-out;
 position: absolute;
-bottom:-240vh;
+bottom:-220vh;
 left: 2vw;
 transform-origin: left center;
 /* border: 1px dashed red; */
-height: 80vh;
+height: 70vh;
 
 `;
 
 const EnglishTab = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 9}%) scale(0.7)`,
+    transform: `translate(0px,-${(scroll) * 9}%) scale(0.6)`,
   }),
 })`
 transition: transform 0.2s ease-out;
 position: absolute;
-bottom: -220vh;
+bottom: -210vh;
 right: 2vw;
 transform-origin: right center;
 /* border: 1px dashed red; */
 filter: blur(0.6px);
-height: 80vh; 
+height: 70vh; 
 `;
 
 const PlayerTab = styled.img.attrs({
@@ -41,12 +41,12 @@ const PlayerTab = styled.img.attrs({
   }),
 })`
 transition: transform 0.2s ease-out;
-bottom:-165vh;
+bottom:-135vh;
 left: 2vw;
 transform-origin: left center;
 position: absolute;
 /* border: 1px dashed red; */
-height: 80vh;
+height: 70vh;
 filter: blur(1px);
 `;
 
