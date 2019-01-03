@@ -7,29 +7,30 @@ import cmgOrNotIphoneImg from '../../../../Assets/Images/ComingOrNot/Iphone.png'
 
 const Iphone = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 12}%)`,
+    transform: `translate(0px,-${(scroll) * 18}%) scale(0.7)`,
   }),
 })`
 transition: transform 0.2s ease-out;
 position: absolute;
-bottom:-70vh;
-left: 0vw;
+bottom: -260vh;
+transform-origin: left center;
+left:2vw;
 /* border: 1px dashed red; */
-height: 80vh;
+height: 100vh; 
 `;
 
 const Tablet = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 2}%) scale(0.94)`,
+    transform: `translate(0px,-${(scroll) * 10}%) scale(0.65)`,
   }),
 })`
 transition: transform 0.2s ease-out;
 position: absolute;
-bottom: -40vh;
-right:0vw;
+bottom: -230vh;
+transform-origin: right center;
+right:2vw;
 /* border: 1px dashed red; */
-height: 80vh; 
-filter: blur(0.6px);
+height: 100vh; 
 `;
 
 class ComingOrNotImages extends Component {
