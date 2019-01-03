@@ -23,7 +23,7 @@ height: 80vh;
 
 const VoistrapPhoneMeetings = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 8}%) scale(0.62)`,
+    transform: `translate(0px,-${(scroll) * 8.5}%) scale(0.62)`,
   }),
 })`
 transition: transform 0.2s ease-out;
@@ -38,12 +38,13 @@ filter: blur(0.6px);
 
 const VoistrapPhoneScore = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 5}%) scale(0.35)`,
+    transform: `translate(0px,-${(scroll) * 3.5}%) scale(0.5)`,
   }),
 })`
 transition: transform 0.2s ease-out;
-bottom:-75vh;
-left:2vw;
+bottom:-90vh;
+left:15vw;
+transform-origin: left center;
 position: absolute;
 /* border: 1px dashed red; */
 height: 80vh;
@@ -52,12 +53,13 @@ filter: blur(0.8px);
 
 const VoistrapPhonePeople = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 2}%) scale(0.3)`,
+    transform: `translate(0px,-${(scroll) * 2}%) scale(0.45)`,
   }),
 })`
 transition: transform 0.2s ease-out;
-bottom:-55vh;
-right: 5vw;
+bottom:-85vh;
+right: 10vw;
+transform-origin: right center;
 position: absolute;
 /* border: 1px dashed red; */
 height: 80vh;
