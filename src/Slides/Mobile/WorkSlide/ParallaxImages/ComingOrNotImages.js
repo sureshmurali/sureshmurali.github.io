@@ -7,12 +7,12 @@ import cmgOrNotIphoneImg from '../../../../Assets/Images/ComingOrNot/Iphone.png'
 
 const Iphone = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 18}%) scale(0.7)`,
+    transform: `translate(0px,-${(scroll) * 22}%) scale(0.65)`,
   }),
 })`
 transition: transform 0.2s ease-out;
 position: absolute;
-bottom: -260vh;
+bottom: -320vh;
 transform-origin: left center;
 left:2vw;
 /* border: 1px dashed red; */
@@ -21,12 +21,12 @@ height: 100vh;
 
 const Tablet = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 10}%) scale(0.65)`,
+    transform: `translate(0px,-${(scroll) * 6}%) scale(0.65)`,
   }),
 })`
 transition: transform 0.2s ease-out;
 position: absolute;
-bottom: -230vh;
+bottom: -180vh;
 transform-origin: right center;
 right:2vw;
 /* border: 1px dashed red; */
