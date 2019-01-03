@@ -13,7 +13,7 @@ const Restaurant = styled.img.attrs({
 })`
 transition: transform 0.2s ease-out;
 position: absolute;
-bottom: -150vh;
+bottom: -170vh;
 transform-origin: left center;
 left:2vw;
 /* border: 1px dashed red; */
@@ -27,7 +27,7 @@ const Home = styled.img.attrs({
 })`
 transition: transform 0.2s ease-out;
 position: absolute;
-bottom:-105vh;
+bottom:-125vh;
 right: 2vw;
 transform-origin: right center;
 /* border: 1px dashed red; */
@@ -41,7 +41,7 @@ const AddFood = styled.img.attrs({
   }),
 })`
 transition: transform 0.2s ease-out;
-bottom:-90vh;
+bottom:-110vh;
 left:15vw;
 transform-origin: left center;
 position: absolute;
@@ -56,7 +56,7 @@ const AddRestaurant = styled.img.attrs({
   }),
 })`
 transition: transform 0.2s ease-out;
-bottom:-85vh;
+bottom:-105vh;
 right: 10vw;
 transform-origin: right center;
 position: absolute;

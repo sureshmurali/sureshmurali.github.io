@@ -17,7 +17,7 @@ flex-flow: column nowrap;
 `;
 
 const ImageBox = styled.div`
-outline: 0.1px dashed green;
+/* outline: 0.1px dashed green; */
 margin-top:30vh;
 height: 100vh;
 position: relative;
@@ -81,7 +81,7 @@ class ImageContent extends Component {
             scrollHeight={scrollHeight}
           />
         </ImageBox>
-        {/* <ImageBox height={boxHeight}>
+        <ImageBox height={boxHeight}>
           <ComingOrNotImages
             boxHeight={boxHeight}
             index={3}
@@ -99,7 +99,7 @@ class ImageContent extends Component {
             scrollHeight={scrollHeight}
           />
         </ImageBox>
-        <ImageBox height={boxHeight}>
+        {/*  <ImageBox height={boxHeight}>
           <KosenImages
             boxHeight={boxHeight}
             index={5}
