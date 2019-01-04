@@ -10,7 +10,9 @@ left:0;
 display: flex;
 flex-flow: column nowrap;
 /* border: 1px dashed black; */
-height:100vh;
+height: 100%;
+min-height: 100vh;
+transition: min-height 999999s;
 width: 100%;
 `;
 

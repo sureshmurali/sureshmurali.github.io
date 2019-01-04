@@ -7,7 +7,9 @@ const Container = styled.section`
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    height:50vh;
+    height: 100%;
+    min-height: 50vh;
+    transition: min-height 999999s;
     width:100%;
     background-color: white;
     /* border: 1px solid blue; */

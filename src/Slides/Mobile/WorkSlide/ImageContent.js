@@ -11,7 +11,9 @@ import VoistrapWebImages from './ParallaxImages/VoistrapWebImages';
 const ImageContainer = styled.div`
 /* border: 0.1px dashed black; */
 width:100%;
-height:900vh;
+height:100%;
+min-height: 900vh;
+transition: min-height 999999s;
 margin-bottom:30vh;
 display: flex;
 flex-flow: column nowrap;
@@ -20,7 +22,9 @@ flex-flow: column nowrap;
 const ImageBox = styled.div`
 /* outline: 0.1px dashed green; */
 margin-top:30vh;
-height: 100vh;
+height:100%;
+min-height: 100vh;
+transition: min-height 999999s;
 position: relative;
 `;
 

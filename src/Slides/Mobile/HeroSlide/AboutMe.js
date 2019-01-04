@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import device from '../../../Assets/Responsive/breakpoints';
 
 const Container = styled.section`
-    height: 50vh;/* Since pageSplitTime is 1.4 */
+    height: 100%;/* Since pageSplitTime is 1.4 */
+    min-height: 50vh;
+    transition: min-height 999999s;
     width:100%;
-    /* border: 1px solid blue; */
+    border: 1px solid blue;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
