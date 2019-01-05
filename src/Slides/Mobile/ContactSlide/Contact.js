@@ -10,6 +10,7 @@ import SocialLogo from './SocialLogo';
 import device from '../../../Assets/Responsive/breakpoints';
 
 const Container = styled.section`
+    margin-top:20vh;
     height: 100vh;
     width:100%;
     /* border: 1px solid blue; */

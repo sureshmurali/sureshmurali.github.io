@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import vhCheck from 'vh-check';
 import VoistrapImages from './ParallaxImages/VoistrapImages';
 import WhatsMyFoodImages from './ParallaxImages/WhatsMyFoodImages';
 import ComingOrNotImages from './ParallaxImages/ComingOrNotImages';
@@ -36,9 +37,12 @@ class ImageContent extends Component {
   }
 
   componentDidMount() {
+    const vhDiff = vhCheck().offset;
     window.addEventListener('scroll', this.handleScroll);
     this.setState({ scrollHeight: Math.round(window.document.documentElement.scrollHeight) });
-    this.setState({ screenHeight: Math.round(window.document.documentElement.clientHeight) });
+    this.setState(
+      { screenHeight: Math.round(window.document.documentElement.clientHeight + vhDiff) },
+    );
     console.log('scrollHeight', Math.round(window.document.documentElement.scrollHeight));
     console.log('screenHeight', Math.round(window.document.documentElement.clientHeight));
   }
