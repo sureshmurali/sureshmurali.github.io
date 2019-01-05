@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import vhCheck from 'vh-check';
 import TextContent from './TextContent';
 import ImageContent from './ImageContent';
 
@@ -82,8 +83,9 @@ class Work extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
+    const vhDiff = vhCheck().offset;
     this.setState(
-      { vh: Math.round(window.document.documentElement.clientHeight * this.pageSplitTimes) },
+      { vh: Math.round((window.document.documentElement.clientHeight + vhDiff) * this.pageSplitTimes) },
     );
   }
 
