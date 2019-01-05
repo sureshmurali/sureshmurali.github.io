@@ -85,7 +85,11 @@ class Work extends Component {
     window.addEventListener('scroll', this.handleScroll);
     const vhDiff = vhCheck().offset;
     this.setState(
-      { vh: Math.round((window.document.documentElement.clientHeight + vhDiff) * this.pageSplitTimes) },
+      {
+        vh: Math.round(
+          (window.document.documentElement.clientHeight + vhDiff) * this.pageSplitTimes,
+        ),
+      },
     );
   }
 

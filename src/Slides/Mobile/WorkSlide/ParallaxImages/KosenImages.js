@@ -28,7 +28,7 @@ const EnglishTab = styled.img.attrs({
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -210vh;
-right: 2vw;
+right: 3vw;
 transform-origin: right center;
 /* border: 1px dashed red; */
 filter: blur(0.6px);
@@ -42,7 +42,7 @@ const PlayerTab = styled.img.attrs({
 })`
 transition: transform 0.2s ease-out;
 bottom:-135vh;
-left: 2vw;
+left: 3vw;
 transform-origin: left center;
 position: absolute;
 /* border: 1px dashed red; */

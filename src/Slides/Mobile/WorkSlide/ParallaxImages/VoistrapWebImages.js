@@ -9,7 +9,7 @@ import bigBubble from '../../../../Assets/Images/Showcase/BigBubble.png';
 
 const Dots = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 38}%) scale(0.99)`,
+    transform: `translate(0px,-${(scroll) * 36}%) scale(0.99)`,
   }),
 })`
 transition: transform 0.2s ease-out;
@@ -23,7 +23,7 @@ width: 80vw;
 
 const Bubbles = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 24}%) scale(0.9)`,
+    transform: `translate(0px,-${(scroll) * 25}%) scale(0.9)`,
   }),
 })`
 position: absolute;
@@ -37,7 +37,7 @@ filter: blur(0.2px);
 
 const BigBubble = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 12}%) scale(0.8)`,
+    transform: `translate(0px,-${(scroll) * 13}%) scale(0.8)`,
   }),
 })`
 bottom:-160vh;
@@ -51,7 +51,7 @@ filter: blur(0.5px);
 
 const Paths = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 3}%) scale(0.7)`,
+    transform: `translate(0px,-${(scroll) * 4}%) scale(0.7)`,
   }),
 })`
 bottom:-120vh;
