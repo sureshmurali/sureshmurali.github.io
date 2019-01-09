@@ -38,6 +38,11 @@ const TextToReveal = styled.div`
     animation: ${props => (props.reveal ? moveUp(100) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
     transform: translateY(${100 * 1.4}px);
   }
+  @media ${device.laptop} {
+    font-size: 130px;
+    animation: ${props => (props.reveal ? moveUp(125) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
+    transform: translateY(${130 * 1.4}px);
+  }
   @media ${device.laptopL} {
     font-size: 150px;
     animation: ${props => (props.reveal ? moveUp(150) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
