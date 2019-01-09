@@ -21,6 +21,9 @@ const SkillsTitle = styled.div.attrs({
   color: #EEE;
   top:40%;
   right:-50%;
+  @media ${device.laptop} {
+    font-size: 180px;
+  }
   @media ${device.laptopL} {
     font-size: 200px;
   }
@@ -41,6 +44,9 @@ const SkillsList = styled.div`
   margin-right: 10%;
   z-index: 1;
   transform: translateY(30%);
+  @media ${device.laptop} {
+    font-size: 35px;
+  }
   @media ${device.laptopL} {
     font-size: 40px;
   }
