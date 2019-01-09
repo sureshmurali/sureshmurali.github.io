@@ -5,6 +5,10 @@ import device from '../../../Assets/Responsive/breakpoints';
 
 const LogoImage = styled.img`
 /* border: 1px solid black; */
+@media ${device.laptop} {
+    height: 85px;
+    width: 85px;
+  }
 @media ${device.laptopL} {
     height: 90px;
     width: 90px;

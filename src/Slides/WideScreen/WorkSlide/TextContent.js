@@ -16,6 +16,9 @@ width: 50%;
 
 const ProjectName = styled.div`
   font-family: 'AvenirHeavy';
+  @media ${device.laptop} {
+    font-size: 70px;
+  }
   @media ${device.laptopL} {
     font-size: 80px;
   }
@@ -28,6 +31,9 @@ const ProjectName = styled.div`
 const ProjectDesc = styled.div`
   padding-top:2%;
   font-family: 'AvenirBook';
+  @media ${device.laptop} {
+    font-size: 25px;
+  }
   @media ${device.laptopL} {
     font-size: 30px;
   }
@@ -40,6 +46,9 @@ const ProjectDesc = styled.div`
 const MyRole = styled.div`
   padding-top:5%;
   font-family: 'AvenirMedium';
+  @media ${device.laptop} {
+    font-size: 25px;
+  }
   @media ${device.laptopL} {
     font-size: 30px;
   }
@@ -51,6 +60,9 @@ const MyRole = styled.div`
 
 const ProjectID = styled.div`
   font-family: 'AvenirHeavy';
+  @media ${device.laptop} {
+    font-size: 25px;
+  }
   @media ${device.laptopL} {
     font-size: 30px;
   }
@@ -63,6 +75,9 @@ const ProjectID = styled.div`
 
 const ProjectType = styled.div`
   font-family: 'AvenirHeavy';
+  @media ${device.laptop} {
+    font-size: 25px;
+  }
   @media ${device.laptopL} {
     font-size: 30px;
   }

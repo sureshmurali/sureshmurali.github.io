@@ -21,6 +21,9 @@ const AboutMeTitle = styled.div.attrs({
   color: #EEE;
   top:5%;
   left:-15%;
+  @media ${device.laptop} {
+    font-size: 180px;
+  }
   @media ${device.laptopL} {
     font-size: 200px;
   }
@@ -35,6 +38,10 @@ const AboutMeDescription = styled.div`
   text-align: left;
   margin-left: 30%;
   margin-right: 5%;
+  @media ${device.laptop} {
+    transform: translateY(90%);
+    font-size: 30px;
+  }
   @media ${device.laptopL} {
     transform: translateY(87%);
     font-size: 38px;

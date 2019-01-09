@@ -40,9 +40,9 @@ const TextToReveal = styled.div`
     transform: translateY(${28 * 1.4}px);
   }
   @media ${device.laptop} {
-    font-size: 37px;
-    animation: ${props => (props.reveal ? moveUp(37) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
-    transform: translateY(${37 * 1.4}px);
+    font-size: 40px;
+    animation: ${props => (props.reveal ? moveUp(40) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
+    transform: translateY(${40 * 1.4}px);
   }
   @media ${device.laptopL} {
     font-size: 50px;
