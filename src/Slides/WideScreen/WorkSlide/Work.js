@@ -82,7 +82,13 @@ class Work extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    this.setState({ vh: Math.round(window.innerHeight * this.pageSplitTimes) });
+    this.setState(
+      {
+        vh: Math.round(
+          window.document.documentElement.clientHeight * this.pageSplitTimes,
+        ),
+      },
+    );
   }
 
   componentWillUnmount() {
