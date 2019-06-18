@@ -102,11 +102,11 @@ class Skills extends Component {
             Node.js
             <br />
             <br />
+            Rapid Prototyping
+            <br />
             Functional Programming
             <br />
-            CSS Flexbox / Grids
-            <br />
-            Scalable Vector Graphics
+            Interaction Development
             <br />
           </div>
           <div>
@@ -121,7 +121,7 @@ class Skills extends Component {
             <br />
             Principle
             <br />
-            Invision
+            Abstract
             <br />
           </div>
         </SkillsList>
