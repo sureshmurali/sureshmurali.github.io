@@ -2,7 +2,7 @@
 
 Website link: [sureshmurali.github.io](sureshmurali.github.io)
 
-![image](https://user-images.githubusercontent.com/8108361/59651644-83f58000-91c5-11e9-8c0c-ef81ba30993e.png)
+![Protfolio GIF](https://user-images.githubusercontent.com/8108361/59652016-03d01a00-91c7-11e9-8106-798d16488073.gif)
 
 ## How to deploy?
 
