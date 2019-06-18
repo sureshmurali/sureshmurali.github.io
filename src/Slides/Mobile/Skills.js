@@ -9,21 +9,21 @@ const Container = styled.section`
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
-    align-content: center;
+    align-content: flex-start;
     @media ${device.mobileS} {
-    padding-left:30px;
-    }
-    @media ${device.mobileM} {
-    padding-left:30px;
-    }
-    @media ${device.mobileL} {
-    padding-left:30px;
-    }
-    @media ${device.tablet} {
     padding-left:60px;
     }
-    @media ${device.laptop} {
+    @media ${device.mobileM} {
+    padding-left:60px;
+    }
+    @media ${device.mobileL} {
+    padding-left:60px;
+    }
+    @media ${device.tablet} {
     padding-left:90px;
+    }
+    @media ${device.laptop} {
+    padding-left:120px;
     }
 `;
 

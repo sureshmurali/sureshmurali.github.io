@@ -17,23 +17,23 @@ const Container = styled.section`
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
-    align-content: center;
+    align-content: flex-start;
     @media ${device.mobileS} {
-    padding-left:30px;
+    padding-left:60px;
     }
     @media ${device.mobileM} {
-    padding-left:30px;
+    padding-left:60px;
     }
     @media ${device.mobileL} {
-    padding-left:30px;
+    padding-left:60px;
     }
     @media ${device.tablet} {
-    padding-left:60px;
-    margin-bottom:60px;
-    }
-    @media ${device.laptop} {
     padding-left:90px;
     margin-bottom:90px;
+    }
+    @media ${device.laptop} {
+    padding-left:120px;
+    margin-bottom:120px;
     }
 `;
 
