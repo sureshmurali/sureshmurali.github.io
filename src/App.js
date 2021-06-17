@@ -33,6 +33,9 @@ class App extends Component {
          • ${ipInfo.org}`;
         fetch(process.env.SLACK_URL, {
           credentials: 'omit',
+          headers: {
+            'Content-type': 'application/x-www-form-urlencoded'
+          },
           method: 'POST',
           body: JSON.stringify({ text: message }),
         });
