@@ -34,7 +34,7 @@ class App extends Component {
         fetch(process.env.SLACK_URL, {
           credentials: 'omit',
           headers: {
-            'Content-type': 'application/json'
+            'Content-type': 'application/x-www-form-urlencoded'
           },
           method: 'POST',
           body: JSON.stringify({ text: message }),
