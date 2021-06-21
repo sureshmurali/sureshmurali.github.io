@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import parser from 'ua-parser-js';
 import { createGlobalStyle } from 'styled-components';
 import MediaQuery from 'react-responsive';
 import WideScreenHero from './Slides/WideScreen/HeroSlide/Hero';
@@ -23,23 +22,6 @@ class App extends Component {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
-    fetch(atob("aHR0cHM6Ly9ob29rcy5zbGFjay5jb20vc2VydmljZXMvVDY5SjhGTDA2L0IwMjVTSjJNVjZEL3NOSFVWZWlmck5iVUx2dGJTcW9YNzdveA=="))
-      .then(data => data.json())
-      .then((ipInfo) => {
-        const ua = parser(navigator.userAgent);
-        const message = `${ipInfo.region}, ${ipInfo.city}
-         • ${ua.browser.name} ${ua.browser.version}
-         • ${ua.os.name} ${ua.os.version}
-         • ${ipInfo.org}`;
-        fetch(process.env.SLACK_URL, {
-          credentials: 'omit',
-          headers: {
-            'Content-type': 'application/x-www-form-urlencoded'
-          },
-          method: 'POST',
-          body: JSON.stringify({ text: message }),
-        });
-      });
   }
 
   render() {
