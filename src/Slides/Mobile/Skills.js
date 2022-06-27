@@ -101,9 +101,9 @@ class Skills extends Component {
             Application Architecture
             <br />
             <br />
-            Sketch
+            Figma & Sketch
             <br />
-            Principle
+            Design system
             <br />
             Abstract
             <br />
