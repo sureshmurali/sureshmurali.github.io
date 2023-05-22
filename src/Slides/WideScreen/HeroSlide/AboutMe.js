@@ -85,8 +85,8 @@ class AboutMe extends Component {
       <Container>
         <AboutMeTitle scrollPercent={scrollPercent}>ABOUT ME</AboutMeTitle>
         <AboutMeDescription>
-        Front-end developer who cares deeply about user experience.
-        Serious passion for UI design and new technologies.
+          Crafting user friendly and aesthetic UI designs
+          is not just my profession, it's my passion.
         </AboutMeDescription>
       </Container>
     );
