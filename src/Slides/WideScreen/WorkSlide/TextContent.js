@@ -9,7 +9,7 @@ top:0;
 left:0;
 display: flex;
 flex-flow: column nowrap;
-/* border: 1px dashed black; */
+/** border: 5px dashed black; */
 height:100vh;
 width: 50%;
 `;
@@ -17,13 +17,13 @@ width: 50%;
 const ProjectName = styled.div`
   font-family: 'AvenirHeavy';
   @media ${device.laptop} {
-    font-size: 70px;
+    font-size: 60px;
   }
   @media ${device.laptopL} {
-    font-size: 80px;
+    font-size: 70px;
   }
   @media ${device.desktop} {
-    font-size: 120px;
+    font-size: 110px;
   }
   /* border: 1px dashed black; */
 `;

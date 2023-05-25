@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import device from '../../../Assets/Responsive/breakpoints';
@@ -19,7 +20,7 @@ const AboutMeTitle = styled.div.attrs({
   font-family: 'AvenirHeavy';
   position: absolute;
   color: #EEE;
-  top:5%;
+  top:10%;
   left:-15%;
   @media ${device.laptop} {
     font-size: 180px;
@@ -36,8 +37,10 @@ const AboutMeDescription = styled.div`
   align-items: center;
   font-family: 'AvenirLight';
   text-align: left;
+  position: absolute;
   margin-left: 30%;
   margin-right: 5%;
+  top:20%;
   @media ${device.laptop} {
     transform: translateY(90%);
     font-size: 30px;

@@ -2,23 +2,25 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import VoistrapImages from './ParallaxImages/VoistrapImages';
+import FastRetailingImages from './ParallaxImages/FastRetailingImages';
 import WhatsMyFoodImages from './ParallaxImages/WhatsMyFoodImages';
 import ComingOrNotImages from './ParallaxImages/ComingOrNotImages';
+import EyepImages from './ParallaxImages/EyepImages';
 import TeslaImages from './ParallaxImages/TeslaImages';
-import KosenImages from './ParallaxImages/KosenImages';
+import LashicImages from './ParallaxImages/LashicImages';
 import VoistrapWebImages from './ParallaxImages/VoistrapWebImages';
 
 const ImageContainer = styled.div`
-/* border: 0.1px dashed black; */
+/** border: 10px dashed black; */
 margin-left:50%;
 width:50%;
-height:900vh;
+height:925vh;
 display: flex;
 flex-flow: column nowrap;
 `;
 
 const ImageBox = styled.div`
-/* outline: 0.1px dashed green; */
+/** outline: 5px dashed green; */
 margin-top:40vh;
 height: 100vh;
 position: relative;
@@ -63,7 +65,7 @@ class ImageContent extends Component {
     return (
       <ImageContainer>
         <ImageBox height={boxHeight}>
-          <VoistrapImages
+          <FastRetailingImages
             boxHeight={boxHeight}
             index={1}
             scrollPercent={scrollPercent}
@@ -72,7 +74,7 @@ class ImageContent extends Component {
           />
         </ImageBox>
         <ImageBox height={boxHeight}>
-          <WhatsMyFoodImages
+          <LashicImages
             boxHeight={boxHeight}
             index={2}
             scrollPercent={scrollPercent}
@@ -81,7 +83,7 @@ class ImageContent extends Component {
           />
         </ImageBox>
         <ImageBox height={boxHeight}>
-          <ComingOrNotImages
+          <EyepImages
             boxHeight={boxHeight}
             index={3}
             scrollPercent={scrollPercent}
@@ -99,7 +101,7 @@ class ImageContent extends Component {
           />
         </ImageBox>
         <ImageBox height={boxHeight}>
-          <KosenImages
+          <WhatsMyFoodImages
             boxHeight={boxHeight}
             index={5}
             scrollPercent={scrollPercent}
@@ -108,7 +110,7 @@ class ImageContent extends Component {
           />
         </ImageBox>
         <ImageBox height={boxHeight}>
-          <VoistrapWebImages
+          <VoistrapImages
             boxHeight={boxHeight}
             index={6}
             scrollPercent={scrollPercent}

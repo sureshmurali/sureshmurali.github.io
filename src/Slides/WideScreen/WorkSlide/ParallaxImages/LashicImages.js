@@ -1,46 +1,45 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import voistrapHomeImg from '../../../../Assets/Images/Voistrap/Home.png';
-import voistrapMeetingsImg from '../../../../Assets/Images/Voistrap/Meetings.png';
-import voistrapPeopleImg from '../../../../Assets/Images/Voistrap/People.png';
-import voistrapScoreImg from '../../../../Assets/Images/Voistrap/Score.png';
+import alertImg from '../../../../Assets/Images/Lashic/Alert.png';
+import taskImg from '../../../../Assets/Images/Lashic/Task.png';
+import customersImg from '../../../../Assets/Images/Lashic/Customers.png';
+import customerDetailImg from '../../../../Assets/Images/Lashic/CustomerDetail.png';
 
-
-const VoistrapPhoneHome = styled.img.attrs({
+const Task = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 18}%)`,
+    transform: `translate(0px,-${(scroll) * 15}%)`,
   }),
 })`
 transition: transform 0.2s ease-out;
 position: absolute;
-bottom: -200vh;
+bottom: -90vh;
 left:0vw;
 /* border: 1px dashed red; */
 height: 80vh; 
 `;
 
-const VoistrapPhoneMeetings = styled.img.attrs({
+const Alert = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 9}%) scale(0.9)`,
+    transform: `translate(0px,-${(scroll) * 8}%) scale(0.9)`,
   }),
 })`
 transition: transform 0.2s ease-out;
 position: absolute;
-bottom:-120vh;
+bottom:-45vh;
 right: 2vw;
 /* border: 1px dashed red; */
 height: 80vh;
 filter: blur(0.6px);
 `;
 
-const VoistrapPhoneScore = styled.img.attrs({
+const CustomerDetail = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 7}%) scale(0.7)`,
+    transform: `translate(0px,-${(scroll) * 5}%) scale(0.7)`,
   }),
 })`
 transition: transform 0.2s ease-out;
-bottom:-135vh;
+bottom:-75vh;
 left:2vw;
 position: absolute;
 /* border: 1px dashed red; */
@@ -48,13 +47,13 @@ height: 80vh;
 filter: blur(0.8px);
 `;
 
-const VoistrapPhonePeople = styled.img.attrs({
+const Customers = styled.img.attrs({
   style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 3}%) scale(0.6)`,
+    transform: `translate(0px,-${(scroll) * 2}%) scale(0.6)`,
   }),
 })`
 transition: transform 0.2s ease-out;
-bottom:-95vh;
+bottom:-55vh;
 right: 5vw;
 position: absolute;
 /* border: 1px dashed red; */
@@ -62,7 +61,7 @@ height: 80vh;
 filter: blur(1.2px);
 `;
 
-class VoistrapImages extends Component {
+class LashicImages extends Component {
   render() {
     let { scrollPercent } = this.props;
     const {
@@ -70,20 +69,21 @@ class VoistrapImages extends Component {
     } = this.props;
     const heighttoBeReducedinVH = ((boxHeight * index) - 100);
     const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
+    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight) + index - 1;
+    // console.log('WMF scrollOffsetPercent ', scrollOffsetInPercent);
     scrollPercent -= scrollOffsetInPercent;
     return (
       <React.Fragment>
-        <VoistrapPhonePeople src={voistrapPeopleImg} scroll={scrollPercent} alt="voistrapPeople" />
-        <VoistrapPhoneScore src={voistrapScoreImg} scroll={scrollPercent} alt="voistrapScore" />
-        <VoistrapPhoneMeetings src={voistrapMeetingsImg} scroll={scrollPercent} alt="voistrapMeetings" />
-        <VoistrapPhoneHome src={voistrapHomeImg} scroll={scrollPercent} alt="voistrapHome" />
+        <CustomerDetail src={customerDetailImg} scroll={scrollPercent} alt="customerDetails" />
+        <Customers src={customersImg} scroll={scrollPercent} alt="customers" />
+        <Alert src={alertImg} scroll={scrollPercent} alt="Alert" />
+        <Task src={taskImg} scroll={scrollPercent} alt="Task" />
       </React.Fragment>
     );
   }
 }
 
-VoistrapImages.propTypes = {
+LashicImages.propTypes = {
   boxHeight: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   screenHeight: PropTypes.number.isRequired,
@@ -91,4 +91,4 @@ VoistrapImages.propTypes = {
   scrollPercent: PropTypes.number.isRequired,
 };
 
-export default VoistrapImages;
+export default LashicImages;

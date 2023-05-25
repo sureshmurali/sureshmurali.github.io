@@ -19,7 +19,7 @@ const SkillsTitle = styled.div.attrs({
   font-family: 'AvenirHeavy';
   position: absolute;
   color: #EEE;
-  top:40%;
+  top:30%;
   right:-50%;
   @media ${device.laptop} {
     font-size: 180px;
@@ -45,13 +45,13 @@ const SkillsList = styled.div`
   z-index: 1;
   transform: translateY(30%);
   @media ${device.laptop} {
-    font-size: 35px;
+    font-size: 30px;
   }
   @media ${device.laptopL} {
-    font-size: 40px;
+    font-size: 35px;
   }
   @media ${device.desktop} {
-    font-size: 70px;
+    font-size: 65px;
   }
 `;
 
@@ -95,33 +95,33 @@ class Skills extends Component {
         <SkillsTitle scrollPercent={scrollPercent}>SKILLS</SkillsTitle>
         <SkillsList>
           <div>
+            Product Design
+            <br />
             Design system
             <br />
-            Wireframing & Prototyping
+            Information architect
+            <br />
+            <br />
+            HTML & CSS
+            <br />
+            React
+            <br />
+            Node JS
+            <br />
+          </div>
+          <div>
+            Project Management
             <br />
             Visual Communication
+            <br />
+            Concept development
             <br />
             <br />
             Figma
             <br />
             Sketch
             <br />
-            P5 JS
-            <br />
-          </div>
-          <div>
-            Responsive & Adaptive Design
-            <br />
-            Styling Architecture
-            <br />
-            UI Maintenance
-            <br />
-            <br />
-            React
-            <br />
-            React Native
-            <br />
-            Node JS
+            Principle
             <br />
           </div>
         </SkillsList>
