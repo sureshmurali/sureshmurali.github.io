@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import device from '../../../Assets/Responsive/breakpoints';
@@ -43,8 +44,8 @@ class AboutMe extends Component {
     return (
       <Container>
         <AboutMeDescription>
-          Front-end developer who cares deeply about user experience.
-          Serious passion for UI design and new technologies.
+          Crafting user friendly and aesthetic UI designs
+          is not just my profession, it's my passion.
         </AboutMeDescription>
       </Container>
     );

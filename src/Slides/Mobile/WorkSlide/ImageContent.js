@@ -3,9 +3,12 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import vhCheck from 'vh-check';
 import VoistrapImages from './ParallaxImages/VoistrapImages';
+import FastRetailingImages from './ParallaxImages/FastRetailingImages';
 import WhatsMyFoodImages from './ParallaxImages/WhatsMyFoodImages';
+import LashicImages from './ParallaxImages/LashicImages';
 import ComingOrNotImages from './ParallaxImages/ComingOrNotImages';
 import TeslaImages from './ParallaxImages/TeslaImages';
+import EyepImages from './ParallaxImages/EyepImages';
 import KosenImages from './ParallaxImages/KosenImages';
 import VoistrapWebImages from './ParallaxImages/VoistrapWebImages';
 
@@ -69,7 +72,7 @@ class ImageContent extends Component {
     return (
       <ImageContainer>
         <ImageBox height={boxHeight}>
-          <VoistrapImages
+          <FastRetailingImages
             boxHeight={boxHeight}
             index={1}
             scrollPercent={scrollPercent}
@@ -78,7 +81,7 @@ class ImageContent extends Component {
           />
         </ImageBox>
         <ImageBox height={boxHeight}>
-          <WhatsMyFoodImages
+          <LashicImages
             boxHeight={boxHeight}
             index={2}
             scrollPercent={scrollPercent}
@@ -87,7 +90,7 @@ class ImageContent extends Component {
           />
         </ImageBox>
         <ImageBox height={boxHeight}>
-          <ComingOrNotImages
+          <EyepImages
             boxHeight={boxHeight}
             index={3}
             scrollPercent={scrollPercent}
@@ -105,7 +108,7 @@ class ImageContent extends Component {
           />
         </ImageBox>
         <ImageBox height={boxHeight}>
-          <KosenImages
+          <WhatsMyFoodImages
             boxHeight={boxHeight}
             index={5}
             scrollPercent={scrollPercent}
@@ -114,7 +117,7 @@ class ImageContent extends Component {
           />
         </ImageBox>
         <ImageBox height={boxHeight}>
-          <VoistrapWebImages
+          <VoistrapImages
             boxHeight={boxHeight}
             index={6}
             scrollPercent={scrollPercent}
