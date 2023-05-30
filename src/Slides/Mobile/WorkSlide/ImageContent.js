@@ -6,11 +6,8 @@ import VoistrapImages from './ParallaxImages/VoistrapImages';
 import FastRetailingImages from './ParallaxImages/FastRetailingImages';
 import WhatsMyFoodImages from './ParallaxImages/WhatsMyFoodImages';
 import LashicImages from './ParallaxImages/LashicImages';
-import ComingOrNotImages from './ParallaxImages/ComingOrNotImages';
 import TeslaImages from './ParallaxImages/TeslaImages';
 import EyepImages from './ParallaxImages/EyepImages';
-import KosenImages from './ParallaxImages/KosenImages';
-import VoistrapWebImages from './ParallaxImages/VoistrapWebImages';
 
 const ImageContainer = styled.div`
 /* border: 0.1px dashed black; */
