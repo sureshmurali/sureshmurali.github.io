@@ -35,7 +35,7 @@
     "react-dom": "^16.6.0",
     "react-responsive": "^6.0.1",
     "styled-components": "^4.0.3",
-    "ua-parser-js": "^0.7.19",
+    "ua-parser-js": "^0.7.33",
     "vh-check": "^2.0.5"
   }
 }
