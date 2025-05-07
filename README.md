@@ -4,17 +4,24 @@ Website link: [sureshmurali.github.io](sureshmurali.github.io)
 
 ![Protfolio GIF](https://user-images.githubusercontent.com/8108361/59652016-03d01a00-91c7-11e9-8106-798d16488073.gif)
 
+## Technology Stack
+
+- Node.js: v22.13.0
+- NPM: v9.5.1
+- Yarn: v1.22.22
+- Vite: v5.0.10
+- React: v16.14.0
+
 ## How to deploy?
 
-1. Clone repo and make sure you're in `dev-portfolio` branch
-2. Run `npm ci && npm run dev`
-3. Make changes in code and debug in `localhost:1234` by running `npm run dev`. (No Hot reload available)
-4. Commit code in dev-portfolio
-5. Run `npm run build` to create dist files in dist folder
-6. Copy dist files temporarily
-7. Switch to master branch
-8. Overwite temporarily saved dist files in master branch
-9. Updated code reflects in live site
+1. Clone the repository
+2. Install dependencies with `npm ci`
+3. Run `npm run dev` to start the development server at `localhost:5173`
+4. Make your changes to the code
+5. Run `npm run build` to create the production build directly in the `docs` folder
+6. Commit and push your changes
+7. Run `npm run deploy` to push the `docs` folder to the `gh-pages` branch
+8. Your changes will be live at your GitHub Pages site (username.github.io)
 
 ## LICENSE
 
