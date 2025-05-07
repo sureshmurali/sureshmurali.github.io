@@ -2,11 +2,15 @@
   "name": "my_portfolio",
   "version": "1.0.0",
   "description": "Suresh Murali's Portfolio",
-  "main": "App.js",
+  "engines": {
+    "node": "22.13.0",
+    "npm": "9.5.1",
+    "yarn": "1.22.22"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html",
+    "dev": "vite",
+    "build": "vite build",
     "deploy": "git subtree push --prefix docs origin gh-pages"
   },
   "repository": {
@@ -20,22 +24,22 @@
   },
   "homepage": "https://github.com/sureshmurali/My-Portfolio#readme",
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.8.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.11.1",
-    "parcel-bundler": "^1.10.3"
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.43.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.32.2",
+    "vite": "^5.0.10"
   },
   "dependencies": {
-    "dotenv": "^6.1.0",
-    "prop-types": "^15.6.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.0",
+    "dotenv": "^16.3.1",
+    "prop-types": "^15.8.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-responsive": "^6.0.1",
-    "styled-components": "^4.0.3",
-    "ua-parser-js": "^0.7.19",
+    "styled-components": "^4.4.1",
+    "ua-parser-js": "^0.7.33",
     "vh-check": "^2.0.5"
   }
 }

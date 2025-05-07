@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import MediaQuery from 'react-responsive';
 import WideScreenHero from './Slides/WideScreen/HeroSlide/Hero';
@@ -25,24 +25,28 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <React.Fragment>
-        <MediaQuery query="(min-device-width: 1224px)">
-          <WideScreenHero />
-          <WideScreenWork />
-          <WideScreenSkills />
-          <WideScreenContact />
-        </MediaQuery>
-        <MediaQuery query="(max-device-width: 1224px)">
-          <MobileHero />
-          <MobileWork />
-          <MobileSkills />
-          <MobileContact />
-        </MediaQuery>
-        <GlobalStyle />
-      </React.Fragment>
+    return React.createElement(
+      React.Fragment,
+      null,
+      React.createElement(
+        MediaQuery,
+        { query: "(min-device-width: 1224px)" },
+        React.createElement(WideScreenHero, null),
+        React.createElement(WideScreenWork, null),
+        React.createElement(WideScreenSkills, null),
+        React.createElement(WideScreenContact, null)
+      ),
+      React.createElement(
+        MediaQuery,
+        { query: "(max-device-width: 1224px)" },
+        React.createElement(MobileHero, null),
+        React.createElement(MobileWork, null),
+        React.createElement(MobileSkills, null),
+        React.createElement(MobileContact, null)
+      ),
+      React.createElement(GlobalStyle, null)
     );
   }
 }
 
-render(React.createElement(App), document.getElementById('root'));
+ReactDOM.render(React.createElement(App), document.getElementById('root'));
