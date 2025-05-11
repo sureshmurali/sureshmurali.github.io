@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { createGlobalStyle } from 'styled-components';
 import MediaQuery from 'react-responsive';
@@ -17,36 +17,30 @@ html, body { margin: 0;}
 *, *:before, *:after { box-sizing: border-box; }
 `;
 
-class App extends Component {
-  componentDidMount() {
+const App = () => {
+  useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
-  }
+  }, []);
 
-  render() {
-    return React.createElement(
-      React.Fragment,
-      null,
-      React.createElement(
-        MediaQuery,
-        { query: "(min-device-width: 1224px)" },
-        React.createElement(WideScreenHero, null),
-        React.createElement(WideScreenWork, null),
-        React.createElement(WideScreenSkills, null),
-        React.createElement(WideScreenContact, null)
-      ),
-      React.createElement(
-        MediaQuery,
-        { query: "(max-device-width: 1224px)" },
-        React.createElement(MobileHero, null),
-        React.createElement(MobileWork, null),
-        React.createElement(MobileSkills, null),
-        React.createElement(MobileContact, null)
-      ),
-      React.createElement(GlobalStyle, null)
-    );
-  }
-}
+  return (
+    <>
+      <MediaQuery query="(min-device-width: 1224px)">
+        <WideScreenHero />
+        <WideScreenWork />
+        <WideScreenSkills />
+        <WideScreenContact />
+      </MediaQuery>
+      <MediaQuery query="(max-device-width: 1224px)">
+        <MobileHero />
+        <MobileWork />
+        <MobileSkills />
+        <MobileContact />
+      </MediaQuery>
+      <GlobalStyle />
+    </>
+  );
+};
 
-ReactDOM.render(React.createElement(App), document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
