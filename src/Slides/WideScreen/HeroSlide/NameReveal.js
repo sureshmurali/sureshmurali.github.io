@@ -98,6 +98,6 @@ NameReveal.propTypes = {
 };
 
 NameReveal.defaultProps = {
-  fontFam: 'Avenir Helvetica Ariel',
+  fontFam: 'Valencia',
 };
 export default NameReveal;

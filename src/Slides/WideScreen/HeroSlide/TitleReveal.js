@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
 import device from '../../../Assets/Responsive/breakpoints';
@@ -68,41 +68,28 @@ animation-delay: 2s;
 `;
 
 
-class TitleReveal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      reveal: false,
-    };
-    this.revealText = this.revealText.bind(this);
-  }
+const TitleReveal = ({ text, fontFam, timeDelay }) => {
+  const [reveal, setReveal] = useState(false);
 
-  componentDidMount() {
-    const { timeDelay } = this.props;
-    this.revealText(timeDelay);
-  }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setReveal(true);
+    }, timeDelay);
+    
+    return () => clearTimeout(timer);
+  }, [timeDelay]);
 
-  revealText(timeout) {
-    setTimeout(() => {
-      this.setState({ reveal: true });
-    }, timeout);
-  }
-
-  render() {
-    const { text, fontFam } = this.props;
-    const { reveal } = this.state;
-    return (
-      <Stage>
-        <TextToReveal
-          fontFam={fontFam}
-          reveal={reveal}
-        >
-          {text}
-        </TextToReveal>
-        <WhiteBlock />
-      </Stage>
-    );
-  }
+  return (
+    <Stage>
+      <TextToReveal
+        fontFam={fontFam}
+        reveal={reveal}
+      >
+        {text}
+      </TextToReveal>
+      <WhiteBlock />
+    </Stage>
+  );
 }
 
 TitleReveal.propTypes = {

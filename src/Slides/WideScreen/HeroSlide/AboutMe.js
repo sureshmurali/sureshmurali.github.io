@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import device from '../../../Assets/Responsive/breakpoints';
 
@@ -55,45 +55,35 @@ const AboutMeDescription = styled.div`
   }
 `;
 
-class AboutMe extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      scrollPercent: 0,
-    };
-    this.handleScroll = this.handleScroll.bind(this);
-  }
+const AboutMe = () => {
+  const [scrollPercent, setScrollPercent] = useState(0);
 
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  handleScroll(event) {
+  const handleScroll = (event) => {
     const { body, documentElement } = event.srcElement;
     const sd = Math.max(body.scrollTop, documentElement.scrollTop);
     const sp = (sd / (documentElement.scrollHeight - documentElement.clientHeight) * 100);
     const maxlimit = (documentElement.clientHeight * 150) / documentElement.scrollHeight;
     if (sp >= 0 && sp <= maxlimit) {
-      this.setState({ scrollPercent: sp });
+      setScrollPercent(sp);
     }
-  }
+  };
 
-  render() {
-    const { scrollPercent } = this.state;
-    return (
-      <Container>
-        <AboutMeTitle scrollPercent={scrollPercent}>ABOUT ME</AboutMeTitle>
-        <AboutMeDescription>
-          Crafting user friendly and aesthetic UI designs
-          is not just my profession, it's my passion.
-        </AboutMeDescription>
-      </Container>
-    );
-  }
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  return (
+    <Container>
+      <AboutMeTitle scrollPercent={scrollPercent}>ABOUT ME</AboutMeTitle>
+      <AboutMeDescription>
+        Crafting user friendly and aesthetic UI designs
+        is not just my profession, it's my passion.
+      </AboutMeDescription>
+    </Container>
+  );
 }
 
 export default AboutMe;
