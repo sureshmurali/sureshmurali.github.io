@@ -12,7 +12,8 @@
     "dev": "vite",
     "build": "vite build",
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "node scripts/deploy.js",
+    "reset": "rm -rf node_modules && rm -rf dist && yarn install"
   },
   "repository": {
     "type": "git",
