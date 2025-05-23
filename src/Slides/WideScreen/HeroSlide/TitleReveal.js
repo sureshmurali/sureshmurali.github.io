@@ -40,17 +40,17 @@ const TextToReveal = styled.div`
     transform: translateY(${28 * 1.4}px);
   }
   @media ${device.laptop} {
-    font-size: 40px;
+    font-size: 30px;
     animation: ${props => (props.reveal ? moveUp(40) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
     transform: translateY(${40 * 1.4}px);
   }
   @media ${device.laptopL} {
-    font-size: 50px;
+    font-size: 40px;
     animation: ${props => (props.reveal ? moveUp(50) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
     transform: translateY(${50 * 1.4}px);
   }
   @media ${device.desktop} {
-    font-size: 60px;
+    font-size: 50px;
     animation: ${props => (props.reveal ? moveUp(60) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
     transform: translateY(${60 * 1.4}px);
   }

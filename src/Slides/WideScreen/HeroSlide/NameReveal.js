@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
 import device from '../../../Assets/Responsive/breakpoints';
@@ -39,17 +39,17 @@ const TextToReveal = styled.div`
     transform: translateY(${100 * 1.4}px);
   }
   @media ${device.laptop} {
-    font-size: 140px;
+    font-size: 130px;
     animation: ${props => (props.reveal ? moveUp(140) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
     transform: translateY(${140 * 1.4}px);
   }
   @media ${device.laptopL} {
-    font-size: 150px;
+    font-size: 140px;
     animation: ${props => (props.reveal ? moveUp(150) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
     transform: translateY(${150 * 1.4}px);
   }
   @media ${device.desktop} {
-    font-size: 200px;
+    font-size: 180px;
     animation: ${props => (props.reveal ? moveUp(200) : 'none')} 1s cubic-bezier(0, 0.1, .12, .99) forwards;
     transform: translateY(${200 * 1.4}px);
   }
@@ -67,41 +67,28 @@ animation-delay: 2s;
 `;
 
 
-class NameReveal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      reveal: false,
-    };
-    this.revealText = this.revealText.bind(this);
-  }
+const NameReveal = ({ text, fontFam, timeDelay }) => {
+  const [reveal, setReveal] = useState(false);
 
-  componentDidMount() {
-    const { timeDelay } = this.props;
-    this.revealText(timeDelay);
-  }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setReveal(true);
+    }, timeDelay);
+    
+    return () => clearTimeout(timer);
+  }, [timeDelay]);
 
-  revealText(timeout) {
-    setTimeout(() => {
-      this.setState({ reveal: true });
-    }, timeout);
-  }
-
-  render() {
-    const { text, fontFam } = this.props;
-    const { reveal } = this.state;
-    return (
-      <Stage>
-        <TextToReveal
-          fontFam={fontFam}
-          reveal={reveal}
-        >
-          {text}
-        </TextToReveal>
-        <WhiteBlock />
-      </Stage>
-    );
-  }
+  return (
+    <Stage>
+      <TextToReveal
+        fontFam={fontFam}
+        reveal={reveal}
+      >
+        {text}
+      </TextToReveal>
+      <WhiteBlock />
+    </Stage>
+  );
 }
 
 NameReveal.propTypes = {
