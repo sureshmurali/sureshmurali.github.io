@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import device from '../../../Assets/Responsive/breakpoints';
 
@@ -39,17 +39,15 @@ const AboutMeDescription = styled.span`
   }
 `;
 
-class AboutMe extends Component {
-  render() {
-    return (
-      <Container>
-        <AboutMeDescription>
-          Crafting user friendly and aesthetic UI designs
-          is not just my profession, it's my passion.
-        </AboutMeDescription>
-      </Container>
-    );
-  }
+const AboutMe = () => {
+  return (
+    <Container>
+      <AboutMeDescription>
+        Crafting user friendly and aesthetic UI designs
+        is not just my profession, it's my passion.
+      </AboutMeDescription>
+    </Container>
+  );
 }
 
 export default AboutMe;

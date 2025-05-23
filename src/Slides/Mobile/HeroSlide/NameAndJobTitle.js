@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import device from '../../../Assets/Responsive/breakpoints';
 
@@ -55,15 +55,13 @@ const Title = styled.div`
   }
 `;
 
-class NameAndJobTitle extends Component {
-  render() {
-    return (
-      <Container>
-        <Name>Suresh Murali</Name>
-        <Title>UI/UX Architect</Title>
-      </Container>
-    );
-  }
+const NameAndJobTitle = () => {
+  return (
+    <Container>
+      <Name>Suresh Murali</Name>
+      <Title>UI/UX Architect</Title>
+    </Container>
+  );
 }
 
 export default NameAndJobTitle;

@@ -23,16 +23,12 @@ const LogoImage = styled.img`
   }
 `;
 
-class SocialLogo extends React.Component {
-  render() {
-    const { imgURL, alternate, redirectURL } = this.props;
-    return (
-      <a href={redirectURL} target="_blank" rel="noopener noreferrer">
-        <LogoImage src={imgURL} alt={alternate} />
-      </a>
-
-    );
-  }
+const SocialLogo = ({ imgURL, alternate, redirectURL }) => {
+  return (
+    <a href={redirectURL} target="_blank" rel="noopener noreferrer">
+      <LogoImage src={imgURL} alt={alternate} />
+    </a>
+  );
 }
 
 SocialLogo.propTypes = {

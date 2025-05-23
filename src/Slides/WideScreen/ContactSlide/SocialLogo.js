@@ -19,31 +19,21 @@ const LogoImage = styled.img`
   }
 `;
 
-class SocialLogo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.notifySlack = this.notifySlack.bind(this);
-  }
-
-  notifySlack() {
-    const { alternate } = this.props;
+const SocialLogo = ({ imgURL, alternate, redirectURL }) => {
+  const notifySlack = () => {
     console.log(alternate);
     fetch(process.env.SLACK_URL, {
       credentials: 'omit',
       method: 'POST',
       body: JSON.stringify({ text: `🚀 ${alternate}` }),
     });
-  }
+  };
 
-  render() {
-    const { imgURL, alternate, redirectURL } = this.props;
-    return (
-      <a href={redirectURL} onClick={this.notifySlack} target="_blank" rel="noopener noreferrer">
-        <LogoImage src={imgURL} alt={alternate} />
-      </a>
-
-    );
-  }
+  return (
+    <a href={redirectURL} onClick={notifySlack} target="_blank" rel="noopener noreferrer">
+      <LogoImage src={imgURL} alt={alternate} />
+    </a>
+  );
 }
 
 SocialLogo.propTypes = {

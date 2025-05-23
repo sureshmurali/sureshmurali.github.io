@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import device from '../../Assets/Responsive/breakpoints';
 
@@ -73,47 +73,45 @@ const SkillsList = styled.div`
   }
 `;
 
-class Skills extends Component {
-  render() {
-    return (
-      <Container>
-        <SkillsTitle>SKILLS</SkillsTitle>
-        <SkillsList>
-          <div>
-            Product Design
-            <br />
-            Design system
-            <br />
-            Information architect
-            <br />
-            <br />
-            HTML & CSS
-            <br />
-            React
-            <br />
-            Node JS
-            <br />
-          </div>
+const Skills = () => {
+  return (
+    <Container>
+      <SkillsTitle>SKILLS</SkillsTitle>
+      <SkillsList>
+        <div>
+          Product Design
           <br />
-          <div>
-            Project Management
-            <br />
-            Visual Communication
-            <br />
-            Concept development
-            <br />
-            <br />
-            Figma
-            <br />
-            Sketch
-            <br />
-            Principle
-            <br />
-          </div>
-        </SkillsList>
-      </Container>
-    );
-  }
+          Design system
+          <br />
+          Information architect
+          <br />
+          <br />
+          HTML & CSS
+          <br />
+          React
+          <br />
+          Node JS
+          <br />
+        </div>
+        <br />
+        <div>
+          Project Management
+          <br />
+          Visual Communication
+          <br />
+          Concept development
+          <br />
+          <br />
+          Figma
+          <br />
+          Sketch
+          <br />
+          Principle
+          <br />
+        </div>
+      </SkillsList>
+    </Container>
+  );
 }
 
 export default Skills;

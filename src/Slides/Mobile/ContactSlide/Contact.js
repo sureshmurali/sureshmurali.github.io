@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import twitterImg from '../../../Assets/Images/Social/twitter.svg';
 import githubImg from '../../../Assets/Images/Social/git.svg';
@@ -84,22 +84,20 @@ const SocialMediaIcons = styled.div`
   }
 `;
 
-class Contact extends Component {
-  render() {
-    return (
-      <Container>
-        <ContactTitle>CONTACT</ContactTitle>
-        <SocialMediaIcons>
-          <SocialLogo imgURL={twitterImg} alternate="twitter" redirectURL="https://twitter.com/sureshmurali29" />
-          <SocialLogo imgURL={githubImg} alternate="github" redirectURL="https://github.com/sureshmurali" />
-          <SocialLogo imgURL={mailImg} alternate="mail" redirectURL="mailto:sureshmurali29@gmail.com" />
-          <SocialLogo imgURL={instaImg} alternate="insta" redirectURL="https://www.instagram.com/sureshmurali_/" />
-          <SocialLogo imgURL={dribbbleImg} alternate="dribbble" redirectURL="https://dribbble.com/sureshmurali29" />
-          <SocialLogo imgURL={linkedInImg} alternate="linkedin" redirectURL="https://www.linkedin.com/in/sureshmurali29" />
-        </SocialMediaIcons>
-      </Container>
-    );
-  }
+const Contact = () => {
+  return (
+    <Container>
+      <ContactTitle>CONTACT</ContactTitle>
+      <SocialMediaIcons>
+        <SocialLogo imgURL={twitterImg} alternate="twitter" redirectURL="https://twitter.com/sureshmurali29" />
+        <SocialLogo imgURL={githubImg} alternate="github" redirectURL="https://github.com/sureshmurali" />
+        <SocialLogo imgURL={mailImg} alternate="mail" redirectURL="mailto:sureshmurali29@gmail.com" />
+        <SocialLogo imgURL={instaImg} alternate="instagram" redirectURL="https://www.instagram.com/sureshmurali_/" />
+        <SocialLogo imgURL={dribbbleImg} alternate="dribbble" redirectURL="https://dribbble.com/sureshmurali29" />
+        <SocialLogo imgURL={linkedInImg} alternate="linkedin" redirectURL="https://www.linkedin.com/in/sureshmurali29" />
+      </SocialMediaIcons>
+    </Container>
+  );
 }
 
 export default Contact;
