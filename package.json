@@ -1,6 +1,6 @@
 {
   "name": "my_portfolio",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Suresh Murali's Portfolio",
   "engines": {
     "node": "22.13.0",
