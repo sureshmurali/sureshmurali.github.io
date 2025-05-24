@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { createGlobalStyle } from 'styled-components';
-import MediaQuery from 'react-responsive';
+import { useMediaQuery } from 'react-responsive';
 import WideScreenHero from './Slides/WideScreen/HeroSlide/Hero';
 import WideScreenWork from './Slides/WideScreen/WorkSlide/Work';
 import WideScreenSkills from './Slides/WideScreen/Skills';
@@ -18,6 +18,10 @@ html, body { margin: 0;}
 `;
 
 const App = () => {
+  // Use the useMediaQuery hook instead of MediaQuery component
+  const isDesktopOrLaptop = useMediaQuery({ minWidth: 1224 });
+  const isMobile = useMediaQuery({ maxWidth: 1223 });
+
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
@@ -26,27 +30,32 @@ const App = () => {
 
   return (
     <>
-      <MediaQuery minDeviceWidth={1224}>
-        <WideScreenHero />
-        <WideScreenWork />
-        <WideScreenSkills />
-        <WideScreenContact />
-      </MediaQuery>
-      <MediaQuery maxDeviceWidth={1223}>
-        <MobileHero />
-        <MobileWork />
-        <MobileSkills />
-        <MobileContact />
-      </MediaQuery>
+      {isDesktopOrLaptop && (
+        <>
+          <WideScreenHero />
+          <WideScreenWork />
+          <WideScreenSkills />
+          <WideScreenContact />
+        </>
+      )}
+      {isMobile && (
+        <>
+          <MobileHero />
+          <MobileWork />
+          <MobileSkills />
+          <MobileContact />
+        </>
+      )}
       <GlobalStyle />
     </>
   );
 };
 
-// React 17 way of rendering with StrictMode
-ReactDOM.render(
+// React 18 way of rendering with createRoot API
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
