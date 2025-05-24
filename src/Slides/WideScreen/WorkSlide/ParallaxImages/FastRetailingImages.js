@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import fastRetailingUQImg from '../../../../Assets/Images/FastRetailing/UQ.png';
@@ -62,25 +62,21 @@ height: 80vh;
 filter: blur(1.2px);
 `;
 
-class FastRetailingImages extends Component {
-  render() {
-    let { scrollPercent } = this.props;
-    const {
-      boxHeight, index, scrollHeight, screenHeight,
-    } = this.props;
-    const heighttoBeReducedinVH = ((boxHeight * index) - 100);
-    const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
-    scrollPercent -= scrollOffsetInPercent;
-    return (
-      <React.Fragment>
-        <FastRetailingPhonePLST src={fastRetailingPLSTImg} scroll={scrollPercent} alt="fastRetailingPLST" />
-        <FastRetailingPhoneGU2 src={fastRetailingGU2Img} scroll={scrollPercent} alt="fastRetailingGU2" />
-        <FastRetailingPhoneUQ src={fastRetailingUQImg} scroll={scrollPercent} alt="fastRetailingUQ" />
-        <FastRetailingPhoneGU src={fastRetailingGUImg} scroll={scrollPercent} alt="fastRetailingGU" />
-      </React.Fragment>
-    );
-  }
+const FastRetailingImages = ({ scrollPercent: initialScrollPercent, boxHeight, index, scrollHeight, screenHeight }) => {
+  // Calculate the adjusted scroll percentage based on the image's position
+  const heighttoBeReducedinVH = ((boxHeight * index) - 100);
+  const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
+  const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
+  const scrollPercent = initialScrollPercent - scrollOffsetInPercent;
+  
+  return (
+    <React.Fragment>
+      <FastRetailingPhonePLST src={fastRetailingPLSTImg} scroll={scrollPercent} alt="fastRetailingPLST" />
+      <FastRetailingPhoneGU2 src={fastRetailingGU2Img} scroll={scrollPercent} alt="fastRetailingGU2" />
+      <FastRetailingPhoneUQ src={fastRetailingUQImg} scroll={scrollPercent} alt="fastRetailingUQ" />
+      <FastRetailingPhoneGU src={fastRetailingGUImg} scroll={scrollPercent} alt="fastRetailingGU" />
+    </React.Fragment>
+  );
 }
 
 FastRetailingImages.propTypes = {

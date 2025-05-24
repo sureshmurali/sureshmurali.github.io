@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import homeImg from '../../../../Assets/Images/WhatsMyFood/Home.png';
@@ -61,26 +61,21 @@ height: 80vh;
 filter: blur(1.2px);
 `;
 
-class WhatsMyFoodImages extends Component {
-  render() {
-    let { scrollPercent } = this.props;
-    const {
-      boxHeight, index, scrollHeight, screenHeight,
-    } = this.props;
-    const heighttoBeReducedinVH = ((boxHeight * index) - 100);
-    const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight) + index - 1;
-    // console.log('WMF scrollOffsetPercent ', scrollOffsetInPercent);
-    scrollPercent -= scrollOffsetInPercent;
-    return (
-      <React.Fragment>
-        <AddFood src={addFoodImg} scroll={scrollPercent} alt="addFood" />
-        <AddRestaurant src={addRestaurantImg} scroll={scrollPercent} alt="addRestaurant" />
-        <Home src={homeImg} scroll={scrollPercent} alt="Home" />
-        <Restaurant src={restaurantImg} scroll={scrollPercent} alt="Restaurant" />
-      </React.Fragment>
-    );
-  }
+const WhatsMyFoodImages = ({ scrollPercent: initialScrollPercent, boxHeight, index, scrollHeight, screenHeight }) => {
+  // Calculate the adjusted scroll percentage based on the image's position
+  const heighttoBeReducedinVH = ((boxHeight * index) - 100);
+  const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
+  const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight) + index - 1;
+  const scrollPercent = initialScrollPercent - scrollOffsetInPercent;
+  
+  return (
+    <React.Fragment>
+      <AddFood src={addFoodImg} scroll={scrollPercent} alt="addFood" />
+      <AddRestaurant src={addRestaurantImg} scroll={scrollPercent} alt="addRestaurant" />
+      <Home src={homeImg} scroll={scrollPercent} alt="Home" />
+      <Restaurant src={restaurantImg} scroll={scrollPercent} alt="Restaurant" />
+    </React.Fragment>
+  );
 }
 
 WhatsMyFoodImages.propTypes = {

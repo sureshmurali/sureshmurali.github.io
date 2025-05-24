@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import dots from '../../../../Assets/Images/Showcase/Dots.png';
@@ -61,25 +61,21 @@ height: 50vh;
 filter: blur(1.2px);
 `;
 
-class VoistrapWebImages extends Component {
-  render() {
-    let { scrollPercent } = this.props;
-    const {
-      boxHeight, index, scrollHeight, screenHeight,
-    } = this.props;
-    const heighttoBeReducedinVH = ((boxHeight * index) - 100);
-    const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
-    scrollPercent -= scrollOffsetInPercent;
-    return (
-      <React.Fragment>
-        <Paths src={paths} scroll={scrollPercent} alt="paths" />
-        <BigBubble src={bigBubble} scroll={scrollPercent} alt="bigBubble" />
-        <Bubbles src={bubbles} scroll={scrollPercent} alt="bubbles" />
-        <Dots src={dots} scroll={scrollPercent} alt="dots" />
-      </React.Fragment>
-    );
-  }
+const VoistrapWebImages = ({ scrollPercent: initialScrollPercent, boxHeight, index, scrollHeight, screenHeight }) => {
+  // Calculate the adjusted scroll percentage based on the image's position
+  const heighttoBeReducedinVH = ((boxHeight * index) - 100);
+  const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
+  const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
+  const scrollPercent = initialScrollPercent - scrollOffsetInPercent;
+  
+  return (
+    <React.Fragment>
+      <Paths src={paths} scroll={scrollPercent} alt="paths" />
+      <BigBubble src={bigBubble} scroll={scrollPercent} alt="bigBubble" />
+      <Bubbles src={bubbles} scroll={scrollPercent} alt="bubbles" />
+      <Dots src={dots} scroll={scrollPercent} alt="dots" />
+    </React.Fragment>
+  );
 }
 
 VoistrapWebImages.propTypes = {
