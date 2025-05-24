@@ -1,5 +1,14 @@
-import React, { useState, useEffect } from 'react';
+/**
+ * Skills Component - Displays the Skills section with scroll-based animations
+ * 
+ * This component creates a parallax-like effect where:
+ * 1. The "SKILLS" title moves based on scroll position
+ * 2. The skills list remains fixed in position
+ */
+
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import gsap from 'gsap'; // GreenSock Animation Platform
 import device from '../../Assets/Responsive/breakpoints';
 
 const Container = styled.div`
@@ -10,30 +19,69 @@ const Container = styled.div`
     overflow: hidden;
 `;
 
-const SkillsTitle = styled.div.attrs({
-  style: ({ scrollPercent }) => ({
-    transform: `translateX(-${(scrollPercent) * 10}%)`,
-  }),
-})`
-  transition: transform 0.5s ease-out;
+/**
+ * Font size configuration for SkillsTitle based on screen sizes
+ */
+const TITLE_FONT_SIZES = {
+  desktop: 350, // >= 2560px
+  laptopL: 200, // >= 1440px
+  laptop: 180,  // >= 1024px
+  tablet: 150   // < 1024px
+};
+
+/**
+ * Get font size for SkillsTitle based on screen width
+ * @returns {string} Font size with px unit
+ */
+const getTitleFontSize = () => {
+  const width = window.innerWidth;
+  
+  if (width >= 2560) return `${TITLE_FONT_SIZES.desktop}px`;
+  if (width >= 1440) return `${TITLE_FONT_SIZES.laptopL}px`;
+  if (width >= 1024) return `${TITLE_FONT_SIZES.laptop}px`;
+  return `${TITLE_FONT_SIZES.tablet}px`;
+};
+
+/**
+ * SkillsTitle component - Large title that moves with scroll
+ */
+const SkillsTitle = styled.div`
   font-family: 'AvenirHeavy';
   position: absolute;
   color: #EEE;
-  top:30%;
-  right:-50%;
-  @media ${device.laptop} {
-    font-size: 180px;
-  }
-  @media ${device.laptopL} {
-    font-size: 200px;
-  }
-  @media ${device.desktop} {
-    font-size: 350px;
-  }
+  top: 30%;
+  right: -50%;
+  font-size: ${getTitleFontSize};
+  /* GSAP will handle the transform instead of CSS */
 `;
 
+/**
+ * Font size configuration for SkillsList based on screen sizes
+ */
+const LIST_FONT_SIZES = {
+  desktop: 65, // >= 2560px
+  laptopL: 35, // >= 1440px
+  laptop: 30,  // >= 1024px
+  tablet: 24   // < 1024px
+};
+
+/**
+ * Get font size for SkillsList based on screen width
+ * @returns {string} Font size with px unit
+ */
+const getListFontSize = () => {
+  const width = window.innerWidth;
+  
+  if (width >= 2560) return `${LIST_FONT_SIZES.desktop}px`;
+  if (width >= 1440) return `${LIST_FONT_SIZES.laptopL}px`;
+  if (width >= 1024) return `${LIST_FONT_SIZES.laptop}px`;
+  return `${LIST_FONT_SIZES.tablet}px`;
+};
+
+/**
+ * SkillsList component - List of skills displayed in two columns
+ */
 const SkillsList = styled.div`
-  /* border: 1px solid #EFEFEF; */
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -44,77 +92,103 @@ const SkillsList = styled.div`
   margin-right: 10%;
   z-index: 1;
   transform: translateY(30%);
-  @media ${device.laptop} {
-    font-size: 30px;
-  }
-  @media ${device.laptopL} {
-    font-size: 35px;
-  }
-  @media ${device.desktop} {
-    font-size: 65px;
-  }
+  font-size: ${getListFontSize};
 `;
 
-const Skills = () =>  {
-  const [scrollPercent, setScrollPercent] = useState(0);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
+/**
+ * Skills Component - Displays the Skills section with scroll-based animations
+ */
+const Skills = () => {
+  // Create ref for the title element we'll animate with GSAP
+  const titleRef = useRef(null);
+  
+  /**
+   * Scroll multiplier - controls how fast the title moves relative to scroll
+   * Higher value = faster movement
+   */
+  const SCROLL_MULTIPLIER = 10;
+  
+  /**
+   * Handle scroll event - animates the title based on scroll position
+   * Uses GSAP for smoother animation with less jank
+   */
   const handleScroll = () => {
-    const { body, documentElement } = window.document;
-    const sd = Math.max(body.scrollTop, documentElement.scrollTop);
-    let sp = (sd / (documentElement.scrollHeight - documentElement.clientHeight) * 100);
-    const minlimit = (documentElement.clientHeight * 950) / documentElement.scrollHeight;
-    const maxlimit = (documentElement.clientHeight * 1180) / documentElement.scrollHeight;
-    if (sp >= minlimit && sp <= maxlimit + 3) {
-      sp -= minlimit;
-      setScrollPercent(sp);
+    // Get scroll information
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    
+    // Calculate scroll percentage (0-100)
+    let scrollPercent = (scrollTop / (scrollHeight - clientHeight) * 100);
+    
+    // Calculate scroll limits for this section
+    const minLimit = (clientHeight * 950) / scrollHeight;
+    const maxLimit = (clientHeight * 1180) / scrollHeight;
+    
+    // Only apply animation within our desired scroll range
+    if (scrollPercent >= minLimit && scrollPercent <= maxLimit + 3 && titleRef.current) {
+      // Adjust scroll percentage to start from 0 at the min limit
+      scrollPercent -= minLimit;
+      
+      // Use GSAP to animate the title position
+      gsap.to(titleRef.current, {
+        x: `-${scrollPercent * SCROLL_MULTIPLIER}%`,
+        duration: 0.5, // Smooth animation duration
+        ease: 'power1.out', // Smooth easing function
+        overwrite: 'auto' // Prevents animation queue buildup during rapid scrolling
+      });
     }
   };
 
+  // Set up scroll listener when component mounts
+  useEffect(() => {
+    // Add passive flag for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Initial position setup
+    handleScroll();
+    
+    // Clean up event listener when component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll, { passive: true });
+    };
+  }, []);
 
-    return (
-      <Container>
-        <SkillsTitle scrollPercent={scrollPercent}>SKILLS</SkillsTitle>
-        <SkillsList>
-          <div>
-            Product Design
-            <br />
-            Design system
-            <br />
-            Information architect
-            <br />
-            <br />
-            HTML & CSS
-            <br />
-            React
-            <br />
-            Node JS
-            <br />
-          </div>
-          <div>
-            Project Management
-            <br />
-            Visual Communication
-            <br />
-            Concept development
-            <br />
-            <br />
-            Figma
-            <br />
-            Sketch
-            <br />
-            Principle
-            <br />
-          </div>
-        </SkillsList>
-      </Container>
-    );
-  }
+  return (
+    <Container>
+      <SkillsTitle ref={titleRef}>SKILLS</SkillsTitle>
+      <SkillsList>
+        <div>
+          Product Design
+          <br />
+          Design system
+          <br />
+          Information architect
+          <br />
+          <br />
+          HTML & CSS
+          <br />
+          React
+          <br />
+          Node JS
+          <br />
+        </div>
+        <div>
+          Project Management
+          <br />
+          Visual Communication
+          <br />
+          Concept development
+          <br />
+          <br />
+          Figma
+          <br />
+          Sketch
+          <br />
+          Principle
+          <br />
+        </div>
+      </SkillsList>
+    </Container>
+  );
+}
 
 export default Skills;

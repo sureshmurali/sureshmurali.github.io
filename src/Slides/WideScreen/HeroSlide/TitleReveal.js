@@ -15,9 +15,6 @@ import PropTypes from 'prop-types';
 // Animation library
 import gsap from 'gsap'; // GreenSock Animation Platform
 
-// Responsive breakpoints
-import device from '../../../Assets/Responsive/breakpoints';
-
 /**
  * Styled container for the animation
  */

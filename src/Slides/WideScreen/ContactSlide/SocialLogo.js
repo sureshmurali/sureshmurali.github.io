@@ -1,36 +1,51 @@
+/**
+ * SocialLogo Component - Displays a social media icon with a link
+ */
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import device from '../../../Assets/Responsive/breakpoints';
 
+/**
+ * Logo size configuration based on screen sizes
+ */
+const LOGO_SIZES = {
+  desktop: 180, // >= 2560px
+  laptopL: 90,  // >= 1440px
+  laptop: 85,   // >= 1024px
+  tablet: 70    // < 1024px
+};
+
+/**
+ * Get logo size based on screen width
+ * @returns {string} Size with px unit
+ */
+const getLogoSize = () => {
+  const width = window.innerWidth;
+  
+  if (width >= 2560) return `${LOGO_SIZES.desktop}px`;
+  if (width >= 1440) return `${LOGO_SIZES.laptopL}px`;
+  if (width >= 1024) return `${LOGO_SIZES.laptop}px`;
+  return `${LOGO_SIZES.tablet}px`;
+};
+
+/**
+ * LogoImage component - Styled image for social media icons
+ */
 const LogoImage = styled.img`
-/* border: 1px solid black; */
-@media ${device.laptop} {
-    height: 85px;
-    width: 85px;
-  }
-@media ${device.laptopL} {
-    height: 90px;
-    width: 90px;
-  }
-  @media ${device.desktop} {
-    height: 180px;
-    width: 180px;
-  }
+  height: ${getLogoSize};
+  width: ${getLogoSize};
 `;
 
+/**
+ * SocialLogo component - Renders a social media icon with a link
+ * @param {string} imgURL - URL of the social media icon image
+ * @param {string} alternate - Alt text for the image and accessibility
+ * @param {string} redirectURL - URL to redirect to when clicked
+ */
 const SocialLogo = ({ imgURL, alternate, redirectURL }) => {
-  const notifySlack = () => {
-    console.log(alternate);
-    fetch(process.env.SLACK_URL, {
-      credentials: 'omit',
-      method: 'POST',
-      body: JSON.stringify({ text: `🚀 ${alternate}` }),
-    });
-  };
-
   return (
-    <a href={redirectURL} onClick={notifySlack} target="_blank" rel="noopener noreferrer">
+    <a href={redirectURL} target="_blank" rel="noopener noreferrer">
       <LogoImage src={imgURL} alt={alternate} />
     </a>
   );
