@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import TextContent from './TextContent';
 import ImageContent from './ImageContent';
@@ -69,41 +69,25 @@ const workDetails = [
   }
 ];
 
-class Work extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      slideHeight: 0,
-      slideNumber: 0
-    };
-    this.slideHeightMultiplier = 1.4; // Each slide is 140% of viewport height
-    this.lastScrollPosition = 0;
-    this.handleScroll = this.handleScroll.bind(this);
-  }
-
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
-    
-    // Calculate slide height (140% of viewport height)
-    const calculatedHeight = Math.round(
-      window.document.documentElement.clientHeight * this.slideHeightMultiplier
-    );
-    this.setState({ slideHeight: calculatedHeight });
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  handleScroll(event) {
+const Work = () => {
+  // State hooks
+  const [slideHeight, setSlideHeight] = useState(0);
+  const [slideNumber, setSlideNumber] = useState(0);
+  const [lastScrollPosition, setLastScrollPosition] = useState(0);
+  const [refreshToggle, setRefreshToggle] = useState(false);
+  
+  // Constants
+  const slideHeightMultiplier = 1.4; // Each slide is 140% of viewport height
+  
+  // Handle scroll event with useCallback for better performance
+  const handleScroll = useCallback((event) => {
     const { body, documentElement } = event.srcElement;
-    const { slideHeight, slideNumber } = this.state;
     
     // Get scroll position (cross-browser compatible)
     const currentScrollPosition = Math.max(body.scrollTop, documentElement.scrollTop);
     
     // Track scroll position
-    this.lastScrollPosition = currentScrollPosition;
+    setLastScrollPosition(currentScrollPosition);
     
     // Calculate current slide index based on scroll position
     const newSlideIndex = Math.floor(currentScrollPosition / slideHeight);
@@ -114,15 +98,41 @@ class Work extends Component {
     const isValidBackward = slideNumber === workDetails.length - 1 && newSlideIndex < slideNumber;
     
     if (isNewSlide && (isValidForward || isValidBackward)) {
-      this.setState({ slideNumber: newSlideIndex });
+      setSlideNumber(newSlideIndex);
+      // Animation will be triggered in the useEffect that watches slideNumber
     }
-  }
-
-  renderCurrentSlide() {
-    const { slideNumber } = this.state;
+  }, [slideHeight, slideNumber]);
+  
+  // Setup event listeners and calculate initial slide height
+  useEffect(() => {
+    // Calculate slide height (140% of viewport height)
+    const calculatedHeight = Math.round(
+      window.document.documentElement.clientHeight * slideHeightMultiplier
+    );
+    setSlideHeight(calculatedHeight);
+    
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll);
+    
+    // Cleanup function to remove event listener
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]); // Only re-run if handleScroll changes
+  
+  // Effect to trigger animation only when slideNumber changes
+  useEffect(() => {
+    // Only toggle refreshToggle when slideNumber changes (not on initial mount)
+    if (slideNumber > 0) {
+      setRefreshToggle(prevState => !prevState);
+    }
+  }, [slideNumber]); // Only run when slideNumber changes
+  
+  // Render the current slide content
+  const renderCurrentSlide = () => {
     const currentProject = workDetails[slideNumber];
     
-    // Always pass true to trigger animations when props change
+    // Pass refreshToggle to trigger animations only when slide changes
     return (
       <TextContent
         number={currentProject.number}
@@ -130,19 +140,17 @@ class Work extends Component {
         projectDesc={currentProject.projectDesc}
         projectType={currentProject.projectType}
         roles={currentProject.roles}
-        refreshToggle={true} // Triggers animations in TextContent
+        refreshToggle={refreshToggle} // Triggers animations only when slide changes
       />
     );
-  }
-
-  render() {
-    return (
-      <Container>
-        {this.renderCurrentSlide()}
-        <ImageContent pageSplitTimes={this.slideHeightMultiplier} />
-      </Container>
-    );
-  }
+  };
+  
+  return (
+    <Container>
+      {renderCurrentSlide()}
+      <ImageContent pageSplitTimes={slideHeightMultiplier} />
+    </Container>
+  );
 }
 
 export default Work;

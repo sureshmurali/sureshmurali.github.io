@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import VoistrapImages from './ParallaxImages/VoistrapImages';
@@ -24,35 +24,14 @@ const ImageBox = styled.div`
   position: relative;
 `;
 
-class ImageContent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      viewportHeight: 0,
-      documentHeight: 0,
-      scrollPercent: 0
-    };
-    this.handleScroll = this.handleScroll.bind(this);
-  }
-
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
-    
-    // Get document dimensions once on mount
-    const documentHeight = Math.round(window.document.documentElement.scrollHeight);
-    const viewportHeight = Math.round(window.document.documentElement.clientHeight);
-    
-    this.setState({ 
-      documentHeight,
-      viewportHeight
-    });
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  handleScroll() {
+const ImageContent = ({ pageSplitTimes }) => {
+  // State hooks
+  const [viewportHeight, setViewportHeight] = useState(0);
+  const [documentHeight, setDocumentHeight] = useState(0);
+  const [scrollPercent, setScrollPercent] = useState(0);
+  
+  // Handle scroll event with useCallback for better performance
+  const handleScroll = useCallback(() => {
     const { body, documentElement } = window.document;
     
     // Current scroll position (cross-browser compatible)
@@ -68,41 +47,56 @@ class ImageContent extends Component {
     
     // Only update state if scroll percentage is within our range of interest
     if (currentScrollPercent >= minScrollLimit && currentScrollPercent <= maxScrollLimit) {
-      this.setState({ scrollPercent: currentScrollPercent });
+      setScrollPercent(currentScrollPercent);
     }
-  }
-
-  render() {
-    const { scrollPercent, documentHeight, viewportHeight } = this.state;
-    const { pageSplitTimes } = this.props;
-    const boxHeight = pageSplitTimes * 100;
+  }, []);
+  
+  // Setup event listeners and calculate initial dimensions
+  useEffect(() => {
+    // Get document dimensions once on mount
+    const documentHeight = Math.round(window.document.documentElement.scrollHeight);
+    const viewportHeight = Math.round(window.document.documentElement.clientHeight);
     
-    // Project image components in order
-    const projectImages = [
-      { Component: FastRetailingImages, index: 1 },
-      { Component: LashicImages, index: 2 },
-      { Component: EyepImages, index: 3 },
-      { Component: TeslaImages, index: 4 },
-      { Component: WhatsMyFoodImages, index: 5 },
-      { Component: VoistrapImages, index: 6 }
-    ];
+    setDocumentHeight(documentHeight);
+    setViewportHeight(viewportHeight);
     
-    return (
-      <ImageContainer>
-        {projectImages.map(({ Component, index }) => (
-          <ImageBox key={index} height={boxHeight}>
-            <Component
-              boxHeight={boxHeight}
-              index={index}
-              scrollPercent={scrollPercent}
-              screenHeight={viewportHeight}
-              scrollHeight={documentHeight}
-            />
-          </ImageBox>
-        ))}
-      </ImageContainer>
-    );
-  }
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll);
+    
+    // Cleanup function to remove event listener
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+  
+  // Calculate box height
+  const boxHeight = pageSplitTimes * 100;
+  
+  // Project image components in order
+  const projectImages = [
+    { Component: FastRetailingImages, index: 1 },
+    { Component: LashicImages, index: 2 },
+    { Component: EyepImages, index: 3 },
+    { Component: TeslaImages, index: 4 },
+    { Component: WhatsMyFoodImages, index: 5 },
+    { Component: VoistrapImages, index: 6 }
+  ];
+  
+  return (
+    <ImageContainer>
+      {projectImages.map(({ Component, index }) => (
+        <ImageBox key={index} height={boxHeight}>
+          <Component
+            boxHeight={boxHeight}
+            index={index}
+            scrollPercent={scrollPercent}
+            screenHeight={viewportHeight}
+            scrollHeight={documentHeight}
+          />
+        </ImageBox>
+      ))}
+    </ImageContainer>
+  );
 }
 
 ImageContent.propTypes = {

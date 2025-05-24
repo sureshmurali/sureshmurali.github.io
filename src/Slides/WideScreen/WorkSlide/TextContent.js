@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
 import device from '../../../Assets/Responsive/breakpoints';
@@ -132,6 +132,7 @@ const revBlock = () => keyframes`
 `;
 
 
+// Create a ref to hold the current animation component
 let BlockTextReveal = styled.span`
 `;
 
@@ -159,94 +160,87 @@ const BlockTextRevealNoAnim = styled.span`
 
 `;
 
-class TextContent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      refreshBlock: false,
-    };
-    this.refresh = this.refresh.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.refresh(nextProps);
-  }
-
-  refresh(nextProps) {
-    const { refreshToggle } = nextProps;
-    
-    // Only trigger animation when refreshToggle is true
-    if (refreshToggle) {
+const TextContent = ({ number, projectName, projectDesc, roles, projectType, refreshToggle }) => {
+  // State to track animation refresh
+  const [refreshBlock, setRefreshBlock] = useState(false);
+  
+  // Store previous refreshToggle value to detect changes
+  const prevRefreshToggleRef = useRef(refreshToggle);
+  
+  // Effect to handle animation when refreshToggle changes
+  useEffect(() => {
+    // Skip on initial render
+    if (prevRefreshToggleRef.current !== refreshToggle) {
       // First set to non-animated version to reset
       BlockTextReveal = BlockTextRevealNoAnim;
       
       // Set refreshBlock state and then update BlockTextReveal in callback
-      this.setState({ refreshBlock: true }, () => {
+      setRefreshBlock(true);
+      
+      // Use setTimeout to mimic the setState callback behavior
+      setTimeout(() => {
         // Switch to animated version to play animation
         BlockTextReveal = BlockTextRevealQuick;
-        this.setState({ refreshBlock: false });
-      });
+        setRefreshBlock(false);
+      }, 0);
     }
-  }
-
-  render() {
-    const {
-      number, projectName, projectDesc, roles, projectType, refreshToggle,
-    } = this.props;
     
-    // Helper function to render roles with bullet separators
-    const renderRoles = (roleList) => {
-      return roleList.map((role, index, arr) => {
-        const isLastRole = index === arr.length - 1;
-        
-        return isLastRole ? (
-          <span key={role}>{role}</span>
-        ) : (
-          <span key={role}>
-            {role}&nbsp; • &nbsp;
-          </span>
-        );
-      });
-    };
-    
-    return (
-      <TextContainer>
-        <ProjectID>
-          <BlockTextReveal refreshToggle={refreshToggle} inline>
-            {number}
-          </BlockTextReveal>
-        </ProjectID>
-        
-        <ProjectDetailsContainer>
-          <ProjectDetails>
-            <ProjectName>
-              <BlockTextReveal refreshToggle={refreshToggle} inline>
-                {projectName}
-              </BlockTextReveal>
-            </ProjectName>
-            
-            <MyRole>
-              <BlockTextReveal refreshToggle={refreshToggle} inline>
-                {renderRoles(roles)}
-              </BlockTextReveal>
-            </MyRole>
-            
-            <ProjectDesc>
-              <BlockTextReveal refreshToggle={refreshToggle} inline={false}>
-                {projectDesc}
-              </BlockTextReveal>
-            </ProjectDesc>
-          </ProjectDetails>
-        </ProjectDetailsContainer>
+    // Update ref with current value for next comparison
+    prevRefreshToggleRef.current = refreshToggle;
+  }, [refreshToggle]);
+  
+  // Helper function to render roles with bullet separators
+  const renderRoles = (roleList) => {
+    return roleList.map((role, index, arr) => {
+      const isLastRole = index === arr.length - 1;
+      
+      return isLastRole ? (
+        <span key={role}>{role}</span>
+      ) : (
+        <span key={role}>
+          {role}&nbsp; • &nbsp;
+        </span>
+      );
+    });
+  };
+  
+  return (
+    <TextContainer>
+      <ProjectID>
+        <BlockTextReveal refreshToggle={refreshToggle} inline>
+          {number}
+        </BlockTextReveal>
+      </ProjectID>
+      
+      <ProjectDetailsContainer>
+        <ProjectDetails>
+          <ProjectName>
+            <BlockTextReveal refreshToggle={refreshToggle} inline>
+              {projectName}
+            </BlockTextReveal>
+          </ProjectName>
+          
+          <MyRole>
+            <BlockTextReveal refreshToggle={refreshToggle} inline>
+              {renderRoles(roles)}
+            </BlockTextReveal>
+          </MyRole>
+          
+          <ProjectDesc>
+            <BlockTextReveal refreshToggle={refreshToggle} inline={false}>
+              {projectDesc}
+            </BlockTextReveal>
+          </ProjectDesc>
+        </ProjectDetails>
+      </ProjectDetailsContainer>
 
-        <ProjectType>
-          <BlockTextReveal refreshToggle={refreshToggle} inline>
-            {projectType}
-          </BlockTextReveal>
-        </ProjectType>
-      </TextContainer>
-    );
-  }
+      <ProjectType>
+        <BlockTextReveal refreshToggle={refreshToggle} inline>
+          {projectType}
+        </BlockTextReveal>
+      </ProjectType>
+    </TextContainer>
+  );
 }
 
 TextContent.propTypes = {
