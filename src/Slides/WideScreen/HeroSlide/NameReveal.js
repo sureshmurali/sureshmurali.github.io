@@ -37,7 +37,7 @@ const FONT_SIZES = {
 
 /**
  * Transform multiplier for initial position
- * Text starts below the visible area and slides up
+ * Text starts below the visible area and slides up from white block
  */
 const TRANSFORM_MULTIPLIER = 1.4;
 
@@ -60,9 +60,9 @@ const getFontSizeByBreakpoint = () => {
  */
 const TextToReveal = React.forwardRef((props, ref) => {
   // Calculate these values once when component mounts instead of on every render
-  const fontSize = `${getFontSizeByBreakpoint()}px`;
-  const translateY = getFontSizeByBreakpoint() * TRANSFORM_MULTIPLIER;
-  const initialTransform = `translateY(${translateY}px)`;
+  const fontSize = `${getFontSizeByBreakpoint()}px`; // Font size in pixels
+  const translateY = getFontSizeByBreakpoint() * TRANSFORM_MULTIPLIER; // Initial transform position
+  const initialTransform = `translateY(${translateY}px)`; // Initial transform value
   
   return (
     <div 

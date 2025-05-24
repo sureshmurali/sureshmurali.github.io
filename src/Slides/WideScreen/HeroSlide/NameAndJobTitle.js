@@ -18,7 +18,7 @@ const NameAndJobTitle = () => {
     <Container>
       <NameReveal text="Suresh Murali" fontFamily="Valencia" timeDelay={500} />
       <br />
-      <TitleReveal text="UI/UX Architect" fontFam="AvenirRoman" timeDelay={1300} />
+      <TitleReveal text="UI/UX Architect" fontFamily="AvenirRoman" timeDelay={1300} />
     </Container>
   );
 }
