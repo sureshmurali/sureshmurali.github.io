@@ -9,8 +9,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --import=vite/modulepreload-polyfill --no-warnings ./node_modules/vite/bin/vite.js",
-    "build": "node --import=vite/modulepreload-polyfill --no-warnings ./node_modules/vite/bin/vite.js build",
+    "dev": "vite",
+    "build": "vite build",
     "predeploy": "yarn build",
     "deploy": "node scripts/deploy.js",
     "reset": "rm -rf node_modules && rm -rf dist && yarn install"
