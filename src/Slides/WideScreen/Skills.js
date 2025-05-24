@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import device from '../../Assets/Responsive/breakpoints';
 
@@ -55,41 +55,29 @@ const SkillsList = styled.div`
   }
 `;
 
-class Skills extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      screenHeight: 0,
-      scrollHeight: 0,
-      scrollPercent: 0,
+const Skills = () =>  {
+  const [scrollPercent, setScrollPercent] = useState(0);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
     };
-    this.handleScroll = this.handleScroll.bind(this);
-  }
+  }, []);
 
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
-    this.setState({ scrollHeight: Math.round(window.document.documentElement.scrollHeight) });
-    this.setState({ screenHeight: Math.round(window.document.documentElement.clientHeight) });
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  handleScroll(event) {
-    const { body, documentElement } = event.srcElement;
+  const handleScroll = () => {
+    const { body, documentElement } = window.document;
     const sd = Math.max(body.scrollTop, documentElement.scrollTop);
     let sp = (sd / (documentElement.scrollHeight - documentElement.clientHeight) * 100);
     const minlimit = (documentElement.clientHeight * 950) / documentElement.scrollHeight;
     const maxlimit = (documentElement.clientHeight * 1180) / documentElement.scrollHeight;
     if (sp >= minlimit && sp <= maxlimit + 3) {
       sp -= minlimit;
-      this.setState({ scrollPercent: sp });
+      setScrollPercent(sp);
     }
-  }
+  };
 
-  render() {
-    const { scrollPercent } = this.state;
+
     return (
       <Container>
         <SkillsTitle scrollPercent={scrollPercent}>SKILLS</SkillsTitle>
@@ -128,6 +116,5 @@ class Skills extends Component {
       </Container>
     );
   }
-}
 
 export default Skills;
