@@ -17,7 +17,7 @@ const Container = styled.div`
 const NameAndJobTitle = () => {
   return (
     <Container>
-      <NameReveal text="Suresh Murali" fontFam="Valencia" timeDelay={500} />
+      <NameReveal text="Suresh Murali" fontFamily="Valencia" timeDelay={500} />
       <br />
       <TitleReveal text="UI/UX Architect" fontFam="AvenirRoman" timeDelay={1300} />
     </Container>
