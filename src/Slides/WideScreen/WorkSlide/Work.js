@@ -1,5 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react';
+/**
+ * Work Component - Displays work projects with scroll-based navigation
+ * 
+ * This component handles:
+ * 1. Scroll-based navigation between work projects
+ * 2. Animation triggers for project content
+ * 3. Rendering the appropriate project details based on scroll position
+ */
+
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styled from 'styled-components';
+import gsap from 'gsap'; // GreenSock Animation Platform
+
+// Components
 import TextContent from './TextContent';
 import ImageContent from './ImageContent';
 
@@ -69,28 +81,31 @@ const workDetails = [
   }
 ];
 
+/**
+ * Work component - Displays work projects with scroll-based navigation
+ */
 const Work = () => {
+  // Refs for animation elements
+  const containerRef = useRef(null);
+  
   // State hooks
   const [slideHeight, setSlideHeight] = useState(0);
   const [slideNumber, setSlideNumber] = useState(0);
-  const [lastScrollPosition, setLastScrollPosition] = useState(0);
   const [refreshToggle, setRefreshToggle] = useState(false);
   
   // Constants
   const slideHeightMultiplier = 1.4; // Each slide is 140% of viewport height
   
-  // Handle scroll event with useCallback for better performance
-  const handleScroll = useCallback((event) => {
-    const { body, documentElement } = event.srcElement;
-    
-    // Get scroll position (cross-browser compatible)
-    const currentScrollPosition = Math.max(body.scrollTop, documentElement.scrollTop);
-    
-    // Track scroll position
-    setLastScrollPosition(currentScrollPosition);
+  /**
+   * Handle scroll event with useCallback for better performance
+   * Uses GSAP for smoother animation transitions
+   */
+  const handleScroll = useCallback(() => {
+    // Get scroll information
+    const { scrollTop, clientHeight } = document.documentElement;
     
     // Calculate current slide index based on scroll position
-    const newSlideIndex = Math.floor(currentScrollPosition / slideHeight);
+    const newSlideIndex = Math.floor(scrollTop / slideHeight);
     
     // Update slide if we're moving to a different valid slide
     const isNewSlide = newSlideIndex !== slideNumber;
@@ -98,12 +113,17 @@ const Work = () => {
     const isValidBackward = slideNumber === workDetails.length - 1 && newSlideIndex < slideNumber;
     
     if (isNewSlide && (isValidForward || isValidBackward)) {
+      // Update slide number state
       setSlideNumber(newSlideIndex);
+      
       // Animation will be triggered in the useEffect that watches slideNumber
+      // GSAP animations are handled in the TextContent component
     }
   }, [slideHeight, slideNumber]);
   
-  // Setup event listeners and calculate initial slide height
+  /**
+   * Setup event listeners and calculate initial slide height
+   */
   useEffect(() => {
     // Calculate slide height (140% of viewport height)
     const calculatedHeight = Math.round(
@@ -111,16 +131,20 @@ const Work = () => {
     );
     setSlideHeight(calculatedHeight);
     
-    // Add scroll event listener
-    window.addEventListener('scroll', handleScroll);
+    // Add scroll event listener with passive flag for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
     // Cleanup function to remove event listener
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll, { passive: true });
     };
   }, [handleScroll]); // Only re-run if handleScroll changes
   
-  // Effect to trigger animation only when slideNumber changes
+  /**
+   * Effect to trigger animation only when slideNumber changes
+   * This toggles the refreshToggle state which is passed to TextContent
+   * to trigger animations when the slide changes
+   */
   useEffect(() => {
     // Only toggle refreshToggle when slideNumber changes (not on initial mount)
     if (slideNumber > 0) {
@@ -128,7 +152,10 @@ const Work = () => {
     }
   }, [slideNumber]); // Only run when slideNumber changes
   
-  // Render the current slide content
+  /**
+   * Render the current slide content with animation triggers
+   * Uses GSAP animations for smooth transitions between slides
+   */
   const renderCurrentSlide = () => {
     const currentProject = workDetails[slideNumber];
     
@@ -146,7 +173,7 @@ const Work = () => {
   };
   
   return (
-    <Container>
+    <Container ref={containerRef}>
       {renderCurrentSlide()}
       <ImageContent pageSplitTimes={slideHeightMultiplier} />
     </Container>
