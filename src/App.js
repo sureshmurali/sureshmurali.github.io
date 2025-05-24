@@ -26,13 +26,13 @@ const App = () => {
 
   return (
     <>
-      <MediaQuery query="(min-device-width: 1224px)">
+      <MediaQuery minDeviceWidth={1224}>
         <WideScreenHero />
         <WideScreenWork />
         <WideScreenSkills />
         <WideScreenContact />
       </MediaQuery>
-      <MediaQuery query="(max-device-width: 1224px)">
+      <MediaQuery maxDeviceWidth={1223}>
         <MobileHero />
         <MobileWork />
         <MobileSkills />
@@ -43,4 +43,10 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// React 17 way of rendering with StrictMode
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);

@@ -26,21 +26,23 @@
   },
   "homepage": "https://github.com/sureshmurali/My-Portfolio#readme",
   "devDependencies": {
+    "@babel/core": "^7.0.0",
     "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.43.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "gh-pages": "^6.3.0",
     "vite": "^5.0.10"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
     "prop-types": "^15.8.1",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "react-responsive": "^6.0.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-responsive": "^8.2.0",
     "styled-components": "^4.4.1",
     "ua-parser-js": "^0.7.33",
     "vh-check": "^2.0.5"
