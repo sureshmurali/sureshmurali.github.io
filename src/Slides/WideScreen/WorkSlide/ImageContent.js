@@ -9,36 +9,43 @@ import TeslaImages from './ParallaxImages/TeslaImages';
 import LashicImages from './ParallaxImages/LashicImages';
 
 const ImageContainer = styled.div`
-/** border: 10px dashed black; */
-margin-left:50%;
-width:50%;
-height:925vh;
-display: flex;
-flex-flow: column nowrap;
+  /** border: 10px dashed black; */
+  margin-left: 50%;
+  width: 50%;
+  height: 925vh;
+  display: flex;
+  flex-flow: column nowrap;
 `;
 
 const ImageBox = styled.div`
-/** outline: 5px dashed green; */
-margin-top:40vh;
-height: 100vh;
-position: relative;
+  /** outline: 5px dashed green; */
+  margin-top: 40vh;
+  height: 100vh;
+  position: relative;
 `;
 
 class ImageContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      screenHeight: 0,
-      scrollHeight: 0,
-      scrollPercent: 0,
+      viewportHeight: 0,
+      documentHeight: 0,
+      scrollPercent: 0
     };
     this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    this.setState({ scrollHeight: Math.round(window.document.documentElement.scrollHeight) });
-    this.setState({ screenHeight: Math.round(window.document.documentElement.clientHeight) });
+    
+    // Get document dimensions once on mount
+    const documentHeight = Math.round(window.document.documentElement.scrollHeight);
+    const viewportHeight = Math.round(window.document.documentElement.clientHeight);
+    
+    this.setState({ 
+      documentHeight,
+      viewportHeight
+    });
   }
 
   componentWillUnmount() {
@@ -47,75 +54,52 @@ class ImageContent extends Component {
 
   handleScroll() {
     const { body, documentElement } = window.document;
-    const sd = Math.max(body.scrollTop, documentElement.scrollTop);
-    const sp = (sd / (documentElement.scrollHeight - documentElement.clientHeight) * 100);
-    const minlimit = (documentElement.clientHeight * 100) / documentElement.scrollHeight;
-    const maxlimit = (documentElement.clientHeight * 1040) / documentElement.scrollHeight;
-    if (sp >= minlimit && sp <= maxlimit) {
-      this.setState({ scrollPercent: sp });
+    
+    // Current scroll position (cross-browser compatible)
+    const scrollPosition = Math.max(body.scrollTop, documentElement.scrollTop);
+    
+    // Calculate scroll percentage (0-100)
+    const scrollableDistance = documentElement.scrollHeight - documentElement.clientHeight;
+    const currentScrollPercent = (scrollPosition / scrollableDistance * 100);
+    
+    // Define valid scroll range for this component
+    const minScrollLimit = (documentElement.clientHeight * 100) / documentElement.scrollHeight;
+    const maxScrollLimit = (documentElement.clientHeight * 1040) / documentElement.scrollHeight;
+    
+    // Only update state if scroll percentage is within our range of interest
+    if (currentScrollPercent >= minScrollLimit && currentScrollPercent <= maxScrollLimit) {
+      this.setState({ scrollPercent: currentScrollPercent });
     }
   }
 
   render() {
-    const { scrollPercent, scrollHeight, screenHeight } = this.state;
+    const { scrollPercent, documentHeight, viewportHeight } = this.state;
     const { pageSplitTimes } = this.props;
     const boxHeight = pageSplitTimes * 100;
+    
+    // Project image components in order
+    const projectImages = [
+      { Component: FastRetailingImages, index: 1 },
+      { Component: LashicImages, index: 2 },
+      { Component: EyepImages, index: 3 },
+      { Component: TeslaImages, index: 4 },
+      { Component: WhatsMyFoodImages, index: 5 },
+      { Component: VoistrapImages, index: 6 }
+    ];
+    
     return (
       <ImageContainer>
-        <ImageBox height={boxHeight}>
-          <FastRetailingImages
-            boxHeight={boxHeight}
-            index={1}
-            scrollPercent={scrollPercent}
-            screenHeight={screenHeight}
-            scrollHeight={scrollHeight}
-          />
-        </ImageBox>
-        <ImageBox height={boxHeight}>
-          <LashicImages
-            boxHeight={boxHeight}
-            index={2}
-            scrollPercent={scrollPercent}
-            screenHeight={screenHeight}
-            scrollHeight={scrollHeight}
-          />
-        </ImageBox>
-        <ImageBox height={boxHeight}>
-          <EyepImages
-            boxHeight={boxHeight}
-            index={3}
-            scrollPercent={scrollPercent}
-            screenHeight={screenHeight}
-            scrollHeight={scrollHeight}
-          />
-        </ImageBox>
-        <ImageBox height={boxHeight}>
-          <TeslaImages
-            boxHeight={boxHeight}
-            index={4}
-            scrollPercent={scrollPercent}
-            screenHeight={screenHeight}
-            scrollHeight={scrollHeight}
-          />
-        </ImageBox>
-        <ImageBox height={boxHeight}>
-          <WhatsMyFoodImages
-            boxHeight={boxHeight}
-            index={5}
-            scrollPercent={scrollPercent}
-            screenHeight={screenHeight}
-            scrollHeight={scrollHeight}
-          />
-        </ImageBox>
-        <ImageBox height={boxHeight}>
-          <VoistrapImages
-            boxHeight={boxHeight}
-            index={6}
-            scrollPercent={scrollPercent}
-            screenHeight={screenHeight}
-            scrollHeight={scrollHeight}
-          />
-        </ImageBox>
+        {projectImages.map(({ Component, index }) => (
+          <ImageBox key={index} height={boxHeight}>
+            <Component
+              boxHeight={boxHeight}
+              index={index}
+              scrollPercent={scrollPercent}
+              screenHeight={viewportHeight}
+              scrollHeight={documentHeight}
+            />
+          </ImageBox>
+        ))}
       </ImageContainer>
     );
   }
