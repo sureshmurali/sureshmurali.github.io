@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import vhCheck from 'vh-check';
@@ -25,48 +25,55 @@ height: 100vh;
 position: relative;
 `;
 
-class ImageContent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      screenHeight: 0,
-      scrollHeight: 0,
-      scrollPercent: 0,
-    };
-    this.handleScroll = this.handleScroll.bind(this);
-  }
-
-  componentDidMount() {
+const ImageContent = ({ pageSplitTimes }) => {
+  // State hooks
+  const [screenHeight, setScreenHeight] = useState(0);
+  const [scrollHeight, setScrollHeight] = useState(0);
+  const [scrollPercent, setScrollPercent] = useState(0);
+  
+  // Handle scroll event with useCallback for better performance
+  const handleScroll = useCallback(() => {
+    const { body, documentElement } = window.document;
+    
+    // Calculate scroll position as a percentage
+    const scrollDistance = Math.max(body.scrollTop, documentElement.scrollTop);
+    const scrollPercentage = (scrollDistance / (documentElement.scrollHeight - documentElement.clientHeight) * 100);
+    
+    // Define scroll boundaries for animation
+    const minScrollLimit = (documentElement.clientHeight * 100) / documentElement.scrollHeight;
+    const maxScrollLimit = (documentElement.clientHeight * 1040) / documentElement.scrollHeight;
+    
+    // Only update state if scroll percentage is within limits
+    if (scrollPercentage >= minScrollLimit && scrollPercentage <= maxScrollLimit) {
+      setScrollPercent(scrollPercentage);
+    }
+  }, []);
+  
+  // Setup event listeners and calculate initial dimensions
+  useEffect(() => {
+    // Calculate viewport height adjustment for mobile browsers
     const vhDiff = vhCheck().offset;
-    window.addEventListener('scroll', this.handleScroll);
-    this.setState({ scrollHeight: Math.round(window.document.documentElement.scrollHeight) });
-    this.setState(
-      { screenHeight: Math.round(window.document.documentElement.clientHeight + vhDiff) },
-    );
+    
+    // Set initial dimensions
+    setScrollHeight(Math.round(window.document.documentElement.scrollHeight));
+    setScreenHeight(Math.round(window.document.documentElement.clientHeight + vhDiff));
+    
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll);
+    
+    // Log dimensions for debugging
     console.log('scrollHeight', Math.round(window.document.documentElement.scrollHeight));
     console.log('screenHeight', Math.round(window.document.documentElement.clientHeight));
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  handleScroll() {
-    const { body, documentElement } = window.document;
-    const sd = Math.max(body.scrollTop, documentElement.scrollTop);
-    const sp = (sd / (documentElement.scrollHeight - documentElement.clientHeight) * 100);
-    const minlimit = (documentElement.clientHeight * 100) / documentElement.scrollHeight;
-    const maxlimit = (documentElement.clientHeight * 1040) / documentElement.scrollHeight;
-    if (sp >= minlimit && sp <= maxlimit) {
-      this.setState({ scrollPercent: sp });
-    }
-  }
-
-  render() {
-    const { scrollPercent, scrollHeight, screenHeight } = this.state;
-    const { pageSplitTimes } = this.props;
-    const boxHeight = pageSplitTimes * 100;
-    return (
+    
+    // Cleanup function to remove event listener
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+  // Calculate box height based on pageSplitTimes prop
+  const boxHeight = pageSplitTimes * 100;
+  
+  return (
       <ImageContainer>
         <ImageBox height={boxHeight}>
           <FastRetailingImages
@@ -123,9 +130,8 @@ class ImageContent extends Component {
           />
         </ImageBox>
       </ImageContainer>
-    );
-  }
-}
+  );
+};
 
 ImageContent.propTypes = {
   pageSplitTimes: PropTypes.number.isRequired,

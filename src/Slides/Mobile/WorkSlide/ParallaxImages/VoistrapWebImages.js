@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import dots from '../../../../Assets/Images/Showcase/Dots.png';
@@ -63,25 +63,26 @@ width: 80vw;
 filter: blur(0.8px);
 `;
 
-class VoistrapWebImages extends Component {
-  render() {
-    let { scrollPercent } = this.props;
-    const {
-      boxHeight, index, scrollHeight, screenHeight,
-    } = this.props;
-    const heighttoBeReducedinVH = ((boxHeight * index) - 100);
-    const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
-    scrollPercent -= scrollOffsetInPercent;
-    return (
-      <React.Fragment>
-        <Paths src={paths} scroll={scrollPercent} alt="paths" />
-        <BigBubble src={bigBubble} scroll={scrollPercent} alt="bigBubble" />
-        <Bubbles src={bubbles} scroll={scrollPercent} alt="bubbles" />
-        <Dots src={dots} scroll={scrollPercent} alt="dots" />
-      </React.Fragment>
-    );
-  }
+const VoistrapWebImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeight }) => {
+  // Calculate the adjusted scroll percentage for this specific section
+  let adjustedScrollPercent = scrollPercent;
+  
+  // Calculate how much to offset the scroll percentage based on this component's position
+  const heighttoBeReducedinVH = ((boxHeight * index) - 100);
+  const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
+  const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
+  
+  // Apply the offset to get the scroll percentage relative to this component
+  adjustedScrollPercent -= scrollOffsetInPercent;
+  
+  return (
+    <React.Fragment>
+      <Paths src={paths} scroll={adjustedScrollPercent} alt="paths" />
+      <BigBubble src={bigBubble} scroll={adjustedScrollPercent} alt="bigBubble" />
+      <Bubbles src={bubbles} scroll={adjustedScrollPercent} alt="bubbles" />
+      <Dots src={dots} scroll={adjustedScrollPercent} alt="dots" />
+    </React.Fragment>
+  );
 }
 
 VoistrapWebImages.propTypes = {

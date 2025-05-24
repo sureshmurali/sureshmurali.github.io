@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import englishHome from '../../../../Assets/Images/Kosen/EnglishHome.png';
@@ -17,7 +17,6 @@ left: 2vw;
 transform-origin: left center;
 /* border: 1px dashed red; */
 height: 70vh;
-
 `;
 
 const EnglishTab = styled.img.attrs({
@@ -50,30 +49,31 @@ height: 70vh;
 filter: blur(1px);
 `;
 
-class KosenImages extends Component {
-  render() {
-    let { scrollPercent } = this.props;
-    const {
-      boxHeight, index, scrollHeight, screenHeight,
-    } = this.props;
-    const heighttoBeReducedinVH = ((boxHeight * index) - 100);
-    const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
-    // console.log('Voistrap scrollOffsetPercent ', scrollOffsetInPercent);
-    console.log('scrollPercent ', scrollPercent);
-    scrollPercent -= scrollOffsetInPercent;
-    if (scrollPercent > 0 && scrollPercent < 0.1) {
-      console.log('Voistrap');
-    }
-    return (
-      <React.Fragment>
-        <PlayerTab src={player} scroll={scrollPercent} alt="kosenPlayer" />
-        <EnglishTab src={englishHome} scroll={scrollPercent} alt="kosenEnglish" />
-        <JapaneseTab src={jpnHome} scroll={scrollPercent} alt="kosenJapanese" />
-      </React.Fragment>
-    );
+const KosenImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeight }) => {
+  // Calculate the adjusted scroll percentage for this specific section
+  let adjustedScrollPercent = scrollPercent;
+  
+  // Calculate how much to offset the scroll percentage based on this component's position
+  const heighttoBeReducedinVH = ((boxHeight * index) - 100);
+  const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
+  const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
+  
+  // Apply the offset to get the scroll percentage relative to this component
+  adjustedScrollPercent -= scrollOffsetInPercent;
+  
+  // Debug logging
+  if (scrollPercent > 0 && scrollPercent < 0.1) {
+    console.log('Kosen');
   }
-}
+  
+  return (
+    <React.Fragment>
+      <PlayerTab src={player} scroll={adjustedScrollPercent} alt="kosenPlayer" />
+      <EnglishTab src={englishHome} scroll={adjustedScrollPercent} alt="kosenEnglish" />
+      <JapaneseTab src={jpnHome} scroll={adjustedScrollPercent} alt="kosenJapanese" />
+    </React.Fragment>
+  );
+};
 
 KosenImages.propTypes = {
   boxHeight: PropTypes.number.isRequired,

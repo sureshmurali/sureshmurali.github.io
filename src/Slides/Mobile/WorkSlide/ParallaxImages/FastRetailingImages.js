@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import fastRetailingUQImg from '../../../../Assets/Images/FastRetailing/UQ.png';
@@ -66,26 +66,27 @@ height: 80vh;
 filter: blur(1.2px);
 `;
 
-class FastRetailingImages extends Component {
-  render() {
-    let { scrollPercent } = this.props;
-    const {
-      boxHeight, index, scrollHeight, screenHeight,
-    } = this.props;
-    const heighttoBeReducedinVH = ((boxHeight * index) - 100);
-    const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
-    scrollPercent -= scrollOffsetInPercent;
-    return (
-      <React.Fragment>
-        <FastRetailingPhonePLST src={fastRetailingPLSTImg} scroll={scrollPercent} alt="fastRetailingPLST" />
-        <FastRetailingPhoneGU2 src={fastRetailingGU2Img} scroll={scrollPercent} alt="fastRetailingGU2" />
-        <FastRetailingPhoneUQ src={fastRetailingUQImg} scroll={scrollPercent} alt="fastRetailingUQ" />
-        <FastRetailingPhoneGU src={fastRetailingGUImg} scroll={scrollPercent} alt="fastRetailingGU" />
-      </React.Fragment>
-    );
-  }
-}
+const FastRetailingImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeight }) => {
+  // Calculate the adjusted scroll percentage for this specific section
+  let adjustedScrollPercent = scrollPercent;
+  
+  // Calculate how much to offset the scroll percentage based on this component's position
+  const heighttoBeReducedinVH = ((boxHeight * index) - 100);
+  const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
+  const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
+  
+  // Apply the offset to get the scroll percentage relative to this component
+  adjustedScrollPercent -= scrollOffsetInPercent;
+  
+  return (
+    <React.Fragment>
+      <FastRetailingPhonePLST src={fastRetailingPLSTImg} scroll={adjustedScrollPercent} alt="fastRetailingPLST" />
+      <FastRetailingPhoneGU2 src={fastRetailingGU2Img} scroll={adjustedScrollPercent} alt="fastRetailingGU2" />
+      <FastRetailingPhoneUQ src={fastRetailingUQImg} scroll={adjustedScrollPercent} alt="fastRetailingUQ" />
+      <FastRetailingPhoneGU src={fastRetailingGUImg} scroll={adjustedScrollPercent} alt="fastRetailingGU" />
+    </React.Fragment>
+  );
+};
 
 FastRetailingImages.propTypes = {
   boxHeight: PropTypes.number.isRequired,

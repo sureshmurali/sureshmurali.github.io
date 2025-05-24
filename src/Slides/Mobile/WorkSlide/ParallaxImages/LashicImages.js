@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import alertImg from '../../../../Assets/Images/Lashic/Alert.png';
@@ -65,25 +65,26 @@ height: 80vh;
 filter: blur(1.2px);
 `;
 
-class LashicImages extends Component {
-  render() {
-    let { scrollPercent } = this.props;
-    const {
-      boxHeight, index, scrollHeight, screenHeight,
-    } = this.props;
-    const heighttoBeReducedinVH = ((boxHeight * index) - 100);
-    const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
-    scrollPercent -= scrollOffsetInPercent;
-    return (
-      <React.Fragment>
-        <CustomerDetail src={customerDetailImg} scroll={scrollPercent} alt="customerDetails" />
-        <Customers src={customersImg} scroll={scrollPercent} alt="customers" />
-        <Alert src={alertImg} scroll={scrollPercent} alt="Alert" />
-        <Task src={taskImg} scroll={scrollPercent} alt="Task" />
-      </React.Fragment>
-    );
-  }
+const LashicImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeight }) => {
+  // Calculate the adjusted scroll percentage for this specific section
+  let adjustedScrollPercent = scrollPercent;
+  
+  // Calculate how much to offset the scroll percentage based on this component's position
+  const heighttoBeReducedinVH = ((boxHeight * index) - 100);
+  const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
+  const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight);
+  
+  // Apply the offset to get the scroll percentage relative to this component
+  adjustedScrollPercent -= scrollOffsetInPercent;
+  
+  return (
+    <React.Fragment>
+      <CustomerDetail src={customerDetailImg} scroll={adjustedScrollPercent} alt="customerDetails" />
+      <Customers src={customersImg} scroll={adjustedScrollPercent} alt="customers" />
+      <Alert src={alertImg} scroll={adjustedScrollPercent} alt="Alert" />
+      <Task src={taskImg} scroll={adjustedScrollPercent} alt="Task" />
+    </React.Fragment>
+  );
 }
 
 LashicImages.propTypes = {

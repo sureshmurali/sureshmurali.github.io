@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import teslaTyreImg from '../../../../Assets/Images/Tesla/Tyre.png';
@@ -66,27 +66,27 @@ height: 80vh;
 filter: blur(1.2px);
 `;
 
-class TeslaImages extends Component {
-  render() {
-    let { scrollPercent } = this.props;
-    const {
-      boxHeight, index, scrollHeight, screenHeight,
-    } = this.props;
-    const heighttoBeReducedinVH = ((boxHeight * index) - 100);
-    const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight) + index - 1;
-    scrollPercent -= scrollOffsetInPercent;
+const TeslaImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeight }) => {
+  // Calculate the adjusted scroll percentage for this specific section
+  let adjustedScrollPercent = scrollPercent;
+  
+  // Calculate how much to offset the scroll percentage based on this component's position
+  const heighttoBeReducedinVH = ((boxHeight * index) - 100);
+  const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
+  const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight) + index - 1;
+  
+  // Apply the offset to get the scroll percentage relative to this component
+  adjustedScrollPercent -= scrollOffsetInPercent;
 
-    return (
-      <React.Fragment>
-        <Lock src={teslaLockImg} scroll={scrollPercent} alt="teslaLock" />
-        <Battery src={teslaBatteryImg} scroll={scrollPercent} alt="teslaBattery" />
-        <Tyre src={teslaTyreImg} scroll={scrollPercent} alt="teslaTyre" />
-        <Heat src={teslaHeatImg} scroll={scrollPercent} alt="teslaHeat" />
-      </React.Fragment>
-    );
-  }
-}
+  return (
+    <React.Fragment>
+      <Lock src={teslaLockImg} scroll={adjustedScrollPercent} alt="teslaLock" />
+      <Battery src={teslaBatteryImg} scroll={adjustedScrollPercent} alt="teslaBattery" />
+      <Tyre src={teslaTyreImg} scroll={adjustedScrollPercent} alt="teslaTyre" />
+      <Heat src={teslaHeatImg} scroll={adjustedScrollPercent} alt="teslaHeat" />
+    </React.Fragment>
+  );
+};
 
 TeslaImages.propTypes = {
   boxHeight: PropTypes.number.isRequired,

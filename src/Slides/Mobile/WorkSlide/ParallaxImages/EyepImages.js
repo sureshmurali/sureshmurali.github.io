@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import eyepTabletImg from '../../../../Assets/Images/Eyep/Tablet.png';
@@ -33,24 +33,24 @@ right:2vw;
 height: 100vh; 
 `;
 
-class EyepImages extends Component {
-  render() {
-    let { scrollPercent } = this.props;
-    const {
-      boxHeight, index, scrollHeight, screenHeight,
-    } = this.props;
-    const heighttoBeReducedinVH = ((boxHeight * index) - 100);
-    const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight) + index - 1;
-    scrollPercent -= scrollOffsetInPercent;
+const EyepImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeight }) => {
+  // Calculate the adjusted scroll percentage for this specific section
+  let adjustedScrollPercent = scrollPercent;
+  
+  // Calculate how much to offset the scroll percentage based on this component's position
+  const heighttoBeReducedinVH = ((boxHeight * index) - 100);
+  const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
+  const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight) + index - 1;
+  
+  // Apply the offset to get the scroll percentage relative to this component
+  adjustedScrollPercent -= scrollOffsetInPercent;
 
-    return (
+  return (
       <React.Fragment>
-        <Tablet src={eyepTabletImg} scroll={scrollPercent} alt="eyepTablet" />
-        <Iphone src={eyepIphoneImg} scroll={scrollPercent} alt="eyepIphone" />
+        <Tablet src={eyepTabletImg} scroll={adjustedScrollPercent} alt="eyepTablet" />
+        <Iphone src={eyepIphoneImg} scroll={adjustedScrollPercent} alt="eyepIphone" />
       </React.Fragment>
-    );
-  }
+  );
 }
 
 EyepImages.propTypes = {

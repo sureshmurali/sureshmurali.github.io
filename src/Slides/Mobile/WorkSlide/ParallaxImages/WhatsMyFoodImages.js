@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import homeImg from '../../../../Assets/Images/WhatsMyFood/Home.png';
@@ -65,30 +65,32 @@ height: 80vh;
 filter: blur(1.2px);
 `;
 
-class WhatsMyFoodImages extends Component {
-  render() {
-    let { scrollPercent } = this.props;
-    const {
-      boxHeight, index, scrollHeight, screenHeight,
-    } = this.props;
-    const heighttoBeReducedinVH = ((boxHeight * index) - 100);
-    const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
-    const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight) + index - 1;
-    // console.log('WMF scrollOffsetPercent ', scrollOffsetInPercent);
-    scrollPercent -= scrollOffsetInPercent;
-    if (scrollPercent > 0 && scrollPercent < 0.1) {
-      console.log('WMF');
-    }
-    return (
-      <React.Fragment>
-        <AddFood src={addFoodImg} scroll={scrollPercent} alt="addFood" />
-        <AddRestaurant src={addRestaurantImg} scroll={scrollPercent} alt="addRestaurant" />
-        <Home src={homeImg} scroll={scrollPercent} alt="Home" />
-        <Restaurant src={restaurantImg} scroll={scrollPercent} alt="Restaurant" />
-      </React.Fragment>
-    );
+const WhatsMyFoodImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeight }) => {
+  // Calculate the adjusted scroll percentage for this specific section
+  let adjustedScrollPercent = scrollPercent;
+  
+  // Calculate how much to offset the scroll percentage based on this component's position
+  const heighttoBeReducedinVH = ((boxHeight * index) - 100);
+  const scrollOffset = (screenHeight * heighttoBeReducedinVH) / 100;
+  const scrollOffsetInPercent = (scrollOffset * 100 / scrollHeight) + index - 1;
+  
+  // Apply the offset to get the scroll percentage relative to this component
+  adjustedScrollPercent -= scrollOffsetInPercent;
+  
+  // Debug logging
+  if (scrollPercent > 0 && scrollPercent < 0.1) {
+    console.log('WMF');
   }
-}
+  
+  return (
+    <React.Fragment>
+      <AddFood src={addFoodImg} scroll={adjustedScrollPercent} alt="addFood" />
+      <AddRestaurant src={addRestaurantImg} scroll={adjustedScrollPercent} alt="addRestaurant" />
+      <Home src={homeImg} scroll={adjustedScrollPercent} alt="Home" />
+      <Restaurant src={restaurantImg} scroll={adjustedScrollPercent} alt="Restaurant" />
+    </React.Fragment>
+  );
+};
 
 WhatsMyFoodImages.propTypes = {
   boxHeight: PropTypes.number.isRequired,
