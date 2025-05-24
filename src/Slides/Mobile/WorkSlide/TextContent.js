@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
 import device from '../../../Assets/Responsive/breakpoints';
@@ -125,8 +125,8 @@ const revBlock = () => keyframes`
 `;
 
 
-let BlockTextReveal = styled.span`
-`;
+// Initial empty styled component that will be dynamically replaced
+let BlockTextReveal = styled.span``;
 
 const BlockTextRevealQuick = styled.span`
 display:${props => (props.inline ? 'inline' : 'block')};
@@ -154,35 +154,25 @@ const BlockTextRevealNoAnim = styled.span`
 
 `;
 
-class TextContent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      refreshBlock: false,
-    };
-    this.refresh = this.refresh.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.refresh(nextProps);
-  }
-
-  refresh(nextProps) {
-    const { refreshToggle } = nextProps;
-    if (refreshToggle) {
-      BlockTextReveal = BlockTextRevealNoAnim;
-      this.setState({ refreshBlock: true },
-        () => {
-          BlockTextReveal = BlockTextRevealQuick;
-          this.setState({ refreshBlock: false });
-        });
-    }
-  }
-
-  render() {
-    const {
-      number, projectName, projectDesc, roles, projectType, refreshToggle,
-    } = this.props;
+const TextContent = ({ number, projectName, projectDesc, roles, projectType, refreshToggle }) => {
+  // State to track animation refresh
+  const [refreshBlock, setRefreshBlock] = useState(false);
+  
+  // Effect to handle animation refresh when props change
+  useEffect(() => {
+    // Always trigger animation when component receives new props
+    // First set to NoAnim version
+    BlockTextReveal = BlockTextRevealNoAnim;
+    setRefreshBlock(true);
+    
+    // Then set back to animated version
+    setTimeout(() => {
+      BlockTextReveal = BlockTextRevealQuick;
+      setRefreshBlock(false);
+    }, 10); // Small timeout to ensure state updates properly
+    
+    // This will run on every render with new props
+  }, [number, projectName, projectDesc, projectType]);
     return (
       <TextContainer>
         <ProjectID>
@@ -226,8 +216,7 @@ class TextContent extends Component {
         </ProjectType>
       </TextContainer>
     );
-  }
-}
+};
 
 TextContent.propTypes = {
   number: PropTypes.string.isRequired,

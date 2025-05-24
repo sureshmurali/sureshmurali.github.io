@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import vhCheck from 'vh-check';
 import TextContent from './TextContent';
@@ -10,18 +10,8 @@ const Container = styled.div`
     /* border: 1px dashed red; */
 `;
 
-class Work extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      vh: 0,
-      slideNumber: 0,
-    };
-    this.pageSplitTimes = 1.3;
-    this.lastScrollTop = 0;
-    this.scrollDirectionDown = true;
-    this.handleScroll = this.handleScroll.bind(this);
-    this.workDetails = [
+// Project data array - extracted outside the component for cleaner code
+const workDetails = [
       {
         number: '',
         projectName: '',
@@ -79,68 +69,91 @@ class Work extends Component {
         roles: [''],
       },
     ];
-  }
 
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
-    const vhDiff = vhCheck().offset;
-    this.setState(
-      {
-        vh: Math.round(
-          (window.document.documentElement.clientHeight + vhDiff) * this.pageSplitTimes,
-        ),
-      },
-    );
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  handleScroll(event) {
+const Work = () => {
+  // State hooks
+  const [slideHeight, setSlideHeight] = useState(0);
+  const [slideNumber, setSlideNumber] = useState(0);
+  const [lastScrollPosition, setLastScrollPosition] = useState(0);
+  const [scrollDirectionDown, setScrollDirectionDown] = useState(true);
+  
+  // Constants
+  const slideHeightMultiplier = 1.3; // Each slide is 130% of viewport height
+  
+  // Handle scroll event with useCallback for better performance
+  const handleScroll = useCallback((event) => {
     const { body, documentElement } = event.srcElement;
-    const { vh, slideNumber } = this.state;
-    const scrollDistance = Math.max(body.scrollTop, documentElement.scrollTop);
-    if (scrollDistance > this.lastScrollTop) {
-      this.scrollDirectionDown = true;
+    
+    // Get scroll position (cross-browser compatible)
+    const currentScrollPosition = Math.max(body.scrollTop, documentElement.scrollTop);
+    
+    // Track scroll direction
+    if (currentScrollPosition > lastScrollPosition) {
+      setScrollDirectionDown(true);
     } else {
-      this.scrollDirectionDown = false;
+      setScrollDirectionDown(false);
     }
-    this.lastScrollTop = scrollDistance;
-    // console.log(scrollDistance);
-
-    if (Math.floor(scrollDistance / vh) !== slideNumber
-      && slideNumber < this.workDetails.length - 1) {
-      this.setState({ slideNumber: Math.floor(scrollDistance / vh) });
-    } else if (slideNumber === this.workDetails.length - 1
-      && (Math.floor(scrollDistance / vh) < slideNumber)) {
-      this.setState({ slideNumber: Math.floor(scrollDistance / vh) });
+    
+    // Store current scroll position for next comparison
+    setLastScrollPosition(currentScrollPosition);
+    
+    // Calculate current slide index based on scroll position
+    const newSlideIndex = Math.floor(currentScrollPosition / slideHeight);
+    
+    // Update slide if we're moving to a different valid slide
+    const isNewSlide = newSlideIndex !== slideNumber;
+    const isValidForward = slideNumber < workDetails.length - 1;
+    const isValidBackward = slideNumber === workDetails.length - 1 && newSlideIndex < slideNumber;
+    
+    if (isNewSlide && (isValidForward || isValidBackward)) {
+      setSlideNumber(newSlideIndex);
     }
-  }
-
-  changeTextContentBasedOnScroll() {
-    const { slideNumber } = this.state;
-    const refresh = true;
+  }, [slideHeight, slideNumber, lastScrollPosition]);
+  
+  // Setup event listeners and calculate initial slide height
+  useEffect(() => {
+    // Calculate slide height (130% of viewport height) with vh-check for mobile browsers
+    const vhDiff = vhCheck().offset;
+    const calculatedHeight = Math.round(
+      (window.document.documentElement.clientHeight + vhDiff) * slideHeightMultiplier
+    );
+    setSlideHeight(calculatedHeight);
+    
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll);
+    
+    // Cleanup function to remove event listener
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+  
+  // No need for a separate effect to trigger animations
+  // The TextContent component will now trigger animations based on prop changes
+  
+  // Render the current slide content
+  const renderCurrentSlide = () => {
+    const currentProject = workDetails[slideNumber];
+    
+    // Pass refreshToggle to trigger animations only when slide changes
     return (
       <TextContent
-        number={this.workDetails[slideNumber].number}
-        projectName={this.workDetails[slideNumber].projectName}
-        projectDesc={this.workDetails[slideNumber].projectDesc}
-        projectType={this.workDetails[slideNumber].projectType}
-        roles={this.workDetails[slideNumber].roles}
-        refreshToggle={refresh}
+        number={currentProject.number}
+        projectName={currentProject.projectName}
+        projectDesc={currentProject.projectDesc}
+        projectType={currentProject.projectType}
+        roles={currentProject.roles}
+        // No need for refreshToggle prop as TextContent now animates based on prop changes
       />
     );
-  }
-
-  render() {
-    return (
-      <Container>
-        {this.changeTextContentBasedOnScroll()}
-        <ImageContent pageSplitTimes={this.pageSplitTimes} />
-      </Container>
-    );
-  }
-}
+  };
+  
+  return (
+    <Container>
+      {renderCurrentSlide()}
+      <ImageContent pageSplitTimes={slideHeightMultiplier} />
+    </Container>
+  );
+};
 
 export default Work;
