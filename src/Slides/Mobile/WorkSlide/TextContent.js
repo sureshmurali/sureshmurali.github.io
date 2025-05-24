@@ -154,7 +154,7 @@ const BlockTextRevealNoAnim = styled.span`
 
 `;
 
-const TextContent = ({ number, projectName, projectDesc, roles, projectType, refreshToggle }) => {
+const TextContent = ({ number, projectName, projectDesc, roles, projectType, refreshToggle = false }) => {
   // State to track animation refresh
   const [refreshBlock, setRefreshBlock] = useState(false);
   
@@ -224,7 +224,7 @@ TextContent.propTypes = {
   projectDesc: PropTypes.string.isRequired,
   projectType: PropTypes.string.isRequired,
   roles: PropTypes.array.isRequired,
-  refreshToggle: PropTypes.bool.isRequired,
+  refreshToggle: PropTypes.bool, // Made optional for React 18 compatibility
 };
 
 export default TextContent;
