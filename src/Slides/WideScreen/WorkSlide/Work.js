@@ -9,7 +9,6 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styled from 'styled-components';
-import gsap from 'gsap'; // GreenSock Animation Platform
 
 // Components
 import TextContent from './TextContent';
@@ -115,9 +114,6 @@ const Work = () => {
     if (isNewSlide && (isValidForward || isValidBackward)) {
       // Update slide number state
       setSlideNumber(newSlideIndex);
-      
-      // Animation will be triggered in the useEffect that watches slideNumber
-      // GSAP animations are handled in the TextContent component
     }
   }, [slideHeight, slideNumber]);
   
