@@ -70,12 +70,12 @@ const TeslaImages = ({ scrollPercent: initialScrollPercent, boxHeight, index, sc
   const scrollPercent = initialScrollPercent - scrollOffsetInPercent;
 
   return (
-    <React.Fragment>
+    <>
       <Lock src={teslaLockImg} scroll={scrollPercent} alt="teslaLock" />
       <Battery src={teslaBatteryImg} scroll={scrollPercent} alt="teslaBattery" />
       <Tyre src={teslaTyreImg} scroll={scrollPercent} alt="teslaTyre" />
       <Heat src={teslaHeatImg} scroll={scrollPercent} alt="teslaHeat" />
-    </React.Fragment>
+    </>
   );
 }
 

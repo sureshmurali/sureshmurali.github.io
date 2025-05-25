@@ -79,12 +79,12 @@ const FastRetailingImages = ({ scrollPercent, boxHeight, index, scrollHeight, sc
   adjustedScrollPercent -= scrollOffsetInPercent;
   
   return (
-    <React.Fragment>
+    <>
       <FastRetailingPhonePLST src={fastRetailingPLSTImg} scroll={adjustedScrollPercent} alt="fastRetailingPLST" />
       <FastRetailingPhoneGU2 src={fastRetailingGU2Img} scroll={adjustedScrollPercent} alt="fastRetailingGU2" />
       <FastRetailingPhoneUQ src={fastRetailingUQImg} scroll={adjustedScrollPercent} alt="fastRetailingUQ" />
       <FastRetailingPhoneGU src={fastRetailingGUImg} scroll={adjustedScrollPercent} alt="fastRetailingGU" />
-    </React.Fragment>
+    </>
   );
 };
 

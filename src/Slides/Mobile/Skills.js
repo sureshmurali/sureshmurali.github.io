@@ -1,5 +1,14 @@
-import React from 'react';
+/**
+ * Skills Component - Mobile version
+ * 
+ * This component handles:
+ * 1. Displaying the skills section with staggered animations
+ * 2. Responsive text sizing based on screen size
+ */
+
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import gsap from 'gsap'; // GreenSock Animation Platform
 import device from '../../Assets/Responsive/breakpoints';
 
 const Container = styled.section`
@@ -74,10 +83,47 @@ const SkillsList = styled.div`
 `;
 
 const Skills = () => {
+  // Create refs for animation targets
+  const titleRef = useRef(null);
+  const skillsListRef = useRef(null);
+  const skillItems = useRef([]);
+  
+  // Set up animations when component mounts
+  useEffect(() => {
+    // Create a timeline for sequenced animations
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    
+    // Get all skill items for staggered animation
+    const skillElements = skillsListRef.current.querySelectorAll('div');
+    skillItems.current = skillElements;
+    
+    // Animate the title with a slide in from left
+    tl.fromTo(titleRef.current,
+      { opacity: 0, x: -50 },
+      { opacity: 1, x: 0, duration: 0.8 }
+    )
+    // Animate each skill item with a staggered fade in
+    .fromTo(skillItems.current,
+      { opacity: 0, y: 20 },
+      { 
+        opacity: 1, 
+        y: 0, 
+        duration: 0.5, 
+        stagger: 0.1 // Stagger each item's animation
+      },
+      "-=0.4" // Start slightly before the title animation finishes
+    );
+    
+    // Cleanup function
+    return () => {
+      tl.kill(); // Kill the timeline if component unmounts
+    };
+  }, []); // Empty dependency array means this runs once on mount
+  
   return (
     <Container>
-      <SkillsTitle>SKILLS</SkillsTitle>
-      <SkillsList>
+      <SkillsTitle ref={titleRef}>SKILLS</SkillsTitle>
+      <SkillsList ref={skillsListRef}>
         <div>
           Product Design
           <br />

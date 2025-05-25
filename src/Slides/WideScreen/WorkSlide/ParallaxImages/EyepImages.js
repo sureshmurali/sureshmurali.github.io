@@ -72,10 +72,10 @@ const EyepImages = ({ scrollPercent: initialScrollPercent, boxHeight, index, scr
   }, [scrollPercent]); // Only re-run when scrollPercent changes
 
   return (
-    <React.Fragment>
+    <>
       <Tablet ref={tabletRef} src={eyepTabletImg} alt="eyepTablet" />
       <Iphone ref={iphoneRef} src={eyepIphoneImg} alt="eyepIphone" />
-    </React.Fragment>
+    </>
   );
 }
 

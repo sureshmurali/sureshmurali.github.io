@@ -46,10 +46,10 @@ const EyepImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeigh
   adjustedScrollPercent -= scrollOffsetInPercent;
 
   return (
-      <React.Fragment>
+      <>
         <Tablet src={eyepTabletImg} scroll={adjustedScrollPercent} alt="eyepTablet" />
         <Iphone src={eyepIphoneImg} scroll={adjustedScrollPercent} alt="eyepIphone" />
-      </React.Fragment>
+      </>
   );
 }
 

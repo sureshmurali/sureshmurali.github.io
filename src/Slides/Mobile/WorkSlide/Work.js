@@ -1,3 +1,12 @@
+/**
+ * Work Component - Mobile version
+ * 
+ * This component handles:
+ * 1. Scroll-based slide navigation
+ * 2. Triggering animations when slides change
+ * 3. Rendering the appropriate content for each slide
+ */
+
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import vhCheck from 'vh-check';
@@ -76,16 +85,26 @@ const Work = () => {
   const [slideNumber, setSlideNumber] = useState(0);
   const [lastScrollPosition, setLastScrollPosition] = useState(0);
   const [scrollDirectionDown, setScrollDirectionDown] = useState(true);
+  const [refreshToggle, setRefreshToggle] = useState(false); // For triggering animations
   
   // Constants
   const slideHeightMultiplier = 1.3; // Each slide is 130% of viewport height
   
   // Handle scroll event with useCallback for better performance
   const handleScroll = useCallback((event) => {
+    // Safety check for event.srcElement
+    if (!event || !event.srcElement) {
+      console.error('Invalid scroll event or missing srcElement');
+      return;
+    }
+    
     const { body, documentElement } = event.srcElement;
     
     // Get scroll position (cross-browser compatible)
-    const currentScrollPosition = Math.max(body.scrollTop, documentElement.scrollTop);
+    const currentScrollPosition = Math.max(
+      body?.scrollTop || 0, 
+      documentElement?.scrollTop || 0
+    );
     
     // Track scroll direction
     if (currentScrollPosition > lastScrollPosition) {
@@ -98,15 +117,23 @@ const Work = () => {
     setLastScrollPosition(currentScrollPosition);
     
     // Calculate current slide index based on scroll position
-    const newSlideIndex = Math.floor(currentScrollPosition / slideHeight);
+    // Ensure slideHeight is not zero to avoid division by zero
+    const newSlideIndex = slideHeight > 0 ? 
+      Math.floor(currentScrollPosition / slideHeight) : 0;
+    
+    // Ensure newSlideIndex is within valid bounds
+    const validSlideIndex = Math.min(
+      Math.max(0, newSlideIndex),
+      workDetails.length - 1
+    );
     
     // Update slide if we're moving to a different valid slide
-    const isNewSlide = newSlideIndex !== slideNumber;
+    const isNewSlide = validSlideIndex !== slideNumber;
     const isValidForward = slideNumber < workDetails.length - 1;
-    const isValidBackward = slideNumber === workDetails.length - 1 && newSlideIndex < slideNumber;
+    const isValidBackward = slideNumber > 0;
     
     if (isNewSlide && (isValidForward || isValidBackward)) {
-      setSlideNumber(newSlideIndex);
+      setSlideNumber(validSlideIndex);
     }
   }, [slideHeight, slideNumber, lastScrollPosition]);
   
@@ -119,8 +146,13 @@ const Work = () => {
     );
     setSlideHeight(calculatedHeight);
     
-    // Add scroll event listener
-    window.addEventListener('scroll', handleScroll);
+    console.log(`Slide height set to: ${calculatedHeight}px`);
+    
+    // Add scroll event listener with passive option for better performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Initial scroll handling to set the correct slide
+    handleScroll({ srcElement: document });
     
     // Cleanup function to remove event listener
     return () => {
@@ -128,22 +160,36 @@ const Work = () => {
     };
   }, [handleScroll]);
   
-  // No need for a separate effect to trigger animations
-  // The TextContent component will now trigger animations based on prop changes
+  // Add effect to trigger animations when slide changes
+  useEffect(() => {
+    // Make sure slideNumber is valid before triggering animations
+    if (slideNumber >= 0 && slideNumber < workDetails.length) {
+      // Toggle the refreshToggle state to trigger animations in TextContent
+      setRefreshToggle(prev => !prev);
+    }
+  }, [slideNumber]); // Only run when slideNumber changes
   
   // Render the current slide content
   const renderCurrentSlide = () => {
-    const currentProject = workDetails[slideNumber];
+    // Make sure slideNumber is valid and within bounds
+    const safeSlideNumber = Math.min(Math.max(0, slideNumber), workDetails.length - 1);
+    const currentProject = workDetails[safeSlideNumber];
     
-    // Pass refreshToggle to trigger animations only when slide changes
+    // Safety check to ensure currentProject is defined
+    if (!currentProject) {
+      console.error(`Project at index ${safeSlideNumber} is undefined`);
+      return null;
+    }
+    
+    // Pass refreshToggle to trigger animations when slide changes
     return (
       <TextContent
-        number={currentProject.number}
-        projectName={currentProject.projectName}
-        projectDesc={currentProject.projectDesc}
-        projectType={currentProject.projectType}
-        roles={currentProject.roles}
-        // No need for refreshToggle prop as TextContent now animates based on prop changes
+        number={currentProject.number || ''}
+        projectName={currentProject.projectName || ''}
+        projectDesc={currentProject.projectDesc || ''}
+        projectType={currentProject.projectType || ''}
+        roles={currentProject.roles || ['']}
+        refreshToggle={refreshToggle} // Pass refreshToggle to trigger GSAP animations
       />
     );
   };

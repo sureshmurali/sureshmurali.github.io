@@ -1,3 +1,11 @@
+/**
+ * TeslaImages Component - Mobile version
+ * 
+ * This component handles:
+ * 1. Parallax scrolling effects for Tesla app images
+ * 2. Responsive positioning based on scroll percentage
+ */
+
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -79,12 +87,12 @@ const TeslaImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeig
   adjustedScrollPercent -= scrollOffsetInPercent;
 
   return (
-    <React.Fragment>
+    <>
       <Lock src={teslaLockImg} scroll={adjustedScrollPercent} alt="teslaLock" />
       <Battery src={teslaBatteryImg} scroll={adjustedScrollPercent} alt="teslaBattery" />
       <Tyre src={teslaTyreImg} scroll={adjustedScrollPercent} alt="teslaTyre" />
       <Heat src={teslaHeatImg} scroll={adjustedScrollPercent} alt="teslaHeat" />
-    </React.Fragment>
+    </>
   );
 };
 

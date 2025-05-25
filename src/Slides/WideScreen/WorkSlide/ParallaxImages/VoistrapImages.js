@@ -70,12 +70,12 @@ const VoistrapImages = ({ scrollPercent: initialScrollPercent, boxHeight, index,
   const scrollPercent = initialScrollPercent - scrollOffsetInPercent;
   
   return (
-    <React.Fragment>
+    <>
       <VoistrapPhonePeople src={voistrapPeopleImg} scroll={scrollPercent} alt="voistrapPeople" />
       <VoistrapPhoneScore src={voistrapScoreImg} scroll={scrollPercent} alt="voistrapScore" />
       <VoistrapPhoneMeetings src={voistrapMeetingsImg} scroll={scrollPercent} alt="voistrapMeetings" />
       <VoistrapPhoneHome src={voistrapHomeImg} scroll={scrollPercent} alt="voistrapHome" />
-    </React.Fragment>
+    </>
   );
 }
 

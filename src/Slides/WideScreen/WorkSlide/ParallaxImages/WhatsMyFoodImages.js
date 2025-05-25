@@ -69,12 +69,12 @@ const WhatsMyFoodImages = ({ scrollPercent: initialScrollPercent, boxHeight, ind
   const scrollPercent = initialScrollPercent - scrollOffsetInPercent;
   
   return (
-    <React.Fragment>
+    <>
       <AddFood src={addFoodImg} scroll={scrollPercent} alt="addFood" />
       <AddRestaurant src={addRestaurantImg} scroll={scrollPercent} alt="addRestaurant" />
       <Home src={homeImg} scroll={scrollPercent} alt="Home" />
       <Restaurant src={restaurantImg} scroll={scrollPercent} alt="Restaurant" />
-    </React.Fragment>
+    </>
   );
 }
 

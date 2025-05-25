@@ -1,3 +1,11 @@
+/**
+ * LashicImages Component - Mobile version
+ * 
+ * This component handles:
+ * 1. Parallax scrolling effects for Lashic app images
+ * 2. Responsive positioning based on scroll percentage
+ */
+
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -78,12 +86,12 @@ const LashicImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHei
   adjustedScrollPercent -= scrollOffsetInPercent;
   
   return (
-    <React.Fragment>
+    <>
       <CustomerDetail src={customerDetailImg} scroll={adjustedScrollPercent} alt="customerDetails" />
       <Customers src={customersImg} scroll={adjustedScrollPercent} alt="customers" />
       <Alert src={alertImg} scroll={adjustedScrollPercent} alt="Alert" />
       <Task src={taskImg} scroll={adjustedScrollPercent} alt="Task" />
-    </React.Fragment>
+    </>
   );
 }
 

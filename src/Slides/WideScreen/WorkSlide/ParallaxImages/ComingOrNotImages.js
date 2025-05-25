@@ -72,10 +72,10 @@ const ComingOrNotImages = ({ scrollPercent: initialScrollPercent, boxHeight, ind
   }, [scrollPercent]); // Only re-run when scrollPercent changes
 
   return (
-    <React.Fragment>
+    <>
       <Tablet ref={tabletRef} src={cmgOrNotTabletImg} alt="cmgOrNotTablet" />
       <Iphone ref={iphoneRef} src={cmgOrNotIphoneImg} alt="cmgOrNotIphone" />
-    </React.Fragment>
+    </>
   );
 }
 

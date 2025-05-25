@@ -83,12 +83,12 @@ const WhatsMyFoodImages = ({ scrollPercent, boxHeight, index, scrollHeight, scre
   }
   
   return (
-    <React.Fragment>
+    <>
       <AddFood src={addFoodImg} scroll={adjustedScrollPercent} alt="addFood" />
       <AddRestaurant src={addRestaurantImg} scroll={adjustedScrollPercent} alt="addRestaurant" />
       <Home src={homeImg} scroll={adjustedScrollPercent} alt="Home" />
       <Restaurant src={restaurantImg} scroll={adjustedScrollPercent} alt="Restaurant" />
-    </React.Fragment>
+    </>
   );
 };
 

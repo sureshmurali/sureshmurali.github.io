@@ -67,11 +67,11 @@ const KosenImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeig
   }
   
   return (
-    <React.Fragment>
+    <>
       <PlayerTab src={player} scroll={adjustedScrollPercent} alt="kosenPlayer" />
       <EnglishTab src={englishHome} scroll={adjustedScrollPercent} alt="kosenEnglish" />
       <JapaneseTab src={jpnHome} scroll={adjustedScrollPercent} alt="kosenJapanese" />
-    </React.Fragment>
+    </>
   );
 };
 

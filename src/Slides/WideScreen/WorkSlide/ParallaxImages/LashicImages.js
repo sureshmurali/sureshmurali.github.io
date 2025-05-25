@@ -112,12 +112,12 @@ const LashicImages = ({ scrollPercent: initialScrollPercent, boxHeight, index, s
   }, [scrollPercent]); // Only re-run when scrollPercent changes
 
   return (
-    <React.Fragment>
+    <>
       <CustomerDetail ref={customerDetailRef} src={customerDetailImg} alt="customerDetails" />
       <Customers ref={customersRef} src={customersImg} alt="customers" />
       <Alert ref={alertRef} src={alertImg} alt="Alert" />
       <Task ref={taskRef} src={taskImg} alt="Task" />
-    </React.Fragment>
+    </>
   );
 }
 

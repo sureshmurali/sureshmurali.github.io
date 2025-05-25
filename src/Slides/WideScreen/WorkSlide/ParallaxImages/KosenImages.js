@@ -92,11 +92,11 @@ const KosenImages = ({ scrollPercent: initialScrollPercent, boxHeight, index, sc
   }, [scrollPercent]); // Only re-run when scrollPercent changes
 
   return (
-    <React.Fragment>
+    <>
       <PlayerTab ref={playerRef} src={player} alt="kosenPlayer" />
       <EnglishTab ref={englishRef} src={englishHome} alt="kosenEnglish" />
       <JapaneseTab ref={japaneseRef} src={jpnHome} alt="kosenJapanese" />
-    </React.Fragment>
+    </>
   );
 }
 

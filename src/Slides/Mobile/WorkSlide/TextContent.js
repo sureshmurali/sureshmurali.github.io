@@ -1,6 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import styled, { keyframes } from 'styled-components';
+/**
+ * TextContent Component - Displays project details with reveal animations
+ * 
+ * This component handles:
+ * 1. Displaying project information (name, description, roles, etc.)
+ * 2. Animating text reveals using GSAP
+ * 3. Responsive text sizing based on screen size
+ */
+
+import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import gsap from 'gsap'; // GreenSock Animation Platform
 import device from '../../../Assets/Responsive/breakpoints';
 
 const TextContainer = styled.section`
@@ -100,131 +110,153 @@ padding-top:5%;
 height: 100%;
 `;
 
-const appearText = () => keyframes`
-0%{
-  color: #FFF;
-}
-100%{
-  color: #333;
-}
-`;
-
-const revBlock = () => keyframes`
-0%{
-    left: 0;
-    width: 0%
-}
-50%{
-    left:0%;
-    width:100%
-}
-100%{
-    left:100%;
-    width:0%
-}
-`;
-
-
-// Initial empty styled component that will be dynamically replaced
-let BlockTextReveal = styled.span``;
-
-const BlockTextRevealQuick = styled.span`
-display:${props => (props.inline ? 'inline' : 'block')};
-color: #FFF;
-animation: ${appearText} 0.0001s linear forwards;
-animation-delay: 0.5s;
-position: relative;
-
-
-
-&::after{
-content:'';
-top:0;
-left:0;
-position:absolute;
-width:0%;
-height:100%;
-background: #222;
-animation: ${revBlock} 1s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-animation-delay:0s;
-}
-`;
-
-const BlockTextRevealNoAnim = styled.span`
-
-`;
-
-const TextContent = ({ number, projectName, projectDesc, roles, projectType, refreshToggle = false }) => {
-  // State to track animation refresh
-  const [refreshBlock, setRefreshBlock] = useState(false);
+/**
+ * TextReveal component - Handles the text reveal animation using GSAP
+ * This replaces the previous CSS keyframes approach with GSAP for better performance
+ */
+const TextReveal = ({ children, inline, refreshToggle }) => {
+  // Create refs for the text and overlay elements
+  const textRef = useRef(null);
+  const overlayRef = useRef(null);
   
-  // Effect to handle animation refresh when props change
+  // Set up animations when the component mounts or refreshToggle changes
   useEffect(() => {
-    // Always trigger animation when component receives new props
-    // First set to NoAnim version
-    BlockTextReveal = BlockTextRevealNoAnim;
-    setRefreshBlock(true);
+    if (!textRef.current || !overlayRef.current) return;
     
-    // Then set back to animated version
-    setTimeout(() => {
-      BlockTextReveal = BlockTextRevealQuick;
-      setRefreshBlock(false);
-    }, 10); // Small timeout to ensure state updates properly
+    // Reset the animation state
+    gsap.set(textRef.current, { color: '#FFF' });
+    gsap.set(overlayRef.current, { 
+      left: 0,
+      width: '0%',
+      opacity: 1
+    });
     
-    // This will run on every render with new props
-  }, [number, projectName, projectDesc, projectType]);
-    return (
-      <TextContainer>
-        <ProjectID>
-          <BlockTextReveal refreshToggle={refreshToggle} inline>
-            {number}
-          </BlockTextReveal>
-        </ProjectID>
-        <ProjectDetailsContainer>
-          <ProjectDetails>
-            <ProjectName>
-              <BlockTextReveal refreshToggle={refreshToggle} inline>
-                {projectName}
-              </BlockTextReveal>
-            </ProjectName>
-            <MyRole>
-              <BlockTextReveal refreshToggle={refreshToggle} inline>
-                {roles.map((role, index, arr) => (index === arr.length - 1 ? (
-                  <span key={role}>
-                    {role}
-                  </span>
-                ) : (
-                  <span key={role}>
-                    {role}
-                        &nbsp; • &nbsp;
-                  </span>
-                )))}
-              </BlockTextReveal>
-            </MyRole>
-            <ProjectDesc>
-              <BlockTextReveal refreshToggle={refreshToggle} inline={false}>
-                {projectDesc}
-              </BlockTextReveal>
-            </ProjectDesc>
-          </ProjectDetails>
-        </ProjectDetailsContainer>
-
-        <ProjectType>
-          <BlockTextReveal refreshToggle={refreshToggle} inline>
-            {projectType}
-          </BlockTextReveal>
-        </ProjectType>
-      </TextContainer>
-    );
+    // Create a timeline for better control of animation sequence
+    const tl = gsap.timeline();
+    
+    // Add the overlay reveal animation
+    tl.to(overlayRef.current, {
+      width: '100%',
+      duration: 0.5,
+      ease: 'power2.inOut'
+    })
+    .to(overlayRef.current, {
+      left: '100%',
+      width: '0%',
+      duration: 0.5,
+      ease: 'power2.inOut'
+    })
+    .to(textRef.current, {
+      color: '#333',
+      duration: 0.01,
+      delay: -0.5 // Start slightly before the overlay finishes
+    });
+    
+    // Cleanup function
+    return () => {
+      tl.kill(); // Kill the timeline if component unmounts during animation
+    };
+  }, [refreshToggle]); // Re-run when refreshToggle changes
+  
+  return (
+    <span 
+      ref={textRef}
+      style={{
+        display: inline ? 'inline' : 'block',
+        color: '#FFF',
+        position: 'relative'
+      }}
+    >
+      {children}
+      <span 
+        ref={overlayRef}
+        style={{
+          content: '',
+          top: 0,
+          left: 0,
+          position: 'absolute',
+          width: '0%',
+          height: '100%',
+          background: '#222',
+          zIndex: 1
+        }}
+      />
+    </span>
+  );
 };
 
+/**
+ * TextContent Component - Displays project details with animated text reveals
+ */
+const TextContent = ({ number, projectName, projectDesc, roles, projectType, refreshToggle = false }) => {
+  // Helper function to render roles with bullet separators
+  const renderRoles = (roleList) => {
+    return roleList.map((role, index, arr) => {
+      return index === arr.length - 1 ? (
+        <span key={role}>{role}</span>
+      ) : (
+        <span key={role}>
+          {role}
+          &nbsp; • &nbsp;
+        </span>
+      );
+    });
+  };
+  return (
+    <TextContainer>
+      <ProjectID>
+        <TextReveal refreshToggle={refreshToggle} inline>
+          {number}
+        </TextReveal>
+      </ProjectID>
+      <ProjectDetailsContainer>
+        <ProjectDetails>
+          <ProjectName>
+            <TextReveal refreshToggle={refreshToggle} inline>
+              {projectName}
+            </TextReveal>
+          </ProjectName>
+          <MyRole>
+            <TextReveal refreshToggle={refreshToggle} inline>
+              {renderRoles(roles)}
+            </TextReveal>
+          </MyRole>
+          <ProjectDesc>
+            <TextReveal refreshToggle={refreshToggle} inline>
+              {projectDesc}
+            </TextReveal>
+          </ProjectDesc>
+        </ProjectDetails>
+      </ProjectDetailsContainer>
+      
+      <ProjectType>
+        <TextReveal refreshToggle={refreshToggle} inline>
+          {projectType}
+        </TextReveal>
+      </ProjectType>
+    </TextContainer>
+  );
+};
+
+/**
+ * PropTypes for TextContent component
+ */
 TextContent.propTypes = {
   number: PropTypes.string.isRequired,
   projectName: PropTypes.string.isRequired,
   projectDesc: PropTypes.string.isRequired,
-  projectType: PropTypes.string.isRequired,
   roles: PropTypes.array.isRequired,
-  refreshToggle: PropTypes.bool, // Made optional for React 18 compatibility
+  projectType: PropTypes.string.isRequired,
+  refreshToggle: PropTypes.bool,
+};
+
+/**
+ * PropTypes for TextReveal component
+ */
+TextReveal.propTypes = {
+  children: PropTypes.node.isRequired,
+  inline: PropTypes.bool,
+  refreshToggle: PropTypes.bool,
 };
 
 export default TextContent;

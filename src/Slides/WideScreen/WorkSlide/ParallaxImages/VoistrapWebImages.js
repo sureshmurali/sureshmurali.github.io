@@ -69,12 +69,12 @@ const VoistrapWebImages = ({ scrollPercent: initialScrollPercent, boxHeight, ind
   const scrollPercent = initialScrollPercent - scrollOffsetInPercent;
   
   return (
-    <React.Fragment>
+    <>
       <Paths src={paths} scroll={scrollPercent} alt="paths" />
       <BigBubble src={bigBubble} scroll={scrollPercent} alt="bigBubble" />
       <Bubbles src={bubbles} scroll={scrollPercent} alt="bubbles" />
       <Dots src={dots} scroll={scrollPercent} alt="dots" />
-    </React.Fragment>
+    </>
   );
 }
 

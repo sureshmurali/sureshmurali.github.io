@@ -1,4 +1,13 @@
-import React from 'react';
+/**
+ * Contact Component - Mobile version
+ * 
+ * This component handles:
+ * 1. Displaying the contact section with staggered animations for social icons
+ * 2. Responsive sizing based on screen size
+ */
+
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap'; // GreenSock Animation Platform
 import styled from 'styled-components';
 import twitterImg from '../../../Assets/Images/Social/twitter.svg';
 import githubImg from '../../../Assets/Images/Social/git.svg';
@@ -85,10 +94,47 @@ const SocialMediaIcons = styled.div`
 `;
 
 const Contact = () => {
+  // Create refs for animation targets
+  const titleRef = useRef(null);
+  const iconsContainerRef = useRef(null);
+  const socialIcons = useRef([]);
+  
+  // Set up animations when component mounts
+  useEffect(() => {
+    // Create a timeline for sequenced animations
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    
+    // Get all social icons for staggered animation
+    const iconElements = iconsContainerRef.current.querySelectorAll('div');
+    socialIcons.current = iconElements;
+    
+    // Animate the title with a slide in from left
+    tl.fromTo(titleRef.current,
+      { opacity: 0, x: -50 },
+      { opacity: 1, x: 0, duration: 0.8 }
+    )
+    // Animate each social icon with a staggered fade in
+    .fromTo(socialIcons.current,
+      { opacity: 0, scale: 0.8 },
+      { 
+        opacity: 1, 
+        scale: 1, 
+        duration: 0.5, 
+        stagger: 0.1 // Stagger each icon's animation
+      },
+      "-=0.4" // Start slightly before the title animation finishes
+    );
+    
+    // Cleanup function
+    return () => {
+      tl.kill(); // Kill the timeline if component unmounts
+    };
+  }, []); // Empty dependency array means this runs once on mount
+  
   return (
     <Container>
-      <ContactTitle>CONTACT</ContactTitle>
-      <SocialMediaIcons>
+      <ContactTitle ref={titleRef}>CONTACT</ContactTitle>
+      <SocialMediaIcons ref={iconsContainerRef}>
         <SocialLogo imgURL={twitterImg} alternate="twitter" redirectURL="https://twitter.com/sureshmurali29" />
         <SocialLogo imgURL={githubImg} alternate="github" redirectURL="https://github.com/sureshmurali" />
         <SocialLogo imgURL={mailImg} alternate="mail" redirectURL="mailto:sureshmurali29@gmail.com" />

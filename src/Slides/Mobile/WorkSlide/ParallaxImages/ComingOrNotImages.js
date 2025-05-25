@@ -46,10 +46,10 @@ const ComingOrNotImages = ({ scrollPercent, boxHeight, index, scrollHeight, scre
   adjustedScrollPercent -= scrollOffsetInPercent;
   
   return (
-    <React.Fragment>
+    <>
       <Tablet src={cmgOrNotTabletImg} scroll={adjustedScrollPercent} alt="cmgOrNotTablet" />
       <Iphone src={cmgOrNotIphoneImg} scroll={adjustedScrollPercent} alt="cmgOrNotIphone" />
-    </React.Fragment>
+    </>
   );
 }
 

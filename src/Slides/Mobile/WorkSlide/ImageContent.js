@@ -1,3 +1,12 @@
+/**
+ * ImageContent Component - Mobile version
+ * 
+ * This component handles:
+ * 1. Scroll-based image animations
+ * 2. Calculating scroll percentages for parallax effects
+ * 3. Rendering project images with proper positioning
+ */
+
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';

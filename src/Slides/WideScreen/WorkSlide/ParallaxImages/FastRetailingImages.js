@@ -113,12 +113,12 @@ const FastRetailingImages = ({ scrollPercent: initialScrollPercent, boxHeight, i
   }, [scrollPercent]); // Only re-run when scrollPercent changes
 
   return (
-    <React.Fragment>
+    <>
       <FastRetailingPhonePLST ref={plstRef} src={fastRetailingPLSTImg} alt="fastRetailingPLST" />
       <FastRetailingPhoneGU2 ref={gu2Ref} src={fastRetailingGU2Img} alt="fastRetailingGU2" />
       <FastRetailingPhoneUQ ref={uqRef} src={fastRetailingUQImg} alt="fastRetailingUQ" />
       <FastRetailingPhoneGU ref={guRef} src={fastRetailingGUImg} alt="fastRetailingGU" />
-    </React.Fragment>
+    </>
   );
 }
 
