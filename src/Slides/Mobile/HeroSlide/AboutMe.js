@@ -56,13 +56,13 @@ const AboutMe = () => {
   useEffect(() => {
     // Animate the about me text with a fade in and slight scale
     gsap.fromTo(textRef.current,
-      { opacity: 0, scale: 0.95 },
+      { opacity: 0, scale: 0.9 },
       { 
         opacity: 1, 
         scale: 1, 
-        duration: 1.2, 
-        ease: "power2.out",
-        delay: 0.5 // Delay to start after the name and title animations
+        duration: 1, 
+        ease: "power4.out",
+        delay: 3 // Delay to start after the name and title animations
       }
     );
     

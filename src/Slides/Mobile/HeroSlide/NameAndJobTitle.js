@@ -29,7 +29,6 @@ const NameStage = styled.div`
   width: 100%;
   text-align: center;
   overflow: hidden;
-  margin-bottom: 20px;
 `;
 
 // Title reveal section
@@ -72,13 +71,13 @@ const TitleText = styled.div`
   color: #333;
   position: relative;
   @media ${device.mobileS} {
-    font-size: 13px;
+    font-size: 20px;
   }
   @media ${device.mobileM} {
-    font-size: 15px;
+    font-size: 25px;
   }
   @media ${device.mobileL} {
-    font-size: 17px;
+    font-size: 32px;
   }
   @media ${device.tablet} {
     font-size: 30px;
@@ -88,32 +87,10 @@ const TitleText = styled.div`
   }
 `;
 
-// White block overlay for name
-const NameWhiteBlock = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 120%;
-  height: 100%;
-  background-color: white;
-  z-index: 2;
-`;
-
-// White block overlay for title
-const TitleWhiteBlock = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 120%;
-  height: 100%;
-  background-color: white;
-  z-index: 2;
-`;
 
 const NameAndJobTitle = () => {
   // Create refs for animation targets
   const nameTextRef = useRef(null);
-  const nameBlockRef = useRef(null);
   const titleTextRef = useRef(null);
   const titleBlockRef = useRef(null);
   
@@ -121,34 +98,23 @@ const NameAndJobTitle = () => {
   useEffect(() => {
     // Get the DOM elements from refs
     const nameText = nameTextRef.current;
-    const nameBlock = nameBlockRef.current;
     const titleText = titleTextRef.current;
-    const titleBlock = titleBlockRef.current;
     
-    if (!nameText || !nameBlock || !titleText || !titleBlock) return;
+    if (!nameText || !titleText) return;
     
     // Set initial states
-    gsap.set(nameText, { y: 100, autoAlpha: 1 });
-    gsap.set(nameBlock, { autoAlpha: 1, height: '100%' });
     gsap.set(titleText, { y: 30, autoAlpha: 1 });
-    gsap.set(titleBlock, { autoAlpha: 1, height: '100%' });
-    
+   
     // Create a master timeline
     const masterTl = gsap.timeline();
     
     // Name reveal timeline
     const nameTl = gsap.timeline();
-    nameTl.to(nameText, {
+    nameTl.fromTo(nameText, {y: 100}, {
       y: 0,
       duration: 1,
-      ease: "cubic-bezier(0, 0.1, 0.12, 0.99)",
-      immediateRender: false
-    }).to(nameBlock, {
-      opacity: 0,
-      height: 0,
-      duration: 0.8,
-      ease: "power1.out"
-    }, ">+0.5"); // Start 0.5 seconds after text animation
+      ease: "power2.out"
+    }); // Start 0.5 seconds after text animation
     
     // Title reveal timeline
     const titleTl = gsap.timeline();
@@ -157,19 +123,14 @@ const NameAndJobTitle = () => {
       duration: 0.8,
       ease: "cubic-bezier(0, 0.1, 0.12, 0.99)",
       immediateRender: false
-    }).to(titleBlock, {
-      opacity: 0,
-      height: 0,
-      duration: 0.6,
-      ease: "power1.out"
-    }, ">+0.3"); // Start 0.3 seconds after text animation
+    }); // Start 0.3 seconds after text animation
     
     // Add both timelines to master timeline with appropriate sequencing
     masterTl.add(nameTl)
             .add(titleTl, ">-0.3"); // Start title animation slightly before name animation completes
     
     // Start the animation after a short delay
-    masterTl.delay(0.5);
+    masterTl.delay(0.2);
     
     // Return cleanup function
     return () => {
@@ -181,12 +142,10 @@ const NameAndJobTitle = () => {
     <Container>
       <NameStage>
         <NameText ref={nameTextRef}>Suresh Murali</NameText>
-        <NameWhiteBlock ref={nameBlockRef} />
       </NameStage>
       
       <TitleStage>
         <TitleText ref={titleTextRef}>UI/UX Architect</TitleText>
-        <TitleWhiteBlock ref={titleBlockRef} />
       </TitleStage>
     </Container>
   );
