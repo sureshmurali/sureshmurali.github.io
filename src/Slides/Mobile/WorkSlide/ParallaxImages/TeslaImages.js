@@ -27,6 +27,7 @@ transform-origin: left center;
 left:2vw;
 /* border: 1px dashed red; */
 height: 80vh; 
+mix-blend-mode: difference;
 `;
 
 const Tyre = styled.img.attrs({
@@ -42,6 +43,7 @@ transform-origin: right center;
 /* border: 1px dashed red; */
 height: 80vh;
 filter: blur(0.6px);
+mix-blend-mode: difference;
 `;
 
 const Battery = styled.img.attrs({

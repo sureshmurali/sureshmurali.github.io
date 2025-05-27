@@ -17,6 +17,7 @@ left: 2vw;
 transform-origin: left center;
 /* border: 1px dashed red; */
 height: 70vh;
+mix-blend-mode: difference;
 `;
 
 const EnglishTab = styled.img.attrs({
@@ -31,7 +32,8 @@ right: 3vw;
 transform-origin: right center;
 /* border: 1px dashed red; */
 filter: blur(0.6px);
-height: 70vh; 
+height: 70vh;
+mix-blend-mode: difference;
 `;
 
 const PlayerTab = styled.img.attrs({
@@ -47,6 +49,7 @@ position: absolute;
 /* border: 1px dashed red; */
 height: 70vh;
 filter: blur(1px);
+mix-blend-mode: difference;
 `;
 
 const KosenImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeight }) => {

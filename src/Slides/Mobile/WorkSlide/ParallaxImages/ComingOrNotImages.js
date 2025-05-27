@@ -17,6 +17,7 @@ transform-origin: left center;
 left:2vw;
 /* border: 1px dashed red; */
 height: 100vh; 
+mix-blend-mode: difference;
 `;
 
 const Tablet = styled.img.attrs({
@@ -31,6 +32,7 @@ transform-origin: right center;
 right:2vw;
 /* border: 1px dashed red; */
 height: 100vh; 
+mix-blend-mode: difference;
 `;
 
 const ComingOrNotImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeight }) => {

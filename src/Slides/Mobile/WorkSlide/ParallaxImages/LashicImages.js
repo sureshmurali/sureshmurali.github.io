@@ -26,6 +26,7 @@ transform-origin: left center;
 left:2vw;
 /* border: 1px dashed red; */
 height: 80vh; 
+mix-blend-mode: difference;
 `;
 
 const Alert = styled.img.attrs({
@@ -41,6 +42,7 @@ transform-origin: right center;
 /* border: 1px dashed red; */
 height: 80vh;
 filter: blur(0.6px);
+mix-blend-mode: difference;
 `;
 
 const CustomerDetail = styled.img.attrs({
@@ -56,6 +58,7 @@ position: absolute;
 /* border: 1px dashed red; */
 height: 80vh;
 filter: blur(0.8px);
+mix-blend-mode: difference;
 `;
 
 const Customers = styled.img.attrs({
@@ -71,6 +74,7 @@ position: absolute;
 /* border: 1px dashed red; */
 height: 80vh;
 filter: blur(1.2px);
+mix-blend-mode: difference;
 `;
 
 const LashicImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeight }) => {

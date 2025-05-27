@@ -19,6 +19,7 @@ left:2vw;
 transform-origin: left center;
 /* border: 1px dashed red; */
 width: 80vw; 
+mix-blend-mode: difference;
 `;
 
 const Bubbles = styled.img.attrs({
@@ -33,6 +34,7 @@ transform-origin: right center;
 /* border: 1px dashed red; */
 width: 80vw;
 filter: blur(0.2px);
+mix-blend-mode: difference;
 `;
 
 const BigBubble = styled.img.attrs({
@@ -47,6 +49,7 @@ position: absolute;
 /* border: 1px dashed red; */
 width: 80vw;
 filter: blur(0.5px);
+mix-blend-mode: difference;
 `;
 
 const Paths = styled.img.attrs({
@@ -61,6 +64,7 @@ position: absolute;
 /* border: 1px dashed red; */
 width: 80vw;
 filter: blur(0.8px);
+mix-blend-mode: difference;
 `;
 
 const VoistrapWebImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeight }) => {
