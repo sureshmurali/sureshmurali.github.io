@@ -62,7 +62,7 @@ const AboutMe = () => {
         scale: 1, 
         duration: 1, 
         ease: "power4.out",
-        delay: 3 // Delay to start after the name and title animations
+        delay: 1.5 // Delay to start after the name and title animations
       }
     );
     
