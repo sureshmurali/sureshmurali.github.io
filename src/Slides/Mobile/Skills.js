@@ -125,34 +125,34 @@ const Skills = () => {
       <SkillsTitle ref={titleRef}>SKILLS</SkillsTitle>
       <SkillsList ref={skillsListRef}>
         <div>
-          Product Design
+          Design System
           <br />
-          Design system
+          UI/UX Design
           <br />
-          Information architect
+          Design Tokens
           <br />
           <br />
           HTML & CSS
           <br />
-          React
+          Next JS
           <br />
           Node JS
           <br />
         </div>
         <br />
         <div>
+          Team Leadership
+          <br />
+          Agile Planning
+          <br />
           Project Management
           <br />
-          Visual Communication
           <br />
-          Concept development
+          Figma Plugins
           <br />
+          Icon Management
           <br />
-          Figma
-          <br />
-          Sketch
-          <br />
-          Principle
+          Workflow Automation
           <br />
         </div>
       </SkillsList>
