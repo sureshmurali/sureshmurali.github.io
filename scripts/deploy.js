@@ -23,7 +23,17 @@ function deploy() {
   console.log(`Current branch: ${currentBranch}`);
 
   if (currentBranch === 'main') {
-    console.log('On main branch - proceeding with deployment to gh-pages...');
+    console.log('On main branch - building and deploying to gh-pages...');
+    
+    // Build the project first
+    try {
+      console.log('Building project...');
+      execSync('yarn build', { stdio: 'inherit' });
+      console.log('Build completed successfully!');
+    } catch (error) {
+      console.error('Build failed:', error.message);
+      process.exit(1);
+    }
     
     const distPath = path.join(__dirname, '..', 'dist');
     
