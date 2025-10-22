@@ -34,16 +34,76 @@ Website link: [sureshmurali.github.io](sureshmurali.github.io)
 - styled-components: v4.4.1
 - react-responsive: v9.0.0
 
-## How to deploy?
+## Development & Deployment
 
-1. Clone the repository
-2. Install dependencies with `yarn install`
-3. Run `yarn dev` to start the development server at `localhost:5173`
-4. Make your changes to the code
-5. Run `yarn build` to create the production build
-6. Commit and push your changes
-7. Run `yarn deploy` to push the build to the `gh-pages` branch
-8. Your changes will be live at your GitHub Pages site (username.github.io)
+### Branch Structure
+
+This project uses a three-branch workflow:
+
+- **`develop`** - Active development branch for ongoing work
+- **`main`** - Production-ready code, stable releases only
+- **`gh-pages`** - Deployment branch (auto-generated, do not edit manually)
+
+### Local Development
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/sureshmurali/My-Portfolio.git
+   cd My-Portfolio
+   ```
+
+2. **Install dependencies**
+   ```bash
+   yarn install
+   ```
+
+3. **Start development server**
+   ```bash
+   yarn dev
+   ```
+   The site will be available at `http://localhost:5173`
+
+4. **Make changes on the `develop` branch**
+   ```bash
+   git checkout develop
+   # Make your changes
+   git add .
+   git commit -m "Your commit message"
+   git push origin develop
+   ```
+
+### Deployment to Production
+
+**Important:** Deployment only works from the `main` branch. The deploy script will automatically check and prevent deployments from other branches.
+
+1. **Merge `develop` into `main`**
+   ```bash
+   git checkout main
+   git merge develop
+   git push origin main
+   ```
+
+2. **Build the production bundle**
+   ```bash
+   yarn build
+   ```
+   This creates an optimized production build in the `dist` folder.
+
+3. **Deploy to GitHub Pages**
+   ```bash
+   yarn deploy
+   ```
+   This pushes the `dist` folder to the `gh-pages` branch and makes it live.
+
+4. **Verify deployment**
+   Your changes will be live at [sureshmurali.github.io](https://sureshmurali.github.io) within a few minutes.
+
+### Available Scripts
+
+- `yarn dev` - Start development server
+- `yarn build` - Create production build
+- `yarn deploy` - Deploy to GitHub Pages (main branch only)
+- `yarn reset` - Clean install (removes node_modules and dist, then reinstalls)
 
 ## LICENSE
 

@@ -11,7 +11,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
     "build": "vite build",
-    "predeploy": "yarn build",
     "deploy": "node scripts/deploy.js",
     "reset": "rm -rf node_modules && rm -rf dist && yarn install"
   },
