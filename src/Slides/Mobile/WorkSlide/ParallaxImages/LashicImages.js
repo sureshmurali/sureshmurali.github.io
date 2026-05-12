@@ -14,11 +14,11 @@ import taskImg from '../../../../Assets/Images/Lashic/Task.png';
 import customersImg from '../../../../Assets/Images/Lashic/Customers.png';
 import customerDetailImg from '../../../../Assets/Images/Lashic/CustomerDetail.png';
 
-const Task = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 15}%) scale(0.7)`,
-  }),
-})`
+const Task = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 15}%) scale(0.7)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -170vh;
@@ -29,11 +29,11 @@ height: 80vh;
 mix-blend-mode: difference;
 `;
 
-const Alert = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 8.5}%) scale(0.62)`,
-  }),
-})`
+const Alert = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 8.5}%) scale(0.62)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom:-125vh;
@@ -45,11 +45,11 @@ filter: blur(0.6px);
 mix-blend-mode: difference;
 `;
 
-const CustomerDetail = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 3.5}%) scale(0.5)`,
-  }),
-})`
+const CustomerDetail = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 3.5}%) scale(0.5)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 bottom:-110vh;
 left:10vw;
@@ -61,11 +61,11 @@ filter: blur(0.8px);
 mix-blend-mode: difference;
 `;
 
-const Customers = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 2}%) scale(0.45)`,
-  }),
-})`
+const Customers = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 2}%) scale(0.45)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 bottom:-105vh;
 right: 10vw;
@@ -91,10 +91,10 @@ const LashicImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHei
   
   return (
     <>
-      <CustomerDetail src={customerDetailImg} scroll={adjustedScrollPercent} alt="customerDetails" />
-      <Customers src={customersImg} scroll={adjustedScrollPercent} alt="customers" />
-      <Alert src={alertImg} scroll={adjustedScrollPercent} alt="Alert" />
-      <Task src={taskImg} scroll={adjustedScrollPercent} alt="Task" />
+      <CustomerDetail src={customerDetailImg} $scroll={adjustedScrollPercent} alt="customerDetails" />
+      <Customers src={customersImg} $scroll={adjustedScrollPercent} alt="customers" />
+      <Alert src={alertImg} $scroll={adjustedScrollPercent} alt="Alert" />
+      <Task src={taskImg} $scroll={adjustedScrollPercent} alt="Task" />
     </>
   );
 }

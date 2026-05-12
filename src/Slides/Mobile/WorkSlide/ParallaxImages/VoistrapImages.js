@@ -7,11 +7,11 @@ import voistrapPeopleImg from '../../../../Assets/Images/Voistrap/People.png';
 import voistrapScoreImg from '../../../../Assets/Images/Voistrap/Score.png';
 
 
-const VoistrapPhoneHome = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 15}%) scale(0.7)`,
-  }),
-})`
+const VoistrapPhoneHome = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 15}%) scale(0.7)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -170vh;
@@ -22,11 +22,11 @@ height: 80vh;
 mix-blend-mode: difference;
 `;
 
-const VoistrapPhoneMeetings = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 8.5}%) scale(0.62)`,
-  }),
-})`
+const VoistrapPhoneMeetings = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 8.5}%) scale(0.62)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom:-125vh;
@@ -38,11 +38,11 @@ filter: blur(0.6px);
 mix-blend-mode: difference;
 `;
 
-const VoistrapPhoneScore = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 3.5}%) scale(0.5)`,
-  }),
-})`
+const VoistrapPhoneScore = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 3.5}%) scale(0.5)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 bottom:-110vh;
 left:10vw;
@@ -54,11 +54,11 @@ filter: blur(0.8px);
 mix-blend-mode: difference;
 `;
 
-const VoistrapPhonePeople = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 2}%) scale(0.45)`,
-  }),
-})`
+const VoistrapPhonePeople = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 2}%) scale(0.45)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 bottom:-105vh;
 right: 10vw;
@@ -84,10 +84,10 @@ const VoistrapImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenH
   
   return (
     <>
-      <VoistrapPhonePeople src={voistrapPeopleImg} scroll={adjustedScrollPercent} alt="voistrapPeople" />
-      <VoistrapPhoneScore src={voistrapScoreImg} scroll={adjustedScrollPercent} alt="voistrapScore" />
-      <VoistrapPhoneMeetings src={voistrapMeetingsImg} scroll={adjustedScrollPercent} alt="voistrapMeetings" />
-      <VoistrapPhoneHome src={voistrapHomeImg} scroll={adjustedScrollPercent} alt="voistrapHome" />
+      <VoistrapPhonePeople src={voistrapPeopleImg} $scroll={adjustedScrollPercent} alt="voistrapPeople" />
+      <VoistrapPhoneScore src={voistrapScoreImg} $scroll={adjustedScrollPercent} alt="voistrapScore" />
+      <VoistrapPhoneMeetings src={voistrapMeetingsImg} $scroll={adjustedScrollPercent} alt="voistrapMeetings" />
+      <VoistrapPhoneHome src={voistrapHomeImg} $scroll={adjustedScrollPercent} alt="voistrapHome" />
     </>
   );
 };

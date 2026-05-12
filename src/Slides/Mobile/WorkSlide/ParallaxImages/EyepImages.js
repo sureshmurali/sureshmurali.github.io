@@ -5,11 +5,11 @@ import eyepTabletImg from '../../../../Assets/Images/Eyep/Tablet.png';
 import eyepIphoneImg from '../../../../Assets/Images/Eyep/Iphone.png';
 
 
-const Iphone = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 22}%) scale(0.65)`,
-  }),
-})`
+const Iphone = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 22}%) scale(0.65)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -320vh;
@@ -20,11 +20,11 @@ height: 100vh;
 mix-blend-mode: difference;
 `;
 
-const Tablet = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 6}%) scale(0.65)`,
-  }),
-})`
+const Tablet = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 6}%) scale(0.65)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -180vh;
@@ -49,8 +49,8 @@ const EyepImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeigh
 
   return (
       <>
-        <Tablet src={eyepTabletImg} scroll={adjustedScrollPercent} alt="eyepTablet" />
-        <Iphone src={eyepIphoneImg} scroll={adjustedScrollPercent} alt="eyepIphone" />
+        <Tablet src={eyepTabletImg} $scroll={adjustedScrollPercent} alt="eyepTablet" />
+        <Iphone src={eyepIphoneImg} $scroll={adjustedScrollPercent} alt="eyepIphone" />
       </>
   );
 }

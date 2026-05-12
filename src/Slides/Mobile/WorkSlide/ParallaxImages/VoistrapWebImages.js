@@ -7,11 +7,11 @@ import paths from '../../../../Assets/Images/Showcase/Paths.png';
 import bigBubble from '../../../../Assets/Images/Showcase/BigBubble.png';
 
 
-const Dots = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 36}%) scale(0.99)`,
-  }),
-})`
+const Dots = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 36}%) scale(0.99)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -250vh;
@@ -22,11 +22,11 @@ width: 80vw;
 mix-blend-mode: difference;
 `;
 
-const Bubbles = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 25}%) scale(0.9)`,
-  }),
-})`
+const Bubbles = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 25}%) scale(0.9)`,
+  },
+}))`
 position: absolute;
 bottom:-210vh;
 right: 2vw;
@@ -37,11 +37,11 @@ filter: blur(0.2px);
 mix-blend-mode: difference;
 `;
 
-const BigBubble = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 13}%) scale(0.8)`,
-  }),
-})`
+const BigBubble = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 13}%) scale(0.8)`,
+  },
+}))`
 bottom:-160vh;
 left:2vw;
 transform-origin: left center;
@@ -52,11 +52,11 @@ filter: blur(0.5px);
 mix-blend-mode: difference;
 `;
 
-const Paths = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 4}%) scale(0.7)`,
-  }),
-})`
+const Paths = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 4}%) scale(0.7)`,
+  },
+}))`
 bottom:-120vh;
 right: 2vw;
 transform-origin: right center;
@@ -81,10 +81,10 @@ const VoistrapWebImages = ({ scrollPercent, boxHeight, index, scrollHeight, scre
   
   return (
     <>
-      <Paths src={paths} scroll={adjustedScrollPercent} alt="paths" />
-      <BigBubble src={bigBubble} scroll={adjustedScrollPercent} alt="bigBubble" />
-      <Bubbles src={bubbles} scroll={adjustedScrollPercent} alt="bubbles" />
-      <Dots src={dots} scroll={adjustedScrollPercent} alt="dots" />
+      <Paths src={paths} $scroll={adjustedScrollPercent} alt="paths" />
+      <BigBubble src={bigBubble} $scroll={adjustedScrollPercent} alt="bigBubble" />
+      <Bubbles src={bubbles} $scroll={adjustedScrollPercent} alt="bubbles" />
+      <Dots src={dots} $scroll={adjustedScrollPercent} alt="dots" />
     </>
   );
 }

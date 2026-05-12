@@ -6,11 +6,11 @@ import restaurantImg from '../../../../Assets/Images/WhatsMyFood/Restaurant.png'
 import addRestaurantImg from '../../../../Assets/Images/WhatsMyFood/AddRestaurant.png';
 import addFoodImg from '../../../../Assets/Images/WhatsMyFood/AddFood.png';
 
-const Restaurant = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 15}%)`,
-  }),
-})`
+const Restaurant = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 15}%)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -90vh;
@@ -19,11 +19,11 @@ left:0vw;
 height: 80vh; 
 `;
 
-const Home = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 8}%) scale(0.9)`,
-  }),
-})`
+const Home = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 8}%) scale(0.9)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom:-45vh;
@@ -33,11 +33,11 @@ height: 80vh;
 filter: blur(0.6px);
 `;
 
-const AddFood = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 5}%) scale(0.7)`,
-  }),
-})`
+const AddFood = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 5}%) scale(0.7)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 bottom:-75vh;
 left:2vw;
@@ -47,11 +47,11 @@ height: 80vh;
 filter: blur(0.8px);
 `;
 
-const AddRestaurant = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 2}%) scale(0.6)`,
-  }),
-})`
+const AddRestaurant = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 2}%) scale(0.6)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 bottom:-55vh;
 right: 5vw;
@@ -70,10 +70,10 @@ const WhatsMyFoodImages = ({ scrollPercent: initialScrollPercent, boxHeight, ind
   
   return (
     <>
-      <AddFood src={addFoodImg} scroll={scrollPercent} alt="addFood" />
-      <AddRestaurant src={addRestaurantImg} scroll={scrollPercent} alt="addRestaurant" />
-      <Home src={homeImg} scroll={scrollPercent} alt="Home" />
-      <Restaurant src={restaurantImg} scroll={scrollPercent} alt="Restaurant" />
+      <AddFood src={addFoodImg} $scroll={scrollPercent} alt="addFood" />
+      <AddRestaurant src={addRestaurantImg} $scroll={scrollPercent} alt="addRestaurant" />
+      <Home src={homeImg} $scroll={scrollPercent} alt="Home" />
+      <Restaurant src={restaurantImg} $scroll={scrollPercent} alt="Restaurant" />
     </>
   );
 }

@@ -6,11 +6,11 @@ import restaurantImg from '../../../../Assets/Images/WhatsMyFood/Restaurant.png'
 import addRestaurantImg from '../../../../Assets/Images/WhatsMyFood/AddRestaurant.png';
 import addFoodImg from '../../../../Assets/Images/WhatsMyFood/AddFood.png';
 
-const Restaurant = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 15}%) scale(0.7)`,
-  }),
-})`
+const Restaurant = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 15}%) scale(0.7)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -170vh;
@@ -21,11 +21,11 @@ height: 80vh;
 mix-blend-mode: difference;
 `;
 
-const Home = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 8.5}%) scale(0.62)`,
-  }),
-})`
+const Home = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 8.5}%) scale(0.62)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom:-125vh;
@@ -37,11 +37,11 @@ filter: blur(0.6px);
 mix-blend-mode: difference;
 `;
 
-const AddFood = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 3.5}%) scale(0.5)`,
-  }),
-})`
+const AddFood = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 3.5}%) scale(0.5)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 bottom:-110vh;
 left:10vw;
@@ -53,11 +53,11 @@ filter: blur(0.8px);
 mix-blend-mode: difference;
 `;
 
-const AddRestaurant = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 2}%) scale(0.45)`,
-  }),
-})`
+const AddRestaurant = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 2}%) scale(0.45)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 bottom:-105vh;
 right: 10vw;
@@ -88,10 +88,10 @@ const WhatsMyFoodImages = ({ scrollPercent, boxHeight, index, scrollHeight, scre
   
   return (
     <>
-      <AddFood src={addFoodImg} scroll={adjustedScrollPercent} alt="addFood" />
-      <AddRestaurant src={addRestaurantImg} scroll={adjustedScrollPercent} alt="addRestaurant" />
-      <Home src={homeImg} scroll={adjustedScrollPercent} alt="Home" />
-      <Restaurant src={restaurantImg} scroll={adjustedScrollPercent} alt="Restaurant" />
+      <AddFood src={addFoodImg} $scroll={adjustedScrollPercent} alt="addFood" />
+      <AddRestaurant src={addRestaurantImg} $scroll={adjustedScrollPercent} alt="addRestaurant" />
+      <Home src={homeImg} $scroll={adjustedScrollPercent} alt="Home" />
+      <Restaurant src={restaurantImg} $scroll={adjustedScrollPercent} alt="Restaurant" />
     </>
   );
 };

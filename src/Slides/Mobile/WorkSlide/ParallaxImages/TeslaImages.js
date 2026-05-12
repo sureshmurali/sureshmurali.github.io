@@ -15,11 +15,11 @@ import teslaLockImg from '../../../../Assets/Images/Tesla/Lock.png';
 import teslaBatteryImg from '../../../../Assets/Images/Tesla/Battery.png';
 
 
-const Heat = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 15}%) scale(0.7)`,
-  }),
-})`
+const Heat = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 15}%) scale(0.7)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -170vh;
@@ -30,11 +30,11 @@ height: 80vh;
 mix-blend-mode: difference;
 `;
 
-const Tyre = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 8.5}%) scale(0.62)`,
-  }),
-})`
+const Tyre = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 8.5}%) scale(0.62)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom:-125vh;
@@ -46,11 +46,11 @@ filter: blur(0.6px);
 mix-blend-mode: difference;
 `;
 
-const Battery = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 3.5}%) scale(0.5)`,
-  }),
-})`
+const Battery = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 3.5}%) scale(0.5)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 bottom:-110vh;
 left:10vw;
@@ -61,11 +61,11 @@ height: 80vh;
 filter: blur(0.8px);
 `;
 
-const Lock = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 2}%) scale(0.45)`,
-  }),
-})`
+const Lock = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 2}%) scale(0.45)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 bottom:-105vh;
 right: 10vw;
@@ -90,10 +90,10 @@ const TeslaImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeig
 
   return (
     <>
-      <Lock src={teslaLockImg} scroll={adjustedScrollPercent} alt="teslaLock" />
-      <Battery src={teslaBatteryImg} scroll={adjustedScrollPercent} alt="teslaBattery" />
-      <Tyre src={teslaTyreImg} scroll={adjustedScrollPercent} alt="teslaTyre" />
-      <Heat src={teslaHeatImg} scroll={adjustedScrollPercent} alt="teslaHeat" />
+      <Lock src={teslaLockImg} $scroll={adjustedScrollPercent} alt="teslaLock" />
+      <Battery src={teslaBatteryImg} $scroll={adjustedScrollPercent} alt="teslaBattery" />
+      <Tyre src={teslaTyreImg} $scroll={adjustedScrollPercent} alt="teslaTyre" />
+      <Heat src={teslaHeatImg} $scroll={adjustedScrollPercent} alt="teslaHeat" />
     </>
   );
 };

@@ -5,11 +5,11 @@ import cmgOrNotTabletImg from '../../../../Assets/Images/ComingOrNot/Tablet.png'
 import cmgOrNotIphoneImg from '../../../../Assets/Images/ComingOrNot/Iphone.png';
 
 
-const Iphone = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 22}%) scale(0.65)`,
-  }),
-})`
+const Iphone = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 22}%) scale(0.65)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -320vh;
@@ -20,11 +20,11 @@ height: 100vh;
 mix-blend-mode: difference;
 `;
 
-const Tablet = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 6}%) scale(0.65)`,
-  }),
-})`
+const Tablet = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 6}%) scale(0.65)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -180vh;
@@ -49,8 +49,8 @@ const ComingOrNotImages = ({ scrollPercent, boxHeight, index, scrollHeight, scre
   
   return (
     <>
-      <Tablet src={cmgOrNotTabletImg} scroll={adjustedScrollPercent} alt="cmgOrNotTablet" />
-      <Iphone src={cmgOrNotIphoneImg} scroll={adjustedScrollPercent} alt="cmgOrNotIphone" />
+      <Tablet src={cmgOrNotTabletImg} $scroll={adjustedScrollPercent} alt="cmgOrNotTablet" />
+      <Iphone src={cmgOrNotIphoneImg} $scroll={adjustedScrollPercent} alt="cmgOrNotIphone" />
     </>
   );
 }

@@ -145,7 +145,7 @@ const NameAndJobTitle = () => {
       </NameStage>
       
       <TitleStage>
-        <TitleText ref={titleTextRef}>UI/UX Architect</TitleText>
+        <TitleText ref={titleTextRef}>Designer & Developer</TitleText>
       </TitleStage>
     </Container>
   );

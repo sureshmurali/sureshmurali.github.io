@@ -7,11 +7,11 @@ import paths from '../../../../Assets/Images/Showcase/Paths.png';
 import bigBubble from '../../../../Assets/Images/Showcase/BigBubble.png';
 
 
-const Dots = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 30}%)`,
-  }),
-})`
+const Dots = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 30}%)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -240vh;
@@ -20,11 +20,11 @@ left:0vw;
 height: 50vh; 
 `;
 
-const Bubbles = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 23}%) scale(0.9)`,
-  }),
-})`
+const Bubbles = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 23}%) scale(0.9)`,
+  },
+}))`
 position: absolute;
 bottom:-225vh;
 right: 0vw;
@@ -34,11 +34,11 @@ height: 50vh;
 filter: blur(0.6px);
 `;
 
-const BigBubble = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 10}%) scale(0.7)`,
-  }),
-})`
+const BigBubble = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 10}%) scale(0.7)`,
+  },
+}))`
 bottom:-125vh;
 left:-4vw;
 position: absolute;
@@ -47,11 +47,11 @@ height: 50vh;
 filter: blur(0.8px);
 `;
 
-const Paths = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 3}%) scale(0.6)`,
-  }),
-})`
+const Paths = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 3}%) scale(0.6)`,
+  },
+}))`
 bottom:-80vh;
 right: 1vw;
 transform-origin: right center;
@@ -70,10 +70,10 @@ const VoistrapWebImages = ({ scrollPercent: initialScrollPercent, boxHeight, ind
   
   return (
     <>
-      <Paths src={paths} scroll={scrollPercent} alt="paths" />
-      <BigBubble src={bigBubble} scroll={scrollPercent} alt="bigBubble" />
-      <Bubbles src={bubbles} scroll={scrollPercent} alt="bubbles" />
-      <Dots src={dots} scroll={scrollPercent} alt="dots" />
+      <Paths src={paths} $scroll={scrollPercent} alt="paths" />
+      <BigBubble src={bigBubble} $scroll={scrollPercent} alt="bigBubble" />
+      <Bubbles src={bubbles} $scroll={scrollPercent} alt="bubbles" />
+      <Dots src={dots} $scroll={scrollPercent} alt="dots" />
     </>
   );
 }

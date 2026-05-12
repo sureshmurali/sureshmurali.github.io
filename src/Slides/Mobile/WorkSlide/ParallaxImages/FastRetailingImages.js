@@ -7,11 +7,11 @@ import fastRetailingPLSTImg from '../../../../Assets/Images/FastRetailing/PLST.p
 import fastRetailingGU2Img from '../../../../Assets/Images/FastRetailing/GU2.png';
 
 
-const FastRetailingPhoneUQ = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 15}%) scale(0.7)`,
-  }),
-})`
+const FastRetailingPhoneUQ = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 15}%) scale(0.7)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -170vh;
@@ -22,11 +22,11 @@ height: 80vh;
 mix-blend-mode: difference;
 `;
 
-const FastRetailingPhoneGU = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 8.5}%) scale(0.62)`,
-  }),
-})`
+const FastRetailingPhoneGU = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 8.5}%) scale(0.62)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom:-125vh;
@@ -38,11 +38,11 @@ filter: blur(0.6px);
 mix-blend-mode: difference;
 `;
 
-const FastRetailingPhonePLST = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 3.5}%) scale(0.5)`,
-  }),
-})`
+const FastRetailingPhonePLST = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 3.5}%) scale(0.5)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 bottom:-110vh;
 left:10vw;
@@ -54,11 +54,11 @@ filter: blur(0.8px);
 mix-blend-mode: difference;
 `;
 
-const FastRetailingPhoneGU2 = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 2}%) scale(0.45)`,
-  }),
-})`
+const FastRetailingPhoneGU2 = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 2}%) scale(0.45)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 bottom:-105vh;
 right: 10vw;
@@ -84,10 +84,10 @@ const FastRetailingImages = ({ scrollPercent, boxHeight, index, scrollHeight, sc
   
   return (
     <>
-      <FastRetailingPhonePLST src={fastRetailingPLSTImg} scroll={adjustedScrollPercent} alt="fastRetailingPLST" />
-      <FastRetailingPhoneGU2 src={fastRetailingGU2Img} scroll={adjustedScrollPercent} alt="fastRetailingGU2" />
-      <FastRetailingPhoneUQ src={fastRetailingUQImg} scroll={adjustedScrollPercent} alt="fastRetailingUQ" />
-      <FastRetailingPhoneGU src={fastRetailingGUImg} scroll={adjustedScrollPercent} alt="fastRetailingGU" />
+      <FastRetailingPhonePLST src={fastRetailingPLSTImg} $scroll={adjustedScrollPercent} alt="fastRetailingPLST" />
+      <FastRetailingPhoneGU2 src={fastRetailingGU2Img} $scroll={adjustedScrollPercent} alt="fastRetailingGU2" />
+      <FastRetailingPhoneUQ src={fastRetailingUQImg} $scroll={adjustedScrollPercent} alt="fastRetailingUQ" />
+      <FastRetailingPhoneGU src={fastRetailingGUImg} $scroll={adjustedScrollPercent} alt="fastRetailingGU" />
     </>
   );
 };

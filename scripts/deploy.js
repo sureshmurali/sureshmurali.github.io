@@ -28,7 +28,7 @@ function deploy() {
     // Build the project first
     try {
       console.log('Building project...');
-      execSync('yarn build', { stdio: 'inherit' });
+      execSync('npm run build', { stdio: 'inherit' });
       console.log('Build completed successfully!');
     } catch (error) {
       console.error('Build failed:', error.message);

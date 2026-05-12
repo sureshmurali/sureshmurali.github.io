@@ -4,7 +4,11 @@ module.exports = {
     "browser": true,
     "es6": true
     },
-    "parser": "babel-eslint",
+    "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module",
+    "ecmaFeatures": { "jsx": true }
+    },
     "rules": {
     "react/jsx-filename-extension": "off",
     "react/prefer-stateless-function": "off",

@@ -5,11 +5,11 @@ import englishHome from '../../../../Assets/Images/Kosen/EnglishHome.png';
 import jpnHome from '../../../../Assets/Images/Kosen/JpnHome.png';
 import player from '../../../../Assets/Images/Kosen/Player.png';
 
-const JapaneseTab = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 13}%) scale(0.8)`,
-  }),
-})`
+const JapaneseTab = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 13}%) scale(0.8)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom:-220vh;
@@ -20,11 +20,11 @@ height: 70vh;
 mix-blend-mode: difference;
 `;
 
-const EnglishTab = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 9}%) scale(0.6)`,
-  }),
-})`
+const EnglishTab = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 9}%) scale(0.6)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 position: absolute;
 bottom: -210vh;
@@ -36,11 +36,11 @@ height: 70vh;
 mix-blend-mode: difference;
 `;
 
-const PlayerTab = styled.img.attrs({
-  style: ({ scroll }) => ({
-    transform: `translate(0px,-${(scroll) * 3}%) scale(0.5)`,
-  }),
-})`
+const PlayerTab = styled.img.attrs(({ $scroll }) => ({
+  style: {
+    transform: `translate(0px,-${($scroll) * 3}%) scale(0.5)`,
+  },
+}))`
 transition: transform 0.2s ease-out;
 bottom:-135vh;
 left: 3vw;
@@ -71,9 +71,9 @@ const KosenImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeig
   
   return (
     <>
-      <PlayerTab src={player} scroll={adjustedScrollPercent} alt="kosenPlayer" />
-      <EnglishTab src={englishHome} scroll={adjustedScrollPercent} alt="kosenEnglish" />
-      <JapaneseTab src={jpnHome} scroll={adjustedScrollPercent} alt="kosenJapanese" />
+      <PlayerTab src={player} $scroll={adjustedScrollPercent} alt="kosenPlayer" />
+      <EnglishTab src={englishHome} $scroll={adjustedScrollPercent} alt="kosenEnglish" />
+      <JapaneseTab src={jpnHome} $scroll={adjustedScrollPercent} alt="kosenJapanese" />
     </>
   );
 };
