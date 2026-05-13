@@ -64,11 +64,6 @@ const KosenImages = ({ scrollPercent, boxHeight, index, scrollHeight, screenHeig
   // Apply the offset to get the scroll percentage relative to this component
   adjustedScrollPercent -= scrollOffsetInPercent;
   
-  // Debug logging
-  if (scrollPercent > 0 && scrollPercent < 0.1) {
-    console.log('Kosen');
-  }
-  
   return (
     <>
       <PlayerTab src={player} $scroll={adjustedScrollPercent} alt="kosenPlayer" />

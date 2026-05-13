@@ -146,8 +146,6 @@ const Work = () => {
     );
     setSlideHeight(calculatedHeight);
     
-    console.log(`Slide height set to: ${calculatedHeight}px`);
-    
     // Add scroll event listener with passive option for better performance
     window.addEventListener('scroll', handleScroll, { passive: true });
     

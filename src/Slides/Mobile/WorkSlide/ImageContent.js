@@ -70,10 +70,6 @@ const ImageContent = ({ pageSplitTimes }) => {
     // Add scroll event listener
     window.addEventListener('scroll', handleScroll);
     
-    // Log dimensions for debugging
-    console.log('scrollHeight', Math.round(window.document.documentElement.scrollHeight));
-    console.log('screenHeight', Math.round(window.document.documentElement.clientHeight));
-    
     // Cleanup function to remove event listener
     return () => {
       window.removeEventListener('scroll', handleScroll);

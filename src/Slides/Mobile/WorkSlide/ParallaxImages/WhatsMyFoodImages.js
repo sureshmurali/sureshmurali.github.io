@@ -81,11 +81,6 @@ const WhatsMyFoodImages = ({ scrollPercent, boxHeight, index, scrollHeight, scre
   // Apply the offset to get the scroll percentage relative to this component
   adjustedScrollPercent -= scrollOffsetInPercent;
   
-  // Debug logging
-  if (scrollPercent > 0 && scrollPercent < 0.1) {
-    console.log('WMF');
-  }
-  
   return (
     <>
       <AddFood src={addFoodImg} $scroll={adjustedScrollPercent} alt="addFood" />
